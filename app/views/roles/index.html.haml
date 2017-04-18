@@ -1,0 +1,18 @@
+.row
+  .col-md-8
+    %h2 Roles
+  .col-md-4.right
+    = link_to 'New Role', new_role_path, class: 'btn btn-success'
+
+%table.table.striped
+  %thead
+    %tr
+      %th Name
+      %th Description
+      %th
+  %tbody
+    - @roles.each do |role|
+      %tr
+        %td= role.name
+        %td= role.description
+        %td.right= object_actions role

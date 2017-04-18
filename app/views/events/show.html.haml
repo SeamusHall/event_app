@@ -1,0 +1,113 @@
+.row
+  .col-sm-8
+    %h2= @event.name
+    %h4= @event.description
+  .col-sm-4.right
+    %br
+    Event Dates:
+    = @event.dates
+%hr
+= @event.page_body.html_safe
+
+%hr
+.row
+  .col-sm-12
+    %h4 Event Items
+    %table.table.striped
+      %thead
+        %tr
+          %th Description
+          %th Price
+          %th Tax
+          %th Flat Rate
+          %th Maximum per Event
+          %th Maximum per Order
+          %th Minimum Days
+          %th
+      %tbody
+        - @event.event_items.each do |ei|
+          %tr
+            %td= ei.description
+            %td= number_to_currency(ei.price)
+            %td= ei.tax > 0.0 ? ei.tax : '--'
+            %td= ei.flat_rate ? "Y" : "N"
+            %td= ei.max_event
+            %td= ei.max_order
+            %td= ei.min_freq
+            %td.right
+              - if current_user
+                = link_to '#', "data-toggle" => "modal", "data-target" => "#order-modal-#{ei.id}" do
+                  %span.label.label-primary Order!
+              - else
+                = link_to new_registration_path(User.new) do
+                  %span.label.label-primary Sign Up!
+
+- if current_user
+  - @event.event_items.each do |ei|
+    .modal.fade{tabindex: '-1', role: 'dialog', id: "order-modal-#{ei.id}"}
+      = form_for @order, remote: true, data: { rel: "#modal-header-#{ei.id}", target: "#errors-#{ei.id}" } do |f|
+        .modal-dialog.modal-md{role: 'document'}
+          .modal-content
+            .modal-header{id: "modal-header-#{ei.id}"}
+              %button.close{type: 'button', "data-dismiss" => "modal", "aria-label" => "Close"}
+                %span{"aria-hidden" => "true"}
+                  &times;
+              %h4 Order Summary
+            .modal-body
+              %div{id: "errors-#{ei.id}"}
+              %h4= @event.name
+              %p
+                Item:
+                = ei.description
+              %hr
+              = f.hidden_field :event_item_id, value: ei.id
+              %strong Item Infomation
+              %br
+              .row
+                .col-sm-4
+                  .form-group
+                    = f.label :quantity
+                    = f.select :quantity, options_for_select((1..ei.max_order).to_a, selected: '1'), {prompt: 'quantity'}, {class: 'form-control selectpicker', required: true}
+                .col-sm-4
+                  .form-group
+                    = f.label :start_date
+                    = f.select :start_date, options_for_select((@event.starts_on.to_date..@event.ends_on.to_date).map{ |d| [d.strftime('%a, %b %d, %Y'), d.strftime('%Y-%m-%d')] }), {prompt: 'start date'}, {class: 'form-control selectpicker', required: true}
+                .col-sm-4
+                  .form-group
+                    = f.label :end_date
+                    = f.select :end_date, options_for_select((@event.starts_on.to_date..@event.ends_on.to_date).map{ |d| [d.strftime('%a, %b %d, %Y'), d.strftime('%Y-%m-%d')] }), {prompt: 'end date'}, {class: 'form-control selectpicker', required: true}
+              %hr
+              %strong Demographic Infomation
+              %br
+              .row
+                .col-sm-6
+                  .form-group
+                    = f.text_field :first_name, placeholder: 'first name', class: 'form-control', required: true
+                .col-sm-6
+                  .form-group
+                    = f.text_field :last_name, placeholder: 'last name', class: 'form-control', required: true
+                %br
+              %i NOTE: this does not submit your order, nor does it ensure availability of item
+            .modal-footer
+              %button.btn.btn-default{type: 'button', "data-dismiss" => "modal"}
+                Close
+              = f.submit 'Create Order', class: 'btn btn-success'
+
+-# TODO: fancy modal that prompts the user for details.. how many suites and which days?
+  how to verify the order is legitimate?
+  require 'openssl'
+  digest = OpenSSL::Digest.new('md5')
+  key = AUTHORIZE_NET_CONFIG['api_transaction_key'] # this is a goddamn password keep is secret
+  data = AUTHORIZE_NET_CONFIG['api_login_id'] + '^' + @sim_transation.sequence + '^' + @sim_transation.timestamp + '^' + @sim_transation.amount + '^'
+  # data = AUTHORIZE_NET_CONFIG['api_login_id'] + '^' + x_fp_sequence + '^' + x_fp_timestamp + '^' + x_amount + '^'
+  # 5S8buB78WCP^143166258^1491879865^206.63^
+  hmac = OpenSSL::HMAC.hexdigest(digest, key, data)
+  # hmac is the x_fp_hash in the form that is submitted to authorize and returned later for verification
+
+  gem 'authorizenet', '1.9.1'
+  this new gem has a completely new way of using authorize. there is no such thing as a payment form going to another payment form
+  we generate the transaction in a method and create it
+
+  https://github.com/AuthorizeNet/sdk-ruby
+  https://github.com/AuthorizeNet/sample-code-ruby
+  http://developer.authorize.net/api/reference/index.html#payment-transactions-charge-a-credit-card

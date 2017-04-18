@@ -1,0 +1,79 @@
+= form_for(event) do |f|
+  = errors_for event
+
+  .row
+    .col-sm-6
+      .form-group
+        = f.label :name
+        = f.text_field :name, placeholder: 'name', class: 'form-control', autofocus: true
+      .form-group
+        = f.label :description
+        = f.text_area :description, placeholder: 'description', class: 'form-control'
+      .form-group
+        = f.label :page_body
+        = f.text_area :page_body, placeholder: 'page body', class: 'form-control', size: 'x15'
+        %i markdown format
+    .col-sm-6
+      .row
+        .col-sm-6
+          .form-group
+            = f.label :available_at
+            = f.text_field :available_at, class: 'form-control'
+        .col-sm-6
+          .form-group
+            = f.label :unavailable_at
+            = f.text_field :unavailable_at, class: 'form-control'
+      .row
+        .col-sm-6
+          .form-group
+            = f.label :starts_on
+            = f.text_field :starts_on, class: 'form-control'
+        .col-sm-6
+          .form-group
+            = f.label :ends_on
+            = f.text_field :ends_on, class: 'form-control'
+      %hr
+      = f.fields_for :event_items do |event_item_form|
+        %p Event Item
+        .row
+          .col-sm-6
+            .form-group
+              = event_item_form.text_field :description, placeholder: 'description', class: 'form-control'
+          .col-sm-3
+            .form-group
+              = event_item_form.text_field :min_freq, placeholder: 'min days', class: 'form-control'
+          .col-sm-3
+            .form-group
+              = event_item_form.check_box :flat_rate
+              = event_item_form.label :flat_rate
+        .row
+          .col-sm-3
+            .form-group
+              .input-group
+                .input-group-addon
+                  $
+                = event_item_form.text_field :price, placeholder: 'price', class: 'form-control'
+          .col-sm-3
+            .form-group
+              .input-group
+                = event_item_form.text_field :tax, placeholder: '0.0875', class: 'form-control'
+                .input-group-addon
+                  = "%"
+          .col-sm-3
+            .form-group
+              = event_item_form.text_field :max_event, placeholder: 'max per event', class: 'form-control'
+          .col-sm-3
+            .form-group
+              = event_item_form.text_field :max_order, placeholder: 'max per order', class: 'form-control'
+        %hr
+
+  .row
+    .actions.right
+      = f.submit 'Submit', class: 'btn btn-success'
+      = link_to 'Back', :back, class: 'btn btn-danger'
+
+:javascript
+  $('#event_available_at').datetimepicker({format: 'YYYY-MM-DD HH:mm:ss ZZ', sideBySide: true});
+  $('#event_unavailable_at').datetimepicker({format: 'YYYY-MM-DD HH:mm:ss ZZ', sideBySide: true});
+  $('#event_starts_on').datetimepicker({format: 'YYYY-MM-DD HH:mm:ss ZZ', sideBySide: true});
+  $('#event_ends_on').datetimepicker({format: 'YYYY-MM-DD HH:mm:ss ZZ', sideBySide: true});
