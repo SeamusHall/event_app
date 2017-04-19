@@ -1,5 +1,6 @@
 # require 'pandoc-ruby'
 class Event < ApplicationRecord
+  acts_as_paranoid
   has_many :event_items
 
   validates_presence_of :name, :description, :page_body, :available_at, :unavailable_at, :starts_on, :ends_on

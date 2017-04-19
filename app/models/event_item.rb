@@ -1,4 +1,5 @@
 class EventItem < ApplicationRecord
+  acts_as_paranoid
   belongs_to :event
 
   validates_presence_of :description, :price, :max_event, :max_order

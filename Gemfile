@@ -33,6 +33,7 @@ gem 'sqlite3'
 gem 'devise', '~> 4.2'
 gem 'cancancan', '~> 1.10'
 gem 'responders'
+gem 'paranoia', '~> 2.2'
 
 gem 'authorizenet', '1.9.1'
 

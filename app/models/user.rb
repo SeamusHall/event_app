@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  acts_as_paranoid
   paginates_per 25
   include Gravtastic
   gravtastic
