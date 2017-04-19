@@ -5,7 +5,7 @@ class OrdersController < ApplicationController
   respond_to :js, :json
 
   def index
-    @orders = Order.all.page params[:page]
+    @orders = Order.accessible_by(current_ability).page params[:page]
   end
 
   def create
