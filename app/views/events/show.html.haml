@@ -92,22 +92,3 @@
               %button.btn.btn-default{type: 'button', "data-dismiss" => "modal"}
                 Close
               = f.submit 'Create Order', class: 'btn btn-success'
-
--# TODO: fancy modal that prompts the user for details.. how many suites and which days?
-  how to verify the order is legitimate?
-  require 'openssl'
-  digest = OpenSSL::Digest.new('md5')
-  key = AUTHORIZE_NET_CONFIG['api_transaction_key'] # this is a goddamn password keep is secret
-  data = AUTHORIZE_NET_CONFIG['api_login_id'] + '^' + @sim_transation.sequence + '^' + @sim_transation.timestamp + '^' + @sim_transation.amount + '^'
-  # data = AUTHORIZE_NET_CONFIG['api_login_id'] + '^' + x_fp_sequence + '^' + x_fp_timestamp + '^' + x_amount + '^'
-  # 5S8buB78WCP^143166258^1491879865^206.63^
-  hmac = OpenSSL::HMAC.hexdigest(digest, key, data)
-  # hmac is the x_fp_hash in the form that is submitted to authorize and returned later for verification
-
-  gem 'authorizenet', '1.9.1'
-  this new gem has a completely new way of using authorize. there is no such thing as a payment form going to another payment form
-  we generate the transaction in a method and create it
-
-  https://github.com/AuthorizeNet/sdk-ruby
-  https://github.com/AuthorizeNet/sample-code-ruby
-  http://developer.authorize.net/api/reference/index.html#payment-transactions-charge-a-credit-card
