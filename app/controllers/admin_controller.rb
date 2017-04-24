@@ -6,7 +6,9 @@ class AdminController < ApplicationController
   def index
     @users = User.all
     @events = Event.available
+    @products = Product.all
     @orders = Order.not_validated
+    @order_products = OrderProduct.not_validated
   end
 
   def users
@@ -23,6 +25,14 @@ class AdminController < ApplicationController
 
   def orders
     @orders = Order.all.page params[:page]
+  end
+
+  def products
+    @products = Product.all
+  end
+
+  def order_products
+    @order_products = OrderProduct.all.page params[:page]
   end
 
   private

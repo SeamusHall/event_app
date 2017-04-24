@@ -1,6 +1,7 @@
 class EventsController < ApplicationController
   load_and_authorize_resource
   before_action :load_nested_attributes, only: [:new, :edit]
+  layout "admin", only: [:new,:update]
 
   def show
     @order = Order.new

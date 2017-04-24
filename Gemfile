@@ -20,10 +20,14 @@ gem 'turbolinks', '~> 5'
 gem 'jquery-turbolinks'
 gem 'jbuilder', '~> 2.5'
 
-gem 'haml'
+gem 'haml-rails'
 # gem 'pandoc-ruby' # markdown
 gem 'kaminari'
 gem 'gravtastic'
+
+# For image Uploading
+gem 'carrierwave'
+gem "mini_magick"
 
 gem 'momentjs-rails', '>= 2.9.0'
 gem 'bootstrap3-datetimepicker-rails', '~> 4.17.47'
@@ -36,6 +40,7 @@ gem 'responders'
 gem 'paranoia', '~> 2.2'
 
 gem 'authorizenet', '1.9.1'
+gem "recaptcha", require: "recaptcha/rails"
 
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby

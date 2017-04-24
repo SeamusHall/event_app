@@ -1,0 +1,65 @@
+/*
+CSS File for Non admin interface
+*/
+
+@import "card";
+@import "footer";
+@import "table";
+
+h1 {
+  display: inline-block;
+  padding: 10px;
+  border: none;
+  font: normal 48px/normal "Warnes", Helvetica, sans-serif;
+  color: $white !important;
+  text-decoration: normal;
+  text-align: center;
+  text-shadow: $green-glow;
+}
+
+body {
+  background-color: #7a7a7a;
+}
+
+div#page-wrapper {
+  height: 100%;
+}
+
+div#wrapper {
+  height: 100%;
+}
+
+.container {
+  width: 100%;
+}
+
+.navbar {
+  background-color: $maroon-dark;
+  height: auto;
+  .logo {
+    width: 100%;
+    height:auto;
+    position: absolute;
+  }
+}
+.navbar-brand {
+  color: $white !important;
+  font-size: 30px;
+  vertical-align: middle;
+}
+.navbar-header.white {
+  background-color: $white;
+}
+.navbar-nav li {
+    color: $white;
+}
+.navbar-nav li .dropdown-menu {
+    margin-top: 0;
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+    background-color: $black;
+    box-shadow: $yellow-glow;
+    a {
+      color: $white;
+    }
+}

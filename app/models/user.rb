@@ -2,7 +2,7 @@ class User < ApplicationRecord
   acts_as_paranoid
   paginates_per 25
   include Gravtastic
-  gravtastic
+  gravtastic size: 360
 
   has_many :user_roles
   has_many :roles, through: :user_roles

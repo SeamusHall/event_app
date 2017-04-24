@@ -1,24 +1,26 @@
 .row
-  .col-md-8
+  .col-lg-12
     %h2 Events
-  .col-md-4.right
-    = link_to 'New Event', new_event_path, class: 'btn btn-success'
 
-%table.table.striped
-  %thead
-    %tr
-      %th Name
-      %th Available at
-      %th Unavailable at
-      %th Starts on
-      %th Ends on
-      %th
-  %tbody
-    - @events.each do |event|
+%div{style: "overflow-x:auto;"}
+  %table.table
+    %thead
       %tr
-        %td= event.name
-        %td= event.available_at
-        %td= event.unavailable_at
-        %td= event.starts_on
-        %td= event.ends_on
-        %td.right= object_actions event
+        %th Name
+        %th Available at
+        %th Unavailable at
+        %th Starts on
+        %th Ends on
+        %th
+    %tbody
+      - @events.each do |event|
+        %tr
+          %td= event.name
+          %td= event.available_at
+          %td= event.unavailable_at
+          %td= event.starts_on
+          %td= event.ends_on
+          %td.right= object_actions event
+.row
+  .col-lg-12
+    = link_to 'New Event', new_event_path, class: 'btn btn-success btn-large btn-block'

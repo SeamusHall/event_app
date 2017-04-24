@@ -1,6 +1,7 @@
 class RolesController < ApplicationController
   load_and_authorize_resource
-
+  layout "admin"
+  
   def create
     @role.save
     respond_with @role, location: -> { roles_path }
