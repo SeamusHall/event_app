@@ -1,0 +1,40 @@
+// Place all the styles related to the Home controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+body {
+  // margin-top: 50px !important;
+  // padding-top: 20px !important;
+}
+.left{text-align:left;}
+.center{text-align:center;}
+.right{text-align:right;}
+
+.field_with_errors {
+  label {
+    color: #a94442;
+  }
+  input.form-control {
+    border-color: #ebccd1;
+    &:focus {
+      border-color: #a94442;
+      -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(235, 204, 209, 0.7);
+      -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(235, 204, 209, 0.7);
+      box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(235, 204, 209, 0.7);
+    }
+  }
+}
+
+.panel-yellow {
+  border-color: #f0ad4e !important;
+}
+.panel-yellow > .panel-heading {
+  border-color: #f0ad4e;
+  color: white;
+  background-color: #f0ad4e;
+}
+.panel-yellow > a {
+  color: #f0ad4e;
+}
+.panel-yellow > a:hover {
+  color: #df8a13;
+}

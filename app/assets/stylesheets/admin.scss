@@ -1,0 +1,57 @@
+/*
+CSS File for admin interface
+*/
+
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import 'bootstrap-datetimepicker';
+@import "card";
+@import "footer";
+@import "table";
+
+body {
+  background-color: $white;
+}
+h2 {
+  text-align: center;
+  font-size: 60px;
+}
+.alert-warning {
+  border-radius: 25px;
+  border: none;
+  background-color: #e25851;
+  color: $black;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  text-align: center;
+  font-size: 20px;
+}
+.navbar {
+  background-color: $maroon-dark;
+  .logo {
+    width: 100%;
+    height:auto;
+    position: absolute;
+  }
+}
+.navbar-brand {
+  color: $white !important;
+  font-size: 30px;
+  text-align: center;
+  text-shadow: $yellow-glow;
+}
+.navbar-header.white {
+  background-color: $white;
+}
+.navbar-nav li {
+    color: $white;
+}
+.navbar-nav li .dropdown-menu {
+    margin-top: 0;
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+    background-color: $black;
+    box-shadow: $yellow-glow;
+    a {
+      color: $white;
+    }
+}

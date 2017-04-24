@@ -1,0 +1,15 @@
+= form_for(role) do |f|
+  = errors_for role, true
+  .row
+    .col-lg-4
+    .col-lg-4
+      .form-group
+        = f.label :name
+        = f.text_field :name, placeholder: 'name', class: 'form-control', autofocus: true
+      .form-group
+        = f.label :description
+        = f.text_area :description, placeholder: 'description', class: 'form-control'
+      .actions.right
+        = f.submit 'Submit', class: 'btn btn-success'
+        = link_to 'Back', :back, class: 'btn btn-danger'
+    .col-lg-4

@@ -1,0 +1,7 @@
+- if @cart
+  %p
+  - if @cart.empty?
+    Your cart is empty
+  - else
+    %h1.navbar-nav.navbar-right
+      %i= link_to "#{@cart.items.length} ", cart_path, class: 'fa fa-shopping-cart fa-6'

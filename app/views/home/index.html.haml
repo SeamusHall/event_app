@@ -1,0 +1,67 @@
+%h1 University Housing
+%hr
+.row
+  - @events.each do |event|
+    .col-lg-3.col-md-6
+      %div.panel{class: (event.almost_over? ? 'panel-danger' : 'panel-primary')}
+        .panel-heading
+          .row
+            .col-xs-12
+              %h3{style: 'margin-top: 3px'}= event.name
+          .row
+            .col-xs-12
+              = event.description
+        = link_to event do
+          .panel-footer
+            %span.pull-left
+              View Details
+            - if event.almost_over?
+              %span.badge.pull-right
+                Almost Over!
+                = text_icon :arrow_circle_right
+            - else
+              %span.pull-right
+                = text_icon :arrow_circle_right
+            .clearfix
+    .col-lg-3.col-md-4
+      %div.panel.panel-yellow
+        .panel-heading
+          .row
+            .col-xs-12
+              %h3 Products
+        = link_to products_path do
+          .panel-footer
+            %span.pull-left
+              View Details
+            %span.pull-right
+              = text_icon :arrow_circle_right
+            .clearfix
+
+- if current_user
+  .row
+    .col-lg-3.col-md-6
+      %div.panel.panel-yellow
+        .panel-heading
+          .row
+            .col-xs-12
+              %h3 Orders
+        = link_to orders_path do
+          .panel-footer
+            %span.pull-left
+              View Details
+            %span.pull-right
+              = text_icon :arrow_circle_right
+            .clearfix
+    .col-lg-3.col-md-6
+      %div.panel.panel-primary
+        .panel-heading
+          .row
+            .col-xs-12
+              %h3 Product Orders
+        = link_to order_products_path do
+          .panel-footer
+            %span.pull-left
+              View Details
+            %span.pull-right
+              = text_icon :arrow_circle_right
+            .clearfix

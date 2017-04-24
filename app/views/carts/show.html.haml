@@ -1,0 +1,20 @@
+%h2 Your Cart
+%div{style: "overflow-x:auto;"}
+  %table.table
+    %thead
+      %tr
+        %th Quantity
+        %th name
+        %th price
+
+    - @cart.items.each do |item|
+      %tr
+        %td=item.quantity
+        %td
+          = image_tag item.product.image.thumb
+          = link_to item.product.name, item.product
+        %td=item.total_price
+
+%h3
+  = "The total cost is #{number_to_currency(@cart.total_price)}"
+  = link_to 'Checkout', checkout_cart_path, class: 'btn btn-success'

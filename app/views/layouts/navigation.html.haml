@@ -1,0 +1,47 @@
+%nav.navbar.navbar-default.navbar-fixed-top
+  .container
+    .navbar-header
+      %button.navbar-toggle.collapsed{"data-toggle" => "collapse", "data-target" => "#navbar", "aria-expanded" => "false", "aria-controls" => "navbar"}
+        %span.sr-only Toggle Navigation
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
+      = link_to "Housing Events", root_path, class: "navbar-brand"
+    .collapse.navbar-collapse
+      = render "layouts/cart"
+      %ul.nav.navbar-nav.navbar-right
+        - if current_user
+          %li.dropdown
+            %a.dropdown-toggle{"data-toggle" => "dropdown", "role" => "button", "aria-haspopup" => "true", "aria-expanded" => "false"}
+              = current_user.email
+              %span.glyphicon.glyphicon-user
+              %strong Profile
+              %span.glyphicon.glyphicon-chevron-down
+            %ul.dropdown-menu
+              %li
+                .navbar-login
+                  .row
+                    .col-lg-12
+                      %p= link_to 'Logout', destroy_user_session_path, class: 'btn btn-danger btn-block', method: :delete
+                  .row
+                    .col-lg-12
+                      .card.hovercard
+                        .cardheader
+                          = image_tag current_user.gravatar_url
+                      -#
+                        .info
+                          .title
+                          .h3 #{current_user.full_name}
+                          .desc #{current_user.email}
+                          .desc #{number_to_phone(current_user.phone_number, area_code: true)}
+                          .desc Role: #{current_user.role}
+
+                        .bottom
+
+              %li= link_to 'Event Admin', admin_path if current_user && current_user.has_role?(:admin)
+              %li= link_to 'Event Orders', orders_path
+              %li= link_to 'Product Order', order_products_path
+              %li.divider{role: "separator"}
+              %li= link_to "Account", edit_user_registration_path
+        - else
+          %li= link_to 'Login', new_session_path(User.new)

@@ -1,0 +1,19 @@
+.row
+  .col-md-12
+    %h2 Users
+
+%div{style: "overflow-x:auto;"}
+  %table.table
+    %thead
+      %tr
+        %th Email
+        %th Locked
+        %th
+    %tbody
+      - @users.each do |user|
+        %tr
+          %td= user.email
+          %td= user.locked_at ? 'LOCKED' : ''
+          %td.right= object_actions user
+
+= paginate @users

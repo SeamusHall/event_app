@@ -1,0 +1,32 @@
+.row
+  .col-md-4
+  .col-md-4
+    .well
+      %h2.center Sign up
+      = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
+        -#= devise_error_messages!
+        = errors_for resource, false
+        -# .form-group
+        -#   = f.label :first_name
+        -#   = f.text_field :first_name, autofocus: true, placeholder: 'first name', class: 'form-control'
+        -# .form-group
+        -#   = f.label :last_name
+        -#   = f.text_field :last_name, placeholder: 'last name', class: 'form-control'
+        .form-group
+          = f.label :email
+          = f.email_field :email, placeholder: 'email', class: 'form-control', autofocus: true
+        .form-group
+          = f.label :password
+          - if @minimum_password_length
+            %em
+              (#{@minimum_password_length} characters minimum)
+          = f.password_field :password, autocomplete: "off", placeholder: 'password', class: 'form-control'
+        .form-group
+          = f.password_field :password_confirmation, autocomplete: "off", placeholder: 'password confirmation', class: 'form-control'
+        .form-group
+          = flash[:recaptcha_error]
+          = recaptcha_tags
+        .form-group.right
+          = f.submit "Sign up", class: 'btn btn-success'
+      = render "devise/shared/links"
+  .col-md-4
