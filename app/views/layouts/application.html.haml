@@ -2,7 +2,7 @@
 %html
   %head
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}
-    %title Eclipse
+    %title Events
     = csrf_meta_tags
 
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
@@ -13,7 +13,8 @@
     = javascript_include_tag '//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js'
 
   %body{style: 'margin-top: 70px'}
+    = render template: 'layouts/navigation'
     .container
-      = render template: 'layouts/navigation'
       = display_flash
       = yield
+    = render file: "layouts/footer"

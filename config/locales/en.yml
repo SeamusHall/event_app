@@ -24,3 +24,6 @@ en:
     show: 'Show'
     edit: 'Edit'
     destroy: 'Destroy'
+  recaptcha:
+    errors:
+      verification_failed: 'Need to go through recaptcha verification'

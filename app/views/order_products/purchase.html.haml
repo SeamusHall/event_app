@@ -1,0 +1,55 @@
+%h2 Order Purchase Form
+%hr
+.row
+  %h4 Order Information
+  %p
+    %strong Order ID:
+    = @order_product.id
+  %p
+    %strong Order Date:
+    = @order_product.created_at
+  %p
+    %strong Order Status:
+    = @order_product.extended_status
+
+  - @order_product.order_items.each do |oi|
+    .col-sm-6
+      %p
+        %strong Product:
+        = oi.product.name
+      %p
+        %strong Product Description:
+        = oi.product.description
+      %p
+        %strong Product Quantity:
+        = oi.product.quantity
+    %p
+      %strong Order Name:
+      = @order_product.first_name + ' ' + @order_product.last_name
+    %hr
+    %h4
+      %strong Price:
+      = number_to_currency(@order_product.total)
+  .col-sm-6
+    %h4 Payment Information
+    = form_tag make_purchase_order_product_path(@order_product) do
+      .row
+        .col-sm-6
+          .form-group
+            = label_tag 'cc_num', 'Credit Card Number'
+            = text_field_tag 'cc_num', '', placeholder: 'XXXXXXXXXXXXXXXX', class: 'form-control', required: true, "x-autocompletetype" => "cc-number"
+        .col-sm-3
+          .form-group
+            = label_tag 'exp_date', 'Expiration Date'
+            = text_field_tag 'exp_date', '', placeholder: 'MMYY', class: 'form-control', required: true, pattern: '[0-9]{4}'
+        .col-sm-3
+          .form-group
+            = label_tag 'ccv', 'CCV'
+            = text_field_tag 'ccv', '', placeholder: 'XXX', class: 'form-control', required: true, pattern: '[0-9]{3}'
+      .row
+        .col-sm-3
+          = label_tag 'zip', 'Billing Zip'
+          = text_field_tag 'zip', '', placeholder: 'XXXXX', class: 'form-control', required: true, pattern: '[0-9]{5}'
+      .actions.right
+        = submit_tag 'Purchase!', class: 'btn btn-success'
+        = link_to 'Back', :back, class: 'btn btn-danger'

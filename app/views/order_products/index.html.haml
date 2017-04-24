@@ -1,0 +1,28 @@
+%h2 Orders
+
+%div{style: "overflow-x:auto;"}
+  %table.table
+    %thead
+      %tr
+        %th ID
+        %th Status
+        %th Date
+        %th Total
+        %th First Name
+        %th Last Name
+        %th
+    %tbody
+      - @order_products.each do |order|
+        %tr
+          %td= order.id
+          %td= current_user.has_role?(:admin) ? order.status : order.extended_status
+          %td= order.created_at.strftime('%m-%e-%y %H:%M')
+          %td= number_to_currency(order.total)
+          %td= order.first_name
+          %td= order.last_name
+          %td.right
+            = object_actions order
+            - if can?(:validate, order) and order.status == OrderProduct::PROGRESS_STATUS
+              |
+              = link_to 'Validate', validate_order_product_path(order)
+= paginate @order_products

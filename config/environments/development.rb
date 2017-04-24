@@ -31,7 +31,7 @@ Rails.application.configure do
 
   config.action_mailer.perform_caching = false
 
-  config.action_mailer.default_url_options = { :host => "eclipse.housing.siu.edu" }
+  config.action_mailer.default_url_options = { :host => "events.housing.siu.edu" }
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log

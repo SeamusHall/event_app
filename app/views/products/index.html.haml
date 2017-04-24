@@ -1,0 +1,28 @@
+%h1 Products
+
+%div{style: "overflow-x:auto;"}
+  %table.table
+    %thead
+      %tr
+        %th Name
+        %th Price
+        %th Image
+        %th Description
+        %th
+        %th
+        %th
+
+    %tbody
+      - @products.each do |product|
+        %tr
+          %td= product.name
+          %td= product.price
+          %td= image_tag product.image.thumb
+          %td= product.description
+          %td= link_to 'Show', product, class: 'btn btn-success'
+          %td= link_to 'Edit', edit_product_path(product), class: 'btn btn-warning'
+          %td= link_to 'Destroy', product, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: 'btn btn-danger'
+
+%br
+- if current_user && current_user.has_role?(:admin)
+  = link_to 'New Product', new_product_path, class: 'btn btn-block btn-success'

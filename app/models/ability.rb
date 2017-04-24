@@ -35,13 +35,17 @@ class Ability
     can :read, Event, Event.all do |event|
       event.available?
     end
+    can :read, Product
     can :manage, Order, user_id: user.id
+    can :manage, OrderProduct, user_id: user.id
     cannot [:update, :destroy, :purchase, :validate], Order, status: (Order::STATUSES.keys - [Order::PENDING_STATUS])
+    cannot [:update, :destroy, :validate], OrderProduct, status: (OrderProduct::STATUSES.keys - [OrderProduct::PENDING_STATUS])
 
     if user.has_role? :admin
       can :manage, :all
       cannot :edit, Order, status: Order::ARCHIVED_STATUS
-      cannot :destroy, [Role, User, Event, Order]
+      cannot :edit, OrderProduct, status: OrderProduct::ARCHIVED_STATUS
+      cannot :destroy, [Role, User, Event, Order, Product, OrderProduct]
     end
   end
 end

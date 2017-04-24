@@ -1,23 +1,42 @@
 %nav.navbar.navbar-default.navbar-fixed-top
-  .navbar-header
-    %button.navbar-toggle.collapsed{"data-toggle" => "collapse", "data-target" => "#navbar", "aria-expanded" => "false", "aria-controls" => "navbar"}
-      %span.sr-only Toggle Navigation
-      %span.icon-bar
-      %span.icon-bar
-      %span.icon-bar
-    = link_to "Event Admin", root_path, class: "navbar-brand"
-  #navbar.navbar-collapse.collapse
-    %ul.nav.navbar-nav
-    %ul.nav.navbar-top-links.navbar-nav.navbar-right
-      %li.dropdown
-        %a.dropdown-toggle{"data-toggle" => "dropdown", "role" => "button", "aria-haspopup" => "true", "aria-expanded" => "false"}
-          = current_user.email
-          %span.caret
-        %ul.dropdown-menu
-          %li= link_to 'Event Admin', admin_path
-          %li.divider{role: "separator"}
-          %li= link_to "Account", edit_user_registration_path
-          %li= link_to 'Logout', destroy_user_session_path, method: :delete
+  .container
+    .navbar-header
+      %button.navbar-toggle.collapsed{"data-toggle" => "collapse", "data-target" => "#navbar", "aria-expanded" => "false", "aria-controls" => "navbar"}
+        %span.sr-only Toggle Navigation
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
+      = link_to "Event Admin", root_path, class: "navbar-brand"
+    .collapse.navbar-collapse
+      - if current_user
+        = render "layouts/cart"
+        %ul.nav.navbar-nav.navbar-right
+          %li.dropdown
+            %a.dropdown-toggle{"data-toggle" => "dropdown", "role" => "button", "aria-haspopup" => "true", "aria-expanded" => "false"}
+              = current_user.email
+              %span.glyphicon.glyphicon-user
+              %strong Profile
+              %span.glyphicon.glyphicon-chevron-down
+            %ul.dropdown-menu
+              %li
+                .navbar-login
+                  .row
+                    .col-lg-12
+                      %p= link_to 'Logout', destroy_user_session_path, class: 'btn btn-danger btn-block', method: :delete
+                  .row
+                    .col-lg-12
+                      .card.hovercard
+                        .cardheader
+                          = image_tag current_user.gravatar_url
+                        .bottom
+
+              %li= link_to 'Event Admin', admin_path if current_user && current_user.has_role?(:admin)
+              %li= link_to 'Orders', orders_path
+              %li.divider{role: "separator"}
+              %li= link_to "Account", edit_user_registration_path
+      - else
+        %li= link_to 'Login', new_session_path(User.new)
+
 
   .navbar-default.sidebar{:role => "navigation"}
     .sidebar-nav.navbar-collapse
@@ -39,6 +58,14 @@
             = text_icon :calendar
             Events
         %li
+          = link_to admin_path(action: 'products'), class: ('active' if action_name =~ /products/) do
+            = text_icon :shopping_cart
+            Products
+        %li
           = link_to admin_path(action: 'orders'), class: ('active' if action_name =~ /orders/) do
             = text_icon :shopping_cart
             Orders
+        %li
+          = link_to admin_path(action: 'order_products'), class: ('active' if action_name =~ /order_products/) do
+            = text_icon :shopping_cart
+            Product Orders

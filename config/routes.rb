@@ -7,20 +7,39 @@ Rails.application.routes.draw do
       post :make_purchase
     end
   end
+
+  resources :order_products do
+    member do
+      get :validate
+      post :make_purchase
+    end
+  end
+
   resources :events
+  resources :products
+  resource :cart, only: [:show] do
+    post "add", path: "add/:id"
+    get :checkout
+  end
+
   get "admin/:action", controller: 'admin', as: 'admin'
   get 'admin' => "admin#index"
 
-  resources :roles
+  devise_for :users, controllers: {
+    # For Recaptcha verification
+    registrations: 'registrations', as: 'register',
+    passwords:     'passwords', as: 'secret'
+  },
+  path: '', path_names: {
+    confirmation:  'verification',
+    unlock:        'unblock',
+    sign_in:       'login',
+    sign_out:      'logout',
+    sign_up:       'sign_up'
+  }
+
   resources :users
-  devise_for :users, path: '', path_names: {
-    sign_in: 'login',
-    sign_out: 'logout',
-    password: 'secret',
-    confirmation: 'verification',
-    unlock: 'unblock',
-    registration: 'register',
-    sign_up: 'sign_up' }
+  resources :roles
 
   root 'home#index'
 end

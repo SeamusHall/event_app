@@ -22,6 +22,10 @@ class ApplicationController < ActionController::Base
     redirect_to root_path
   end
 
+  def cart_initializer
+    @cart = Cart.build_from_hash(session)
+  end
+  
   protected
   def configure_permitted_parameters
     added_attrs = [:email, :password, :password_confirmation, :remember_me]

@@ -23,6 +23,9 @@
           = f.password_field :password, autocomplete: "off", placeholder: 'password', class: 'form-control'
         .form-group
           = f.password_field :password_confirmation, autocomplete: "off", placeholder: 'password confirmation', class: 'form-control'
+        .form-group
+          = flash[:recaptcha_error]
+          = recaptcha_tags
         .form-group.right
           = f.submit "Sign up", class: 'btn btn-success'
       = render "devise/shared/links"

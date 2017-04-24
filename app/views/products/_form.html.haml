@@ -1,0 +1,20 @@
+= form_for @product, multipart: true do |f|
+  = errors_for @product, true
+  .row
+    .col-lg-4
+    .col-lg-4
+      .field
+        = f.label :name
+        = f.text_field :name, class: 'form-control'
+      .field
+        = f.label :price
+        = f.text_field :price, class: 'form-control'
+      .field
+        = f.label :description
+        = f.text_area :description, class: 'form-control'
+      .field
+        = f.label :image
+        = f.file_field :image, class: 'form-control'
+      .actions
+        = f.submit 'Save', class: 'btn btn-success'
+      .col-lg-4
