@@ -9,9 +9,21 @@ class CartsController < ApplicationController
     product = Product.find(params[:id])
     redirect_to :back, notice: "Added #{product.name} to cart"
   end
-  def show
+
+  def remove
+    @cart.delete_item_from_cart(params[:id])
+    session["cart"] = @cart.serialize
+    product = Product.find(params[:id])
+    redirect_to :back, notice: "Removed #{product.name} from cart"
   end
-  def checkout
+
+  def clear
+    @cart.clear_cart
+    session["cart"] = @cart.serialize
+    redirect_to :back, notice: "Cart Has Been Cleared"
+  end
+
+  def show
     @order_product = OrderProduct.new
   end
 end
