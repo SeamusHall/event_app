@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   resources :order_products do
     member do
       get :validate
+      get :purchase
       post :make_purchase
     end
   end

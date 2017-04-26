@@ -1,15 +1,15 @@
 default:
-  api_login_id: 5S8buB78WCP
-  api_transaction_key: 9479Ba6Ux7uPe7rX
-  merchant_hash_value: MERCH_HASH_KEY
+  api_login_id: 6w68gNZT
+  api_transaction_key: 839rnL9BB55Kfb8J
+  merchant_hash_value: Simon
 
 # Sign-up
 # http://developer.authorize.net/hello_world/
 # Transaction Gateway
 # https://sandbox.authorize.net/
 development:
-  api_login_id: 5P9dM8st3AkX
-  api_transaction_key: 7ZGWdG3eM452j96p
+  api_login_id: 6w68gNZT
+  api_transaction_key: 839rnL9BB55Kfb8J
   merchant_hash_value: Simon
 test:
 production:
