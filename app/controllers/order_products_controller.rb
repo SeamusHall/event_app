@@ -3,7 +3,8 @@ class OrderProductsController < ApplicationController
   load_and_authorize_resource
   before_action :authenticate_user!
   before_action :cart_initializer
-  before_action :build_order_items, only: [:show,:edit,:create,:update,:destroy]
+  before_action :build_order_product_items, only: [:show,:edit,:create,:update,:destroy]
+  before_action :set_order_product, only: [:show, :edit,:destroy]
   respond_to :js, :json
 
   def index
@@ -17,25 +18,26 @@ class OrderProductsController < ApplicationController
 
     if @order_product.save
       @cart.items.each do |item|
-        @item = OrderProductItem.new
-        @item.order_product_id = @order_product.id
-        @item.product_id = item.product.id
-        @item.quantity = item.quantity
-        @item.save
+        product_item = OrderProductItem.new
+        product_item.order_product_id = @order_product.id
+        product_item.product_id = item.product.id
+        product_item.quantity = item.quantity
+        product_item.save
       end
-      redirect_to @order_product, notice: "Order was created"
+      respond_to do |format|
+        format.html { redirect_to @order_product, notice: 'Order was successfully created.' }
+        format.js { redirect_to @order_product, notice: 'Order was successfully created.' }
+      end
     else
-      render "carts/checkout"
+      respond_to do |format|
+        format.json { render json: @order_product.errors, status: :unprocessable_entity}
+      end
     end
-
   end
 
   def show
-    @order_product = OrderProduct.find(params[:id])
-  end
-
-  def edit
-    @order_product = OrderProduct.find(params[:id])
+    @cart.clear_cart
+    session["cart"] = @cart.serialize
   end
 
   def update
@@ -63,15 +65,6 @@ class OrderProductsController < ApplicationController
     request.transactionRequest.payment = PaymentType.new
     request.transactionRequest.payment.creditCard = CreditCardType.new(params[:cc_num], params[:exp_date], params[:ccv])
 
-    # add order and line item information
-    request.transactionRequest.order = OrderType.new(@order_product.id.to_s, @order_product.order_item.product.name)
-    request.transactionRequest.lineItems = LineItems.new([LineItemType.new(
-        @order_product.order_item.id.to_s(16), # itemId
-        @order_product.order_item.product.name, # name
-        @order_product.order_item.product.description, # description
-        @order_product.quantity, # quantity
-        @order_product.event_item.price, # unitPrice
-      )])
 
     # add billing address to request
     request.transactionRequest.billTo = CustomerAddressType.new
@@ -101,13 +94,13 @@ class OrderProductsController < ApplicationController
         end
       else
         respond_to do |format|
-          format.html { redirect_to purcahse_order_product_path(@order_product), error: 'Payment processed, but order was not updated. Call University Housing during regular business hours (618.453.2301).' }
+          format.html { redirect_to purchase_order_product_path(@order_product), error: 'Payment processed, but order was not updated. Call University Housing during regular business hours (618.453.2301).' }
         end
       end
     else
       # failure
       respond_to do |format|
-        format.html { redirect_to purcahse_order_product_path(@order_product), alert: "#{response.messages.messages[0].text} Error Code: #{response.transactionResponse.errors.errors[0].errorCode} (#{response.transactionResponse.errors.errors[0].errorText})" }
+        format.html { redirect_to purchase_order_product_path(@order_product), alert: "#{response.messages.messages[0].text} Error Code: #{response.transactionResponse.errors.errors[0].errorCode} (#{response.transactionResponse.errors.errors[0].errorText})" }
       end
     end
 
@@ -124,11 +117,17 @@ class OrderProductsController < ApplicationController
 
   private
   def order_product_params
-    params.require(:order_product).permit(:user_id, :first_name, :last_name,:total, :payment_details,
-                                          order_product_item_attributes: [:id,:product_id,:quantity])
+    permitted_params = [:user_id, :first_name, :last_name, :total, :payment_details,
+                         order_product_item_attributes: [:id,:product_id,:quantity]]
+    permitted_params << :status if current_user.has_role?(:admin)
+    params.require(:order_product).permit(permitted_params)
   end
 
-  def build_order_items
+  def set_order_product
+    @order_product = OrderProduct.find(params[:id])
+  end
+
+  def build_order_product_items
     @cart.items.each do |item|
       @order_product.order_product_items.build
     end

@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   resources :order_products do
     member do
       get :validate
+      get :purchase
       post :make_purchase
     end
   end
@@ -19,7 +20,8 @@ Rails.application.routes.draw do
   resources :products
   resource :cart, only: [:show] do
     post "add", path: "add/:id"
-    get :checkout
+    post "remove", path: "remove/:id"
+    post "clear", path: "clear"
   end
 
   get "admin/:action", controller: 'admin', as: 'admin'

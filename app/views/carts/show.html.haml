@@ -15,6 +15,70 @@
           = link_to item.product.name, item.product
         %td=item.total_price
 
-%h3
-  = "The total cost is #{number_to_currency(@cart.total_price)}"
-  = link_to 'Checkout', checkout_cart_path, class: 'btn btn-success'
+- if current_user
+  = link_to '#', "data-toggle" => "modal", "data-target" => "#order-modal-1" do
+    .btn.btn-lg.btn-success Order!
+- else
+  = link_to new_registration_path(User.new) do
+    .btn.btn-lg.btn-primary Sign Up!
+
+- if current_user
+  .modal.fade{tabindex: '-1', role: 'dialog', id: "order-modal-1"}
+    = form_for @order_product, remote: true, data: { rel: "#modal-header-1", target: "#errors-1" } do |f|
+      .modal-dialog.modal-md{role: 'document'}
+        .modal-content
+          .modal-header{id: "modal-header-1"}
+            %button.close{type: 'button', "data-dismiss" => "modal", "aria-label" => "Close"}
+              %span{"aria-hidden" => "true"}
+                &times;
+            %h2 Order Summary
+          .modal-body
+          %div{id: "errors-1"}
+          %h2= "Total cost #{number_to_currency @cart.total_price} "
+          = f.hidden_field :total, value: @cart.total_price
+          %h3.center Item Infomation
+          %br
+          - @cart.items.each do |item|
+            .row
+              .col-sm-4
+              .col-sm-4
+                %p
+                  %strong
+                    Quantity:
+                    = item.quantity
+              .col-sm-4
+            .row
+              .col-sm-4
+              .col-sm-4
+                %p
+                  %strong
+                    Product Name:
+                    = item.product.name
+              .col-sm-4
+            .row
+              .col-sm-4
+              .col-sm-4
+                %p
+                  %strong
+                    = image_tag item.product.image.thumb
+              .col-sm-4
+            .row
+              .col-sm-4
+              .col-sm-4
+                %p
+                  %strong
+                    Total price:
+                    = number_to_currency item.total_price
+              .col-sm-4
+          %strong Demographic Infomation
+          %br
+          .row
+            .col-sm-6
+              .form-group
+                = f.text_field :first_name, placeholder: 'first name', class: 'form-control', required: true
+            .col-sm-6
+              .form-group
+                = f.text_field :last_name, placeholder: 'last name', class: 'form-control', required: true
+            %br
+          %i NOTE: this does not submit your order, nor does it ensure availability of item
+          %p= f.submit 'Place Order', class: 'btn btn-success btn-block'
