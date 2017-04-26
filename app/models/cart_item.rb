@@ -14,6 +14,12 @@ class CartItem
 		@quantity = @quantity + 1
 	end
 
+	def decrement
+		if @quantity >= 0
+			@quantity = @quantity - 1
+		end
+	end
+
 	def product
 		Product.find(product_id)
 	end

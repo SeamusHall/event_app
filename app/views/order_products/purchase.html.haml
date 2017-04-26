@@ -12,7 +12,7 @@
     %strong Order Status:
     = @order_product.extended_status
 
-  - @order_product.order_items.each do |oi|
+  - @order_product.order_product_items.each do |oi|
     .col-sm-6
       %p
         %strong Product:
@@ -22,14 +22,14 @@
         = oi.product.description
       %p
         %strong Product Quantity:
-        = oi.product.quantity
+        = oi.quantity
     %p
       %strong Order Name:
       = @order_product.first_name + ' ' + @order_product.last_name
-    %hr
-    %h4
-      %strong Price:
-      = number_to_currency(@order_product.total)
+  %hr
+  %h4
+    %strong Price:
+    = number_to_currency(@order_product.total)
   .col-sm-6
     %h4 Payment Information
     = form_tag make_purchase_order_product_path(@order_product) do

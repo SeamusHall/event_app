@@ -7,6 +7,10 @@ default:
 # http://developer.authorize.net/hello_world/
 # Transaction Gateway
 # https://sandbox.authorize.net/
+
+# api_login_id: 6w68gNZT
+# api_transaction_key: 839rnL9BB55Kfb8J
+
 development:
   api_login_id: 5P9dM8st3AkX
   api_transaction_key: 7ZGWdG3eM452j96p

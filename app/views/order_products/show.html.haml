@@ -16,13 +16,13 @@
         %strong Product:
         = opi.product.name
       %p
-        %strong Event Item:
+        %strong Product Description:
         = opi.product.description
       %p
         %strong Item Price:
         = number_to_currency(opi.product.price)
       %p
-        %strong Order Quantity:
+        %strong Product Quantity:
         = opi.quantity
     %p
       %strong Order Name:
@@ -50,3 +50,4 @@
 %br
 = link_to 'Orders', order_products_path, class: 'btn btn-primary'
 = link_to 'Modify Order', edit_order_product_path(@order_product), class: 'btn btn-info' if can? :edit, @order_product
+= link_to 'Proceed to Checkout', purchase_order_product_path(@order_product), class: 'btn btn-success' if @order_product.status == Order::PENDING_STATUS

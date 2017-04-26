@@ -5,7 +5,8 @@
 %p= image_tag @product.image, height: "300"
 
 %p= link_to "Add to cart", add_cart_path, method: :post, class: 'btn btn-success'
-
+%p= link_to "Clear cart", clear_cart_path, method: :post, class: 'btn btn-warning'
+%p= link_to "Remove from cart", remove_cart_path, method: :post, class: 'btn btn-danger'
 %p
   = link_to 'Edit', edit_product_path(@product), class: 'btn btn-warning'
   = link_to 'Back', products_path, class: 'btn btn-danger'
