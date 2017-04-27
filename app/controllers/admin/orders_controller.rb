@@ -1,0 +1,44 @@
+include AuthorizeNet::API
+module Admin
+  class OrdersController < AdminController
+    before_action :set_order, only: [:edit,:show,:update]
+
+    def index
+      @orders = Order.all.page params[:page]
+      # Order.not_validated
+    end
+
+    def update
+      @order.update(order_params)
+      respond_with @order, location: -> { @order }
+    end
+
+    def destroy
+      @order.destroy
+      respond_to do |format|
+        format.html { redirect_to admin_orders_path, notice: 'Order was successfully destroyed.' }
+      end
+    end
+
+    def validate
+      @order.status = Order::VALIDATED_STATUS
+      if @order.save
+        respond_to do |format|
+          format.html { redirect_to admin_orders_path, notice: 'Order was successfully validated.' }
+        end
+      end
+    end
+
+    private
+
+    def set_order
+      @order = Order.find(params[:id])
+    end
+
+    def order_params
+      permitted_params = [:event_item_id, :quantity, :start_date, :end_date, :first_name, :last_name]
+      permitted_params << :status if current_user.has_role?(:admin)
+      params.require(:order).permit(permitted_params)
+    end
+  end
+end

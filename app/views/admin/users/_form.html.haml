@@ -1,0 +1,13 @@
+= form_for ["admin", @user] do |f|
+  = errors_for @user, true
+  .row
+    .col-sm-6
+      .form-group
+        = f.label :email
+        = f.text_field :email, placeholder: 'email', class: 'form-control', autofocus: true
+      .form-group
+        = f.label :role
+        = f.collection_select :role_ids, Role.all, :id, :name, {prompt: true}, {multiple: true, class: 'form-control selectpicker'}
+      .actions.right
+        = f.submit 'Submit', class: 'btn btn-success'
+        = link_to 'Back', :back, class: 'btn btn-danger'

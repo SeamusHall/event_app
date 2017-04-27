@@ -1,0 +1,38 @@
+.row
+  .col-sm-8
+    %h1= @event.name
+    %h4= @event.description
+  .col-sm-4.right
+    %br
+    Event Dates:
+    = @event.dates
+%hr
+= @event.page_body.html_safe
+
+%hr
+.row
+  .col-sm-12
+    %h4 Event Items
+    %div{style: "overflow-x:auto;"}
+      %table.table
+        %thead
+          %tr
+            %th Description
+            %th Price
+            %th Tax
+            %th Flat Rate
+            %th Maximum per Event
+            %th Maximum per Order
+            %th Minimum Days
+            %th
+        %tbody
+          - @event.event_items.each do |ei|
+            %tr
+              %td= ei.description
+              %td= number_to_currency(ei.price)
+              %td= ei.tax > 0.0 ? ei.tax : '--'
+              %td= ei.flat_rate ? "Y" : "N"
+              %td= ei.max_event
+              %td= ei.max_order
+              %td= ei.min_freq
+              %td

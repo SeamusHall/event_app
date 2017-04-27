@@ -1,0 +1,209 @@
+=== puma startup: 2017-04-27 15:56:02 -0500 ===
+[47483] * Starting control server on unix:///var/folders/vq/7rmp5bvd7vsf4z4hv2zhqyzh0000gq/T/puma-status-1493326562496-47483
+[47483] - Worker 0 (pid: 47518) booted, phase: 0
+[47483] - Worker 1 (pid: 47519) booted, phase: 0
+Started GET "/admin/events" for 127.0.0.1 at 2017-04-27 15:56:59 -0500
+DEPRECATION WARNING: Specifying strings for both :path and the route path is deprecated. Change things like this:
+
+match "add", :path => "add/:id"
+
+to this:
+
+match "add/:id", :as => "add", :action => "add"
+ (called from block (2 levels) in <top (required)> at /Users/vincent/git/events/config/routes.rb:20)
+DEPRECATION WARNING: Specifying strings for both :path and the route path is deprecated. Change things like this:
+
+match "remove", :path => "remove/:id"
+
+to this:
+
+match "remove/:id", :as => "remove", :action => "remove"
+ (called from block (2 levels) in <top (required)> at /Users/vincent/git/events/config/routes.rb:21)
+DEPRECATION WARNING: Specifying strings for both :path and the route path is deprecated. Change things like this:
+
+match "clear", :path => "clear"
+
+to this:
+
+match "clear", :as => "clear", :action => "clear"
+ (called from block (2 levels) in <top (required)> at /Users/vincent/git/events/config/routes.rb:22)
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by Admin::EventsController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."deleted_at" IS NULL AND "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mcommit transaction[0m
+Completed 401 Unauthorized in 70ms (ActiveRecord: 1.2ms)
+
+
+Started GET "/admin/events" for 127.0.0.1 at 2017-04-27 15:57:00 -0500
+Processing by Admin::EventsController#index as HTML
+Completed 401 Unauthorized in 1ms (ActiveRecord: 0.0ms)
+
+
+Started GET "/login" for 127.0.0.1 at 2017-04-27 15:57:00 -0500
+Processing by Devise::SessionsController#new as HTML
+  Rendering devise/sessions/new.html.haml within layouts/application
+  Rendered devise/shared/_links.html.haml (2.8ms)
+  Rendered devise/sessions/new.html.haml within layouts/application (45.9ms)
+  Rendering layouts/navigation.html.haml
+  Rendered layouts/_cart.html.haml (1.0ms)
+  Rendered layouts/navigation.html.haml (8.7ms)
+  Rendering layouts/footer.html.haml
+  Rendering layouts/seal.html
+  Rendered layouts/seal.html (0.2ms)
+  Rendered layouts/footer.html.haml (4.9ms)
+Completed 200 OK in 595ms (Views: 591.9ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/login" for 127.0.0.1 at 2017-04-27 15:57:16 -0500
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"EcNUl/m1LeeNI8QJq9OfWUjBq3/OZbG+gE7akQthFR5UXRdkwU1AkohDwSFLbbNoj9KVPY4CEuiq9FXpGA6ACw==", "user"=>{"email"=>"vdavis@siu.edu", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Log in"}
+  [1m[36mUser Load (0.8ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."deleted_at" IS NULL AND "users"."email" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["email", "vdavis@siu.edu"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[33mUPDATE "users" SET "current_sign_in_at" = ?, "last_sign_in_at" = ?, "sign_in_count" = ?, "updated_at" = ? WHERE "users"."id" = ?[0m  [["current_sign_in_at", 2017-04-27 20:57:16 UTC], ["last_sign_in_at", 2017-04-27 19:18:47 UTC], ["sign_in_count", 5], ["updated_at", 2017-04-27 20:57:16 UTC], ["id", 1]]
+  [1m[35m (5.8ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://127.0.0.1:3000/admin/events
+Completed 302 Found in 213ms (ActiveRecord: 7.2ms)
+
+
+Started GET "/admin/events" for 127.0.0.1 at 2017-04-27 15:57:16 -0500
+Processing by Admin::EventsController#index as HTML
+  [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."deleted_at" IS NULL AND "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRole Load (0.2ms)[0m  [1m[34mSELECT "roles".* FROM "roles" INNER JOIN "user_roles" ON "roles"."id" = "user_roles"."role_id" WHERE "roles"."deleted_at" IS NULL AND "user_roles"."deleted_at" IS NULL AND "user_roles"."user_id" = ?[0m  [["user_id", 1]]
+  Rendering admin/events/index.html.haml within layouts/admin
+  [1m[36mEvent Load (0.2ms)[0m  [1m[34mSELECT  "events".* FROM "events" WHERE "events"."deleted_at" IS NULL LIMIT ? OFFSET ?[0m  [["LIMIT", 25], ["OFFSET", 0]]
+  Rendered admin/events/index.html.haml within layouts/admin (13.1ms)
+  Rendering layouts/admin_navigation.html.haml
+  Rendered layouts/admin_navigation.html.haml (18.8ms)
+Completed 200 OK in 208ms (Views: 134.6ms | ActiveRecord: 2.5ms)
+
+
+Started GET "/admin/events/1/edit" for 127.0.0.1 at 2017-04-27 15:57:20 -0500
+Processing by Admin::EventsController#edit as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.8ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."deleted_at" IS NULL AND "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRole Load (0.3ms)[0m  [1m[34mSELECT "roles".* FROM "roles" INNER JOIN "user_roles" ON "roles"."id" = "user_roles"."role_id" WHERE "roles"."deleted_at" IS NULL AND "user_roles"."deleted_at" IS NULL AND "user_roles"."user_id" = ?[0m  [["user_id", 1]]
+  [1m[36mEvent Load (0.2ms)[0m  [1m[34mSELECT  "events".* FROM "events" WHERE "events"."deleted_at" IS NULL AND "events"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering admin/events/edit.html.haml within layouts/admin
+  [1m[36mEventItem Load (0.2ms)[0m  [1m[34mSELECT "event_items".* FROM "event_items" WHERE "event_items"."deleted_at" IS NULL AND "event_items"."event_id" = ?[0m  [["event_id", 1]]
+  Rendered admin/events/_form.html.haml (34.6ms)
+  Rendered admin/events/edit.html.haml within layouts/admin (37.3ms)
+  Rendering layouts/admin_navigation.html.haml
+  Rendered layouts/admin_navigation.html.haml (12.8ms)
+Completed 200 OK in 128ms (Views: 116.0ms | ActiveRecord: 2.2ms)
+
+
+Started GET "/admin/events" for 127.0.0.1 at 2017-04-27 15:57:22 -0500
+Processing by Admin::EventsController#index as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."deleted_at" IS NULL AND "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRole Load (0.3ms)[0m  [1m[34mSELECT "roles".* FROM "roles" INNER JOIN "user_roles" ON "roles"."id" = "user_roles"."role_id" WHERE "roles"."deleted_at" IS NULL AND "user_roles"."deleted_at" IS NULL AND "user_roles"."user_id" = ?[0m  [["user_id", 1]]
+  Rendering admin/events/index.html.haml within layouts/admin
+  [1m[36mEvent Load (0.2ms)[0m  [1m[34mSELECT  "events".* FROM "events" WHERE "events"."deleted_at" IS NULL LIMIT ? OFFSET ?[0m  [["LIMIT", 25], ["OFFSET", 0]]
+  Rendered admin/events/index.html.haml within layouts/admin (5.5ms)
+  Rendering layouts/admin_navigation.html.haml
+  Rendered layouts/admin_navigation.html.haml (11.8ms)
+Completed 200 OK in 99ms (Views: 89.3ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/admin/events/1" for 127.0.0.1 at 2017-04-27 15:57:24 -0500
+Processing by Admin::EventsController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."deleted_at" IS NULL AND "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRole Load (0.3ms)[0m  [1m[34mSELECT "roles".* FROM "roles" INNER JOIN "user_roles" ON "roles"."id" = "user_roles"."role_id" WHERE "roles"."deleted_at" IS NULL AND "user_roles"."deleted_at" IS NULL AND "user_roles"."user_id" = ?[0m  [["user_id", 1]]
+  [1m[36mEvent Load (0.2ms)[0m  [1m[34mSELECT  "events".* FROM "events" WHERE "events"."deleted_at" IS NULL AND "events"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mOrder Load (0.2ms)[0m  [1m[34mSELECT  "orders".* FROM "orders" WHERE "orders"."deleted_at" IS NULL AND "orders"."id" = ? ORDER BY created_at DESC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+Redirected to http://127.0.0.1:3000/
+Completed 302 Found in 29ms (ActiveRecord: 2.5ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-04-27 15:57:24 -0500
+Processing by HomeController#index as HTML
+  Rendering home/index.html.haml within layouts/application
+  [1m[36mEvent Load (0.2ms)[0m  [1m[34mSELECT "events".* FROM "events" WHERE "events"."deleted_at" IS NULL AND (available_at <= '2017-04-27 20:57:24.348374' AND unavailable_at >= '2017-04-27 20:57:24.348374')[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."deleted_at" IS NULL AND "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered home/index.html.haml within layouts/application (11.8ms)
+  Rendering layouts/navigation.html.haml
+  Rendered layouts/_cart.html.haml (1.3ms)
+  [1m[36mRole Load (0.2ms)[0m  [1m[34mSELECT "roles".* FROM "roles" INNER JOIN "user_roles" ON "roles"."id" = "user_roles"."role_id" WHERE "roles"."deleted_at" IS NULL AND "user_roles"."deleted_at" IS NULL AND "user_roles"."user_id" = ?[0m  [["user_id", 1]]
+  Rendered layouts/navigation.html.haml (14.0ms)
+  Rendering layouts/footer.html.haml
+  Rendering layouts/seal.html
+  Rendered layouts/seal.html (0.2ms)
+  Rendered layouts/footer.html.haml (4.3ms)
+Completed 200 OK in 111ms (Views: 107.1ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/admin/events/1" for 127.0.0.1 at 2017-04-27 15:57:24 -0500
+Processing by Admin::EventsController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."deleted_at" IS NULL AND "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRole Load (0.2ms)[0m  [1m[34mSELECT "roles".* FROM "roles" INNER JOIN "user_roles" ON "roles"."id" = "user_roles"."role_id" WHERE "roles"."deleted_at" IS NULL AND "user_roles"."deleted_at" IS NULL AND "user_roles"."user_id" = ?[0m  [["user_id", 1]]
+  [1m[36mEvent Load (0.2ms)[0m  [1m[34mSELECT  "events".* FROM "events" WHERE "events"."deleted_at" IS NULL AND "events"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mOrder Load (0.2ms)[0m  [1m[34mSELECT  "orders".* FROM "orders" WHERE "orders"."deleted_at" IS NULL AND "orders"."id" = ? ORDER BY created_at DESC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+Redirected to http://127.0.0.1:3000/
+Completed 302 Found in 11ms (ActiveRecord: 0.8ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-04-27 15:57:24 -0500
+Processing by HomeController#index as HTML
+  Rendering home/index.html.haml within layouts/application
+  [1m[36mEvent Load (0.3ms)[0m  [1m[34mSELECT "events".* FROM "events" WHERE "events"."deleted_at" IS NULL AND (available_at <= '2017-04-27 20:57:24.581607' AND unavailable_at >= '2017-04-27 20:57:24.581607')[0m
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."deleted_at" IS NULL AND "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered home/index.html.haml within layouts/application (13.0ms)
+  Rendering layouts/navigation.html.haml
+  Rendered layouts/_cart.html.haml (1.1ms)
+  [1m[36mRole Load (0.2ms)[0m  [1m[34mSELECT "roles".* FROM "roles" INNER JOIN "user_roles" ON "roles"."id" = "user_roles"."role_id" WHERE "roles"."deleted_at" IS NULL AND "user_roles"."deleted_at" IS NULL AND "user_roles"."user_id" = ?[0m  [["user_id", 1]]
+  Rendered layouts/navigation.html.haml (21.6ms)
+  Rendering layouts/footer.html.haml
+  Rendering layouts/seal.html
+  Rendered layouts/seal.html (0.3ms)
+  Rendered layouts/footer.html.haml (5.1ms)
+Completed 200 OK in 130ms (Views: 126.3ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/admin" for 127.0.0.1 at 2017-04-27 15:57:38 -0500
+Processing by AdminController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."deleted_at" IS NULL AND "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRole Load (0.2ms)[0m  [1m[34mSELECT "roles".* FROM "roles" INNER JOIN "user_roles" ON "roles"."id" = "user_roles"."role_id" WHERE "roles"."deleted_at" IS NULL AND "user_roles"."deleted_at" IS NULL AND "user_roles"."user_id" = ?[0m  [["user_id", 1]]
+  Rendering admin/index.html.haml within layouts/admin
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "users" WHERE "users"."deleted_at" IS NULL[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "events" WHERE "events"."deleted_at" IS NULL AND (available_at <= '2017-04-27 20:57:38.768785' AND unavailable_at >= '2017-04-27 20:57:38.768785')[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "orders" WHERE "orders"."deleted_at" IS NULL AND (status = 'pending' or status = 'progress')[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "order_products" WHERE (status = 'pending' or status = 'progress')[0m
+  Rendered admin/index.html.haml within layouts/admin (12.3ms)
+  Rendering layouts/admin_navigation.html.haml
+  Rendered layouts/admin_navigation.html.haml (10.7ms)
+Completed 200 OK in 111ms (Views: 90.7ms | ActiveRecord: 1.3ms)
+
+
+Started GET "/admin" for 127.0.0.1 at 2017-04-27 15:57:38 -0500
+Processing by AdminController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."deleted_at" IS NULL AND "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRole Load (0.2ms)[0m  [1m[34mSELECT "roles".* FROM "roles" INNER JOIN "user_roles" ON "roles"."id" = "user_roles"."role_id" WHERE "roles"."deleted_at" IS NULL AND "user_roles"."deleted_at" IS NULL AND "user_roles"."user_id" = ?[0m  [["user_id", 1]]
+  Rendering admin/index.html.haml within layouts/admin
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "users" WHERE "users"."deleted_at" IS NULL[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "events" WHERE "events"."deleted_at" IS NULL AND (available_at <= '2017-04-27 20:57:38.922183' AND unavailable_at >= '2017-04-27 20:57:38.922183')[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "orders" WHERE "orders"."deleted_at" IS NULL AND (status = 'pending' or status = 'progress')[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "order_products" WHERE (status = 'pending' or status = 'progress')[0m
+  Rendered admin/index.html.haml within layouts/admin (11.0ms)
+  Rendering layouts/admin_navigation.html.haml
+  Rendered layouts/admin_navigation.html.haml (10.2ms)
+Completed 200 OK in 109ms (Views: 97.6ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/admin/events" for 127.0.0.1 at 2017-04-27 15:57:40 -0500
+Processing by Admin::EventsController#index as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."deleted_at" IS NULL AND "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRole Load (0.2ms)[0m  [1m[34mSELECT "roles".* FROM "roles" INNER JOIN "user_roles" ON "roles"."id" = "user_roles"."role_id" WHERE "roles"."deleted_at" IS NULL AND "user_roles"."deleted_at" IS NULL AND "user_roles"."user_id" = ?[0m  [["user_id", 1]]
+  Rendering admin/events/index.html.haml within layouts/admin
+  [1m[36mEvent Load (0.3ms)[0m  [1m[34mSELECT  "events".* FROM "events" WHERE "events"."deleted_at" IS NULL LIMIT ? OFFSET ?[0m  [["LIMIT", 25], ["OFFSET", 0]]
+  Rendered admin/events/index.html.haml within layouts/admin (5.9ms)
+  Rendering layouts/admin_navigation.html.haml
+  Rendered layouts/admin_navigation.html.haml (10.5ms)
+Completed 200 OK in 105ms (Views: 94.8ms | ActiveRecord: 0.9ms)
+
+
+[47483] - Gracefully shutting down workers...
+[47483] === puma shutdown: 2017-04-27 15:57:52 -0500 ===
+[47483] - Goodbye!
+Exiting

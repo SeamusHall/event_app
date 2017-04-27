@@ -20,8 +20,9 @@
           %td= number_to_currency(order.total)
           %td= order.first_name
           %td= order.last_name
-          %td
-            = link_to 'Show', order, class: 'btn btn-success'
-            |
-            = link_to 'edit', edit_order_product_path(order), class: 'btn btn-warning'
+          %td.right
+            = object_actions ["admin",order], class: 'btn btn-success'
+            - if can?(:validate, order) and order.status == OrderProduct::PROGRESS_STATUS
+              |
+              = link_to 'Validate', admin_validate_order_product_path(order), class: 'btn btn-warning'
 = paginate @order_products

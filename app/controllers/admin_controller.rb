@@ -1,4 +1,5 @@
 class AdminController < ApplicationController
+  #load_and_authorize_resource
   before_action :authenticate_user!
   before_action :ensure_authorized
   layout 'admin'
@@ -9,30 +10,6 @@ class AdminController < ApplicationController
     @products = Product.all
     @orders = Order.not_validated
     @order_products = OrderProduct.not_validated
-  end
-
-  def users
-    @users = User.active.order(:email).page params[:page]
-  end
-
-  def roles
-    @roles = Role.all
-  end
-
-  def events
-    @events = Event.all
-  end
-
-  def orders
-    @orders = Order.all.page params[:page]
-  end
-
-  def products
-    @products = Product.all
-  end
-
-  def order_products
-    @order_products = OrderProduct.all.page params[:page]
   end
 
   private

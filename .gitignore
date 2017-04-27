@@ -25,9 +25,3 @@
 
 # Ignore Public Uploads
 /public/uploads/*
-
-# Ignore Shared Log Files
-/shared/log/*.log
-/shared/pids/*.pid
-/shared/pids/*.state
-/shared/sockets/*.sock

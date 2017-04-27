@@ -8,7 +8,7 @@ class OrderProductsController < ApplicationController
   respond_to :js, :json
 
   def index
-    @order_products = OrderProduct.accessible_by(current_ability).page params[:page]
+    @order_products = OrderProduct.all.where(user_id: current_user.id).page params[:page] # current user should only see the orders they placed
   end
 
   def create
@@ -104,15 +104,6 @@ class OrderProductsController < ApplicationController
       end
     end
 
-  end
-
-  def validate
-    @order_product.status = OrderProduct::VALIDATED_STATUS
-    if @order_product.save
-      respond_to do |format|
-        format.html { redirect_to admin_path(action: 'order_products'), notice: 'Order was successfully validated.' }
-      end
-    end
   end
 
   private

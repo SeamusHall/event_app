@@ -7,21 +7,24 @@
         %th ID
         %th Status
         %th Date
+        %th Quantity
         %th Total
         %th First Name
         %th Last Name
         %th
     %tbody
-      - @order_products.each do |order|
-        %tr
+      - @orders.each do |order|
+        %tr{class: ('success' if order.status == Order::VALIDATED_STATUS)}
           %td= order.id
           %td= current_user.has_role?(:admin) ? order.status : order.extended_status
           %td= order.created_at.strftime('%m-%e-%y %H:%M')
+          %td= order.quantity
           %td= number_to_currency(order.total)
           %td= order.first_name
           %td= order.last_name
-          %td
-            = link_to 'Show', order, class: 'btn btn-success'
-            |
-            = link_to 'edit', edit_order_product_path(order), class: 'btn btn-warning'
-= paginate @order_products
+          %td.right
+            = object_actions ["admin",order]
+            - if can?(:validate, order) and order.status == Order::PROGRESS_STATUS
+              |
+              = link_to 'Validate', admin_validate_order_path(order)
+= paginate @orders
