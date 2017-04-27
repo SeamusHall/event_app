@@ -3,8 +3,8 @@ class OrderProductsController < ApplicationController
   load_and_authorize_resource
   before_action :authenticate_user!
   before_action :cart_initializer
-  before_action :build_order_product_items, only: [:show,:edit,:create,:update,:destroy]
-  before_action :set_order_product, only: [:show, :edit,:destroy]
+  before_action :build_order_product_items, only: [:create]
+  before_action :set_order_product, only: [:show, :edit]
   respond_to :js, :json
 
   def index
