@@ -3,12 +3,12 @@ class OrderProductsController < ApplicationController
   load_and_authorize_resource
   before_action :authenticate_user!
   before_action :cart_initializer
-  before_action :build_order_product_items, only: [:show,:edit,:create,:update,:destroy]
-  before_action :set_order_product, only: [:show, :edit,:destroy]
+  before_action :build_order_product_items, only: [:create]
+  before_action :set_order_product, only: [:show, :edit]
   respond_to :js, :json
 
   def index
-    @order_products = OrderProduct.accessible_by(current_ability).page params[:page]
+    @order_products = OrderProduct.all.where(user_id: current_user.id).page params[:page] # current user should only see the orders they placed
   end
 
   def create
@@ -104,15 +104,6 @@ class OrderProductsController < ApplicationController
       end
     end
 
-  end
-
-  def validate
-    @order_product.status = OrderProduct::VALIDATED_STATUS
-    if @order_product.save
-      respond_to do |format|
-        format.html { redirect_to admin_path(action: 'order_products'), notice: 'Order was successfully validated.' }
-      end
-    end
   end
 
   private

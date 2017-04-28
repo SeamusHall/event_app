@@ -1,5 +1,5 @@
-= form_for(role) do |f|
-  = errors_for role, true
+= form_for ["admin", @role] do |f|
+  = errors_for @role, true
   .row
     .col-lg-4
     .col-lg-4

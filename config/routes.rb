@@ -1,31 +1,26 @@
 Rails.application.routes.draw do
 
-  resources :orders do
+  resources :orders, except: [:destroy] do
     member do
-      get :purchase
-      get :validate
-      post :make_purchase
-    end
-  end
-
-  resources :order_products do
-    member do
-      get :validate
       get :purchase
       post :make_purchase
     end
   end
 
-  resources :events
-  resources :products
+  resources :order_products, except: [:destroy] do
+    member do
+      get :purchase
+      post :make_purchase
+    end
+  end
+
+  resources :events, only: [:index,:show]
+  resources :products, only: [:index,:show]
   resource :cart, only: [:show] do
     post "add", path: "add/:id"
     post "remove", path: "remove/:id"
     post "clear", path: "clear"
   end
-
-  get "admin/:action", controller: 'admin', as: 'admin'
-  get 'admin' => "admin#index"
 
   devise_for :users, controllers: {
     # For Recaptcha verification
@@ -41,7 +36,25 @@ Rails.application.routes.draw do
   }
 
   resources :users
-  resources :roles
+
+  # routes for admin interface
+  get "admin" => "admin#index"
+  namespace :admin do
+    resources :users
+    resources :roles
+    resources :orders do
+      member do
+        get :validate
+      end
+    end
+    resources :events
+    resources :order_products do
+      member do
+        get :validate
+      end
+    end
+    resources :products
+  end
 
   root 'home#index'
 end

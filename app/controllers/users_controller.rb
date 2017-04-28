@@ -1,12 +1,6 @@
 class UsersController < ApplicationController
   before_action :ensure_authorization
   load_and_authorize_resource
-  layout "admin"
-
-  def index
-    @roles = Role.all
-    @users = User.order(:email).page params[:page]
-  end
 
   def update
     @user.update(user_params)

@@ -9,6 +9,7 @@ end
 
 gem 'rails', '~> 5.0.2'
 gem 'puma', '~> 3.0'
+gem 'puma_worker_killer'
 
 gem 'uglifier', '>= 1.3.0'
 gem 'sass-rails', '~> 5.0'
@@ -45,8 +46,13 @@ gem "recaptcha", require: "recaptcha/rails"
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
-# Use Redis adapter to run Action Cable in production
-# gem 'redis', '~> 3.0'
+# For Running Back Ground Jobs and Implementation of Multithreaded Processing (Later)
+# Remember these!!!!
+gem 'redis'
+gem 'redis-namespace'
+gem 'redis-rails'
+gem 'redis-rack-cache'
+gem 'concurrent-ruby', require: 'concurrent'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

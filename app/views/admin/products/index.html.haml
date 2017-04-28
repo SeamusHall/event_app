@@ -1,6 +1,4 @@
-%h1 Products
-
-%h1= link_to "Clear cart", clear_cart_path, method: :post, class: 'btn btn-warning'
+%h2 Products
 %div{style: "overflow-x:auto;"}
   %table.table
     %thead
@@ -19,7 +17,8 @@
           %td= number_to_currency product.price
           %td= image_tag product.image.thumb
           %td= product.description
-          %td= link_to 'Show', product, class: 'btn btn-success'
           %td
-            = link_to "Add to cart", add_cart_path(product), method: :post, class: 'btn btn-success'
-            = link_to "Remove from cart", remove_cart_path(product), method: :post, class: 'btn btn-danger'
+            = link_to 'Show', admin_product_path(product), class: 'btn btn-success btn-block'
+            = link_to 'Edit', edit_admin_product_path(product), class: 'btn btn-warning btn-block'
+
+= link_to 'New Product', new_admin_product_path, class: 'btn btn-block btn-success'

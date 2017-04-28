@@ -1,0 +1,57 @@
+%h2 Order Details
+%hr
+.row
+  .col-sm-6
+    %p
+      %strong Order ID:
+      = @order.id
+    %p
+      %strong Order Date:
+      = @order.created_at
+    %p
+      %strong Order Status:
+      = @order.extended_status
+    %p
+      %strong Event:
+      = @order.event_item.event.name
+    %p
+      %strong Event Item:
+      = @order.event_item.description
+    %p
+      %strong Item Price:
+      = number_to_currency(@order.event_item.price)
+    %p
+      %strong Item Tax:
+      = @order.event_item.tax > 0.0 ? @order.event_item.tax : '--'
+    %p
+      %strong Order Quantity:
+      = @order.quantity
+    %p
+      %strong Order Dates for Event:
+      = @order.dates
+    %p
+      %strong Order Name:
+      = @order.first_name + ' ' + @order.last_name
+  .col-sm-6
+    - if @order.placed_at
+      %p
+        %strong Auth Code:
+        = @order.auth_code
+      %p
+        %strong Transaction ID:
+        = @order.transaction_id
+      %p
+        %strong Placed At:
+        = @order.placed_at.strftime('%m/%d/%Y %l:%M%p')
+    - if @order.finalized_on
+      %p
+        %strong Finalized On:
+        = @order.finalized_on.strftime('%m/%d/%Y %l:%M%p')
+%hr
+%h4
+  %strong Order Total:
+  = number_to_currency(@order.total)
+
+%br
+= link_to 'Orders', admin_orders_path, class: 'btn btn-primary'
+= link_to 'Modify Order', edit_admin_order_path(@order), class: 'btn btn-info' if can? :edit, @order

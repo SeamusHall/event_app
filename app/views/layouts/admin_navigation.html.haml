@@ -6,10 +6,9 @@
         %span.icon-bar
         %span.icon-bar
         %span.icon-bar
-      = link_to "Event Admin", root_path, class: "navbar-brand"
+      = link_to "Event Admin", admin_path, class: "navbar-brand"
     .collapse.navbar-collapse
       - if current_user
-        = render "layouts/cart"
         %ul.nav.navbar-nav.navbar-right
           %li.dropdown
             %a.dropdown-toggle{"data-toggle" => "dropdown", "role" => "button", "aria-haspopup" => "true", "aria-expanded" => "false"}
@@ -42,30 +41,30 @@
     .sidebar-nav.navbar-collapse
       %ul#side-menu.nav.in
         %li
-          = link_to admin_path, class: ('active' if action_name =~ /index/) do
+          = link_to admin_path do
             = text_icon :tachometer
             Dashboard
         %li
-          = link_to admin_path(action: 'users'), class: ('active' if action_name =~ /users/) do
+          = link_to admin_users_path do
             = text_icon :users
             Users
         %li
-          = link_to admin_path(action: 'roles'), class: ('active' if action_name =~ /roles/) do
+          = link_to admin_roles_path do
             = text_icon :wrench
             Roles
         %li
-          = link_to admin_path(action: 'events'), class: ('active' if action_name =~ /events/) do
+          = link_to admin_events_path do
             = text_icon :calendar
             Events
         %li
-          = link_to admin_path(action: 'products'), class: ('active' if action_name =~ /products/) do
+          = link_to admin_products_path do
             = text_icon :shopping_cart
             Products
         %li
-          = link_to admin_path(action: 'orders'), class: ('active' if action_name =~ /orders/) do
+          = link_to admin_orders_path do
             = text_icon :shopping_cart
             Orders
         %li
-          = link_to admin_path(action: 'order_products'), class: ('active' if action_name =~ /order_products/) do
+          = link_to admin_order_products_path do
             = text_icon :shopping_cart
             Product Orders
