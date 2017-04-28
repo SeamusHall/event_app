@@ -1,3 +1,5 @@
+require 'fileutils' # used to create directories
+
 # Allow puma to be restarted by `rails restart` command.
 plugin :tmp_restart
 
@@ -17,12 +19,15 @@ rails_env = ENV['RAILS_ENV'] || "development"
 environment rails_env
 
 # Set up socket location
+FileUtils.mkdir_p "#{shared_dir}/sockets" # create socket directory
 bind "unix://#{shared_dir}/sockets/puma.sock"
 
 # Logging
+FileUtils.mkdir_p "#{shared_dir}/log" # create log directory
 stdout_redirect "#{shared_dir}/log/puma.stdout.log", "#{shared_dir}/log/puma.stderr.log", true
 
 # Set master PID and state locations
+FileUtils.mkdir_p "#{shared_dir}/pids" # create process ids directory
 pidfile "#{shared_dir}/pids/puma.pid"
 state_path "#{shared_dir}/pids/puma.state"
 activate_control_app
