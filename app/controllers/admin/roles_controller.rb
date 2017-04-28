@@ -1,5 +1,6 @@
 module Admin
   class RolesController < AdminController
+    load_and_authorize_resource
     before_action :set_role, only: [:edit,:show,:update]
 
     def index

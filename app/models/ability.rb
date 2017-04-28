@@ -34,7 +34,6 @@ class Ability
     can :manage, User, user_id: user.id
     can :read, Event, Event.all do |event|
       event.available?
-      can :read, EventItem, EventItem.all.where(event_id: event.id)
     end
     can :read, Product
     can :manage, Order, user_id: user.id

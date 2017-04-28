@@ -1,9 +1,12 @@
 module Admin
   class EventsController < AdminController
     before_action :set_event, only: [:edit,:show,:update]
+    before_action :load_nested_attributes, only: [:new, :edit]
 
+    # Not to sure about the one, seems to stop people if not admin
+    # Should make sure though Adam if you see this
     def index
-      @events = Event.all.page params[:page]
+      @events = Event.accessible_by(current_ability, :manage).page params[:page]
     end
 
     def show

@@ -1,6 +1,7 @@
 include AuthorizeNet::API
 module Admin
   class OrdersController < AdminController
+    load_and_authorize_resource
     before_action :set_order, only: [:edit,:show,:update]
 
     def index

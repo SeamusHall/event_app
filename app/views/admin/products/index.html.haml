@@ -1,4 +1,4 @@
-%h1 Products
+%h2 Products
 %div{style: "overflow-x:auto;"}
   %table.table
     %thead
@@ -9,7 +9,6 @@
         %th Description
         %th
         %th
-        %th
 
     %tbody
       - @products.each do |product|
@@ -18,8 +17,8 @@
           %td= number_to_currency product.price
           %td= image_tag product.image.thumb
           %td= product.description
-          %td= link_to 'Show', admin_product_path(product), class: 'btn btn-success'
-          %td= link_to 'Edit', edit_admin_product_path(product), class: 'btn btn-warning'
           %td
+            = link_to 'Show', admin_product_path(product), class: 'btn btn-success btn-block'
+            = link_to 'Edit', edit_admin_product_path(product), class: 'btn btn-warning btn-block'
 
 = link_to 'New Product', new_admin_product_path, class: 'btn btn-block btn-success'

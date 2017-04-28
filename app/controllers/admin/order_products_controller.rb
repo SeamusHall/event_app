@@ -1,6 +1,7 @@
 include AuthorizeNet::API
 module Admin
   class OrderProductsController < AdminController
+    load_and_authorize_resource
     before_action :set_order_product, only: [:show, :edit]
     respond_to :js, :json
 
