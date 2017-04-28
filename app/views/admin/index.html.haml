@@ -11,7 +11,7 @@
             .huge
               = @users.count
             Active Users
-      = link_to admin_path(action: 'users') do
+      = link_to admin_users_path do
         .panel-footer
           %span.pull-left
             View Details
@@ -28,7 +28,7 @@
             .huge
               = @events.count
             Available Events
-      = link_to admin_path(action: 'events') do
+      = link_to admin_events_path do
         .panel-footer
           %span.pull-left
             View Details
@@ -45,7 +45,7 @@
             .huge
               = @orders.count
             New Orders
-      = link_to admin_path(action: 'orders') do
+      = link_to admin_orders_path do
         .panel-footer
           %span.pull-left
             View Details
@@ -62,7 +62,7 @@
             .huge
               = @order_products.count
             New Product Orders
-      = link_to admin_path(action: 'order_products') do
+      = link_to admin_order_products_path do
         .panel-footer
           %span.pull-left
             View Details

@@ -17,8 +17,9 @@
 
   %body{style: 'margin-top: 50px'}
     = render file: "layouts/admin_navigation"
-    #wrapper
-      #page-wrapper
-        = display_flash
-        = yield
-    = render file: "layouts/footer"
+    .container
+      .row
+        #wrapper
+          #page-wrapper
+            = display_flash
+            = yield

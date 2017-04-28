@@ -1,5 +1,5 @@
-= form_for(event) do |f|
-  = errors_for event
+= form_for ["admin", @event] do |f|
+  = errors_for @event
 
   .row
     .col-sm-6

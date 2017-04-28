@@ -21,7 +21,8 @@
           %td= order.first_name
           %td= order.last_name
           %td
-            = link_to 'Show', order, class: 'btn btn-success'
-            |
-            = link_to 'edit', edit_order_product_path(order), class: 'btn btn-warning'
+            = link_to 'show', admin_order_product_path(order), class: 'btn btn-success btn-block'
+            = link_to 'edit', edit_admin_order_product_path(order), class: 'btn btn-warning btn-block'
+            - if can?(:validate, order) and order.status == OrderProduct::PROGRESS_STATUS
+              = link_to 'Validate', validate_admin_order_product_path(order), class: 'btn btn-info btn-block'
 = paginate @order_products

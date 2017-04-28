@@ -1,27 +1,12 @@
 class EventsController < ApplicationController
   load_and_authorize_resource
-  before_action :load_nested_attributes, only: [:new, :edit]
-  layout "admin", only: [:new,:update]
+
+  def index
+    @events = Event.available
+  end
 
   def show
     @order = Order.new
-  end
-
-  def create
-    @event.save
-    respond_with @event, location: -> { admin_path(action: 'events') }
-  end
-
-  def update
-    @event.update(event_params)
-    respond_with @event, location: -> { admin_path(action: 'events') }
-  end
-
-  def destroy
-    @event.destroy
-    respond_to do |format|
-      format.html { redirect_to admin_path(action: 'events'), notice: 'Event was successfully destroyed.' }
-    end
   end
 
   private
