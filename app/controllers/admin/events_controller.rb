@@ -1,12 +1,20 @@
 module Admin
   class EventsController < AdminController
     before_action :set_event, only: [:edit,:show,:update]
-    before_action :load_nested_attributes, only: [:new, :edit]
 
     # Not to sure about the one, seems to stop people if not admin
     # Should make sure though Adam if you see this
     def index
-      @events = Event.accessible_by(current_ability, :manage).page params[:page]
+      @events = Event.all.page params[:page]
+    end
+
+    def new
+      @event = Event.new
+      load_nested_attributes
+    end
+
+    def edit
+      load_nested_attributes
     end
 
     def show
@@ -15,12 +23,12 @@ module Admin
 
     def create
       @event.save
-      respond_with(@event)
+      redirect_to admin_event_path(@event), notice: 'Event was successfully created.'
     end
 
     def update
       @event.update(event_params)
-      respond_with(@event)
+      redirect_to admin_event_path(@event), notice: 'Event was successfully updated.'
     end
 
     def destroy
@@ -42,7 +50,7 @@ module Admin
     end
 
     def load_nested_attributes
-      @event.event_items.to_a.size.upto 1 do
+      @event.event_items.to_a.size.upto 13 do
         @event.event_items.build
       end
     end

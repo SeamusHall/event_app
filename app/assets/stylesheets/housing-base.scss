@@ -3,55 +3,62 @@ CSS File for Non admin interface
 */
 
 @import "card";
-@import "footer";
 @import "table";
+@import "footer";
 
 h1 {
   display: inline-block;
   padding: 10px;
   border: none;
   font: normal 48px/normal "Warnes", Helvetica, sans-serif;
-  color: $white !important;
+  color: $blue !important;
   text-decoration: normal;
   text-align: center;
-  text-shadow: $green-glow;
 }
-
+h3 {
+  color: $blue;
+  font: normal 28px/normal "Warnes", Helvetica, sans-serif;
+}
 body {
-  background-color: #7a7a7a;
-}
-
-div#page-wrapper {
-  height: 100%;
-}
-
-div#wrapper {
-  height: 100%;
+  background-color: #DAD6CB !important;
 }
 
 .container {
-  width: 100%;
+  margin-top: 90px;
 }
-
 .navbar {
-  background-color: $maroon-dark;
-  height: auto;
+  clear: both;
+  z-index: 0;
+  height: 85px;
+  background-repeat: no-repeat;
+  background-position: center;
   .logo {
     width: 100%;
-    height:auto;
+    height: 85px;
     position: absolute;
+    bottom: 0;
   }
 }
+
+.white {
+  color: $white;
+}
+
 .navbar-brand {
+  height: 85px !important;
   color: $white !important;
   font-size: 30px;
   vertical-align: middle;
+  margin: auto;
 }
 .navbar-header.white {
   background-color: $white;
 }
-.navbar-nav li {
-    color: $white;
+.navbar-default {
+  .navbar-nav li a {
+    color: $white !important;
+    font-size: 20px;
+  }
 }
 .navbar-nav li .dropdown-menu {
     margin-top: 0;
@@ -60,6 +67,40 @@ div#wrapper {
     background-color: $black;
     box-shadow: $yellow-glow;
     a {
-      color: $white;
+      color: $white !important;
     }
+}
+
+.thumbnail .caption {
+  height: auto;
+}
+
+.navbar-fixed-top {
+  background-color: $maroon !important;
+}
+
+.navbar-lower {
+  background-color: $white !important;
+  top: 28px;
+}
+.navbar-right {
+  padding-right: 320px;
+  a {
+    color: $maroon;
+    text-decoration: none;
+  }
+}
+
+.right {
+  padding-right: 25px;
+}
+.navbar-left {
+  padding-left: 320px;
+  a {
+    color: $maroon;
+    text-decoration: none;
+    vertical-align: -webkit-baseline-middle;
+    font-size: 36px !important;
+    line-height: 42px;
+  }
 }

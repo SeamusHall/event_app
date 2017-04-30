@@ -1,15 +1,15 @@
 %nav.navbar.navbar-default.navbar-fixed-top
-  .container
+  .container-top
     .navbar-header
       %button.navbar-toggle.collapsed{"data-toggle" => "collapse", "data-target" => "#navbar", "aria-expanded" => "false", "aria-controls" => "navbar"}
         %span.sr-only Toggle Navigation
         %span.icon-bar
         %span.icon-bar
         %span.icon-bar
-      = link_to "Housing Events", root_path, class: "navbar-brand"
+      .logo
+        = link_to image_tag("siu-logo-horizontal.png", alt: "Southern Illinois University Logo",class: 'navbar-brand'), "http://siu.edu"
     .collapse.navbar-collapse
-      = render "layouts/cart"
-      %ul.nav.navbar-nav.navbar-right
+      %ul.nav.navbar-nav.navbar-right.right
         - if current_user
           %li.dropdown
             %a.dropdown-toggle{"data-toggle" => "dropdown", "role" => "button", "aria-haspopup" => "true", "aria-expanded" => "false"}
@@ -42,3 +42,16 @@
               %li= link_to "Account", edit_user_registration_path
         - else
           %li= link_to 'Login', new_session_path(User.new)
+  %nav.navbar.navbar-default.navbar-lower{role: "navigation"}
+    .collapse.navbar-collapse
+      %h2.navbar-nav.navbar-left
+        = link_to 'University Housing Events', root_path
+      .navbar-nav.navbar-right
+        .row
+          .col-sm-5
+            %h4
+              618.453.2301
+              %br
+              != "#{mail_to 'housing@siu.edu', 'housing@siu.edu', encode: :hex}"
+          .col-sm-7
+            = render "layouts/cart"

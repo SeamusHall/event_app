@@ -11,7 +11,7 @@ module Admin
 
     def update
       @order.update(order_params)
-      respond_with @order, location: -> { @order }
+      redirect_to admin_order_path(@order), notice: 'Order was successfully updated.'
     end
 
     def destroy

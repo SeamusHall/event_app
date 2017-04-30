@@ -6,35 +6,26 @@ module Admin
 
     def index
       @products = Product.all.page params[:page]
-      respond_with(@products)
-    end
-
-    def show
-      respond_with(@product)
     end
 
     def new
       @product = Product.new
-      respond_with(@product)
-    end
-
-    def edit
     end
 
     def create
       @product = Product.new(product_params)
       @product.save
-      respond_with(@product)
+      redirect_to admin_product_path(@product), notice: 'Product was successfully created.'
     end
 
     def update
       @product.update(product_params)
-      respond_with(@product)
+      redirect_to admin_product_path(@product), notice: 'Product was successfully updated.'
     end
 
     def destroy
       @product.destroy
-      respond_with(@product)
+      redirect_to admin_product_path(@product), notice: 'Product was successfully destroyed.'
     end
 
     private
