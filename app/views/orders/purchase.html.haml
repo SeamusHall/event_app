@@ -1,5 +1,3 @@
-%h2 Order Purchase Form
-%hr
 .row
   .col-md-6
     %h1 Order Information
@@ -49,7 +47,7 @@
             .display-td
               = image_tag "http://i76.imgup.net/accepted_c22e0.png", alt: 'cards', class: 'img-responsive pull-right'
         .panel-body
-          = form_tag make_purchase_order_path(@order_product) do
+          = form_tag make_purchase_order_path(@order) do
             .row
               .col-md-12
                 .form-group
