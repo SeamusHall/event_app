@@ -17,18 +17,14 @@ module Admin
       load_nested_attributes
     end
 
-    def show
-      @order = Order.find(params[:id])
-    end
-
     def create
       @event.save
-      redirect_to admin_event_path(@event), notice: 'Event was successfully created.'
+      redirect_to admin_events_path, notice: 'Event was successfully created.'
     end
 
     def update
       @event.update(event_params)
-      redirect_to admin_event_path(@event), notice: 'Event was successfully updated.'
+      redirect_to admin_events_path, notice: 'Event was successfully updated.'
     end
 
     def destroy
@@ -50,7 +46,7 @@ module Admin
     end
 
     def load_nested_attributes
-      @event.event_items.to_a.size.upto 13 do
+      @event.event_items.to_a.size.upto 11 do
         @event.event_items.build
       end
     end
