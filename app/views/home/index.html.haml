@@ -3,8 +3,8 @@
   %p Hello welcome to University Housings Event payment location
   %p= link_to 'Sign Up!', new_registration_path(User.new), class: 'btn btn-lg btn-primary'
 
-%hr
 - if current_user
+  %hr
   .row
     .col-lg-3.col-md-6
       %div.panel.panel-yellow
@@ -57,7 +57,7 @@
   - @products.each do |product|
     .col-md-3.col-sm-6.hero-feature
       .thumbnail
-        = image_tag product.image.thumb
+        = image_tag product.image
         .caption
           %h3= product.name
           %p= product.description

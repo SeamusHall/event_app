@@ -10,6 +10,8 @@
         = link_to image_tag("siu-logo-horizontal.png", alt: "Southern Illinois University Logo",class: 'navbar-brand'), "http://siu.edu"
     .collapse.navbar-collapse
       %ul.nav.navbar-nav.navbar-right.right
+        %li= link_to 'products', products_path
+        %li= link_to 'events', events_path 
         - if current_user
           %li.dropdown
             %a.dropdown-toggle{"data-toggle" => "dropdown", "role" => "button", "aria-haspopup" => "true", "aria-expanded" => "false"}
@@ -36,6 +38,7 @@
                         .bottom
 
               %li= link_to 'Admin Interface', admin_path if current_user && current_user.has_role?(:admin)
+              %li= link_to 'Products', products_path
               %li= link_to 'Event Orders', orders_path
               %li= link_to 'Product Order', order_products_path
               %li.divider{role: "separator"}
@@ -45,7 +48,8 @@
   %nav.navbar.navbar-default.navbar-lower{role: "navigation"}
     .collapse.navbar-collapse
       %h2.navbar-nav.navbar-left
-        = link_to 'University Housing Events', root_path
+        %strong
+          = link_to 'University Housing Events', root_path
       .navbar-nav.navbar-right
         .row
           .col-sm-5
