@@ -11,7 +11,7 @@ module Admin
 
     def update
       @order_product.update(order_product_params)
-      respond_with(@order_product)
+      redirect_to admin_order_product_path(@order_product), notice: 'Order was successfully updated.' 
     end
 
     def destroy

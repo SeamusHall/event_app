@@ -1,50 +1,17 @@
-%h1 University Housing
-%hr
-.row
-  - @events.each do |event|
-    .col-lg-3.col-md-6
-      %div.panel{class: (event.almost_over? ? 'panel-danger' : 'panel-primary')}
-        .panel-heading
-          .row
-            .col-xs-12
-              %h3{style: 'margin-top: 3px'}= event.name
-          .row
-            .col-xs-12
-              = event.description
-        = link_to event do
-          .panel-footer
-            %span.pull-left
-              View Details
-            - if event.almost_over?
-              %span.badge.pull-right
-                Almost Over!
-                = text_icon :arrow_circle_right
-            - else
-              %span.pull-right
-                = text_icon :arrow_circle_right
-            .clearfix
-    .col-lg-3.col-md-4
-      %div.panel.panel-yellow
-        .panel-heading
-          .row
-            .col-xs-12
-              %h3 Products
-        = link_to products_path do
-          .panel-footer
-            %span.pull-left
-              View Details
-            %span.pull-right
-              = text_icon :arrow_circle_right
-            .clearfix
+%header.jumbotron.hero-spacer
+  %h1 University Housing
+  %p Hello welcome to University Housings Event payment location
+  %p= link_to 'Sign Up!', new_registration_path(User.new), class: 'btn btn-lg btn-primary'
 
 - if current_user
+  %hr
   .row
     .col-lg-3.col-md-6
       %div.panel.panel-yellow
         .panel-heading
           .row
             .col-xs-12
-              %h3 Orders
+              %h2 Orders
         = link_to orders_path do
           .panel-footer
             %span.pull-left
@@ -57,7 +24,7 @@
         .panel-heading
           .row
             .col-xs-12
-              %h3 Product Orders
+              %h2 Product Orders
         = link_to order_products_path do
           .panel-footer
             %span.pull-left
@@ -65,3 +32,36 @@
             %span.pull-right
               = text_icon :arrow_circle_right
             .clearfix
+
+%hr
+.row.text-center
+  .col-lg-12
+    %h3 Latest Events
+
+.row.text-center
+  - @events.each do |event|
+    .col-md-3.col-sm-6.hero-feature
+      .thumbnail
+        = image_tag 'http://dreamicus.com/data/eclipse/eclipse-04.jpg', alt: 'eclipse'
+        .caption
+          %h3= event.name
+          %p= event.description
+          %p= link_to 'show', event, class: 'btn btn-default'
+
+%hr
+.row.text-center
+  .col-lg-12
+    %h3 Latest Products
+
+.row.text-center
+  - @products.each do |product|
+    .col-md-3.col-sm-6.hero-feature
+      .thumbnail
+        = image_tag product.image
+        .caption
+          %h3= product.name
+          %p= product.description
+          %p= number_to_currency product.price
+          %p
+            = link_to 'add to cart', add_cart_path(product), method: :post, class: 'btn btn-success'
+            = link_to 'Show', product, class: 'btn btn-default'

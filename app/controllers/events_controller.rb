@@ -1,5 +1,4 @@
 class EventsController < ApplicationController
-  load_and_authorize_resource
 
   def index
     @events = Event.available
@@ -7,6 +6,7 @@ class EventsController < ApplicationController
 
   def show
     @order = Order.new
+    @event = Event.find(params[:id])
   end
 
   private
