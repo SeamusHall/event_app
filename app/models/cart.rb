@@ -32,9 +32,11 @@ class Cart
 
 	def delete_item_from_cart(product_id)
 		item = @items.find { |item| item.product_id == product_id }
-		item.decrement
-		if item.quantity == 0
-			@items.delete(item)
+		if !item.nil?
+			item.decrement
+			if item.quantity == 0
+				@items.delete(item)
+			end
 		end
 	end
 

@@ -1,27 +1,53 @@
-%h2 Your Cart
-%div{style: "overflow-x:auto;"}
-  %table.table
-    %thead
-      %tr
-        %th Quantity
-        %th name
-        %th price
-
-    - @cart.items.each do |item|
-      %tr
-        %td=item.quantity
-        %td
-          = image_tag item.product.image.thumb
-          = link_to item.product.name, item.product
-        %td=item.total_price
-
-- if current_user
-  = link_to '#', "data-toggle" => "modal", "data-target" => "#order-modal-1" do
-    .btn.btn-lg.btn-success Order!
-- else
-  = link_to new_registration_path(User.new) do
-    .btn.btn-lg.btn-primary Sign Up!
-
+.row
+  .col-lg-12
+    %h1 Your Cart
+.row
+  .col-lg-12
+    %div{style: "overflow-x:auto;"}
+      %table.table.table-hover
+        %thead
+          %tr
+            %th Product
+            %th Quantity
+            %th.text-center Price
+            %th.text-center Total
+            %th  
+        %tbody
+          - @cart.items.each do |item|
+            %tr
+              %td.col-sm-8.col-md-6
+                .media
+                  = image_tag item.product.image.thumb, class: 'thumbnail pull-left media-object'
+                  %h4.media-heading
+                    = link_to item.product.name, product_path(item.product.id)
+                  %span Status:
+                  %span.text-success
+                    %strong In Stock
+              %td= item.quantity
+              %td= number_to_currency item.product.price
+              %td= number_to_currency item.total_price
+              %td= link_to "Remove from cart", remove_cart_path(item.product.id), method: :post, class: 'btn btn-danger'
+          %tr
+            %td  
+            %td  
+            %td  
+            %td
+              %h3 Total
+            %td.text-right
+              %h3
+                %strong= number_to_currency @cart.total_price
+          %tr
+            %td  
+            %td  
+            %td  
+            %td= link_to 'Continue Shopping',  root_path, class: 'btn btn-primary'
+            %td
+              - if current_user
+                = link_to '#', "data-toggle" => "modal", "data-target" => "#order-modal-1" do
+                  .btn.btn-lg.btn-success Order!
+              - else
+                = link_to new_registration_path(User.new) do
+                  .btn.btn-lg.btn-primary Sign Up!
 - if current_user
   .modal.fade{tabindex: '-1', role: 'dialog', id: "order-modal-1"}
     = form_for @order_product, remote: true, data: { rel: "#modal-header-1", target: "#errors-1" } do |f|

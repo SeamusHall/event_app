@@ -1,26 +1,23 @@
 .row
-  .col-lg-12
-    %h2 Events
-
-%div{style: "overflow-x:auto;"}
-  %table.table
-    %thead
-      %tr
-        %th Name
-        %th Available at
-        %th Unavailable at
-        %th Starts on
-        %th Ends on
-        %th
-    %tbody
-      - @events.each do |event|
-        %tr
-          %td= event.name
-          %td= event.available_at
-          %td= event.unavailable_at
-          %td= event.starts_on
-          %td= event.ends_on
-          %td.right= object_actions event
-.row
-  .col-lg-12
-    = link_to 'New Event', new_event_path, class: 'btn btn-success btn-large btn-block'
+  - @events.each do |event|
+    .col-lg-3.col-md-6
+      %div.panel{class: (event.almost_over? ? 'panel-danger' : 'panel-primary')}
+        .panel-heading
+          .row
+            .col-xs-12
+              %h3{style: 'margin-top: 3px'}= event.name
+          .row
+            .col-xs-12
+              = event.description
+        = link_to event do
+          .panel-footer
+            %span.pull-left
+              View Details
+            - if event.almost_over?
+              %span.badge.pull-right
+                Almost Over!
+                = text_icon :arrow_circle_right
+            - else
+              %span.pull-right
+                = text_icon :arrow_circle_right
+            .clearfix

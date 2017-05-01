@@ -1,15 +1,17 @@
 %nav.navbar.navbar-default.navbar-fixed-top
-  .container
+  .container-top
     .navbar-header
       %button.navbar-toggle.collapsed{"data-toggle" => "collapse", "data-target" => "#navbar", "aria-expanded" => "false", "aria-controls" => "navbar"}
         %span.sr-only Toggle Navigation
         %span.icon-bar
         %span.icon-bar
         %span.icon-bar
-      = link_to "Housing Events", root_path, class: "navbar-brand"
+      .logo
+        = link_to image_tag("siu-logo-horizontal.png", alt: "Southern Illinois University Logo",class: 'navbar-brand'), "http://siu.edu"
     .collapse.navbar-collapse
-      = render "layouts/cart"
-      %ul.nav.navbar-nav.navbar-right
+      %ul.nav.navbar-nav.navbar-right.right
+        %li= link_to 'products', products_path
+        %li= link_to 'events', events_path 
         - if current_user
           %li.dropdown
             %a.dropdown-toggle{"data-toggle" => "dropdown", "role" => "button", "aria-haspopup" => "true", "aria-expanded" => "false"}
@@ -36,9 +38,24 @@
                         .bottom
 
               %li= link_to 'Admin Interface', admin_path if current_user && current_user.has_role?(:admin)
+              %li= link_to 'Products', products_path
               %li= link_to 'Event Orders', orders_path
               %li= link_to 'Product Order', order_products_path
               %li.divider{role: "separator"}
               %li= link_to "Account", edit_user_registration_path
         - else
           %li= link_to 'Login', new_session_path(User.new)
+  %nav.navbar.navbar-default.navbar-lower{role: "navigation"}
+    .collapse.navbar-collapse
+      %h2.navbar-nav.navbar-left
+        %strong
+          = link_to 'University Housing Events', root_path
+      .navbar-nav.navbar-right
+        .row
+          .col-sm-5
+            %h4
+              618.453.2301
+              %br
+              != "#{mail_to 'housing@siu.edu', 'housing@siu.edu', encode: :hex}"
+          .col-sm-7
+            = render "layouts/cart"
