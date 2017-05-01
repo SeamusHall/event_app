@@ -3,55 +3,65 @@ CSS File for Non admin interface
 */
 
 @import "card";
-@import "footer";
 @import "table";
+@import "footer";
 
 h1 {
   display: inline-block;
   padding: 10px;
   border: none;
   font: normal 48px/normal "Warnes", Helvetica, sans-serif;
-  color: $white !important;
+  color: $blue !important;
   text-decoration: normal;
   text-align: center;
-  text-shadow: $green-glow;
 }
-
+h3 {
+  color: $blue;
+  font: normal 28px/normal "Warnes", Helvetica, sans-serif;
+}
 body {
-  background-color: #7a7a7a;
+  background-color: #DAD6CB !important;
 }
 
-div#page-wrapper {
-  height: 100%;
+nav {
+  z-index: 9 !important;
 }
-
-div#wrapper {
-  height: 100%;
-}
-
 .container {
-  width: 100%;
+  margin-top: 90px;
 }
-
 .navbar {
-  background-color: $maroon-dark;
-  height: auto;
+  clear: both;
+  z-index: 0;
+  height: 85px;
+  background-repeat: no-repeat;
+  background-position: center;
   .logo {
     width: 100%;
-    height:auto;
+    height: 85px;
     position: absolute;
+    bottom: 0;
   }
 }
+
+.white {
+  color: $white;
+}
+
 .navbar-brand {
+  height: 85px !important;
   color: $white !important;
   font-size: 30px;
   vertical-align: middle;
+  margin: auto;
 }
 .navbar-header.white {
   background-color: $white;
 }
-.navbar-nav li {
-    color: $white;
+.navbar-default {
+  .navbar-nav li a {
+    color: $white !important;
+    font-size: 20px;
+  }
 }
 .navbar-nav li .dropdown-menu {
     margin-top: 0;
@@ -60,6 +70,143 @@ div#wrapper {
     background-color: $black;
     box-shadow: $yellow-glow;
     a {
-      color: $white;
+      color: $white !important;
     }
+}
+
+.thumbnail .caption {
+  height: auto;
+}
+
+.navbar-fixed-top {
+  background-color: $maroon !important;
+}
+
+.navbar-lower {
+  background-color: $white !important;
+  top: 28px;
+}
+.navbar-right {
+  padding-right: 320px;
+  a {
+    color: $maroon;
+    text-decoration: none;
+  }
+}
+
+.right {
+  padding-right: 25px;
+}
+.navbar-left {
+  padding-left: 320px;
+  a {
+    color: $maroon;
+    text-decoration: none;
+    vertical-align: -webkit-baseline-middle;
+    font-size: 36px !important;
+    line-height: 42px;
+  }
+}
+
+/* Padding - just for asthetics on Bootsnipp.com */
+body { margin-top:20px; }
+
+/* CSS for Credit Card Payment form */
+.credit-card-box .panel-title {
+    display: inline;
+    font-weight: bold;
+}
+.credit-card-box .form-control.error {
+    border-color: red;
+    outline: 0;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(255,0,0,0.6);
+}
+.credit-card-box label.error {
+  font-weight: bold;
+  color: red;
+  padding: 2px 8px;
+  margin-top: 2px;
+}
+.credit-card-box .payment-errors {
+  font-weight: bold;
+  color: red;
+  padding: 2px 8px;
+  margin-top: 2px;
+}
+.credit-card-box label {
+    display: block;
+}
+/* The old "center div vertically" hack */
+.credit-card-box .display-table {
+    display: table;
+    width: 100%;
+}
+.credit-card-box .display-tr {
+    display: table-row;
+}
+.credit-card-box .display-td {
+    display: table-cell;
+    vertical-align: middle;
+    width: 50%;
+}
+/* Just looks nicer */
+.credit-card-box .panel-heading img {
+    min-width: 180px;
+}
+.glyphicon { margin-right:5px; }
+.thumbnail
+{
+    margin-bottom: 20px;
+    padding: 0px;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    border-radius: 0px;
+}
+
+.item.list-group-item
+{
+    float: none;
+    width: 100%;
+    background-color: #fff;
+    margin-bottom: 10px;
+}
+.item.list-group-item:nth-of-type(odd):hover,.item.list-group-item:hover
+{
+    background: #428bca;
+}
+
+.item.list-group-item .list-group-image
+{
+    margin-right: 10px;
+}
+.item.list-group-item .thumbnail
+{
+    margin-bottom: 0px;
+}
+.item.list-group-item .caption
+{
+    padding: 9px 9px 0px 9px;
+}
+.item.list-group-item:nth-of-type(odd)
+{
+    background: #eeeeee;
+}
+
+.item.list-group-item:before, .item.list-group-item:after
+{
+    display: table;
+    content: " ";
+}
+
+.item.list-group-item img
+{
+    float: left;
+}
+.item.list-group-item:after
+{
+    clear: both;
+}
+.list-group-item-text
+{
+    margin: 0 0 11px;
 }

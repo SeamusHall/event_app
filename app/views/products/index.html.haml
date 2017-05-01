@@ -1,25 +1,17 @@
-%h1 Products
-
-%h1= link_to "Clear cart", clear_cart_path, method: :post, class: 'btn btn-warning'
-%div{style: "overflow-x:auto;"}
-  %table.table
-    %thead
-      %tr
-        %th Name
-        %th Price
-        %th Image
-        %th Description
-        %th
-        %th
-
-    %tbody
-      - @products.each do |product|
-        %tr
-          %td= product.name
-          %td= number_to_currency product.price
-          %td= image_tag product.image.thumb
-          %td= product.description
-          %td= link_to 'Show', product, class: 'btn btn-success'
-          %td
-            = link_to "Add to cart", add_cart_path(product), method: :post, class: 'btn btn-success'
-            = link_to "Remove from cart", remove_cart_path(product), method: :post, class: 'btn btn-danger'
+#products.row.list-group
+  - @products.each do |product|
+    .item.col-xs-4.col-lg-4
+      .thumbnail
+        = image_tag product.image, class: 'group list-group-image'
+        .caption
+          %h4.group.inner.list-group-item-heading
+            = product.name
+          %p.group.inner.list-group-item-text
+            = product.description
+        .row
+          .col-xs-12.col-md-6
+            %p.lead
+              = number_to_currency product.price
+          .col-xs-12.col-md-6
+            = link_to "Add to cart", add_cart_path(product), method: :post, class: 'btn btn-success btn-block'
+            = link_to "Remove from cart", remove_cart_path(product), method: :post, class: 'btn btn-danger btn-block'

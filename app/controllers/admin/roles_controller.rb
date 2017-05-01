@@ -9,12 +9,12 @@ module Admin
 
     def create
       @role.save
-      respond_with(@role)
+      redirect_to admin_role_path(@role), notice: 'Role was successfully created.'
     end
 
     def update
       @role.update(role_params)
-      respond_with(@role)
+      redirect_to admin_role_path(@role), notice: 'Role was successfully updated.'
     end
 
     def destroy

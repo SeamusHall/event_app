@@ -9,7 +9,7 @@ module Admin
 
     def update
       @user.update(user_params)
-      respond_with(@user)
+      redirect_to admin_user_path(@user), notice: 'User was successfully updated.'
     end
 
     private

@@ -1,6 +1,6 @@
 class CartsController < ApplicationController
-  before_action :authenticate_user!
   before_filter :cart_initializer
+  skip_before_filter :verify_authenticity_token
 
   def add
     @cart.add_item_to_cart(params[:id])
