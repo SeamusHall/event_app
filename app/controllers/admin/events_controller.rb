@@ -18,6 +18,7 @@ module Admin
     end
 
     def create
+      @event = Event.new(event_params)
       @event.save
       redirect_to admin_events_path, notice: 'Event was successfully created.'
     end

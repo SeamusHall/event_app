@@ -61,6 +61,7 @@ nav {
   .navbar-nav li a {
     color: $white !important;
     font-size: 20px;
+    margin-top: 15px;
   }
 }
 .navbar-nav li .dropdown-menu {
@@ -84,7 +85,14 @@ nav {
 
 .navbar-lower {
   background-color: $white !important;
-  top: 28px;
+  top: 17px;
+}
+a:focus {
+  box-shadow: 0px 0px 3px 2px #A3A0A3;
+}
+a {
+  text-decoration: none;
+  text-underline: none;
 }
 .navbar-right {
   padding-right: 320px;
@@ -99,6 +107,7 @@ nav {
 }
 .navbar-left {
   padding-left: 320px;
+  margin-top: 15px;
   a {
     color: $maroon;
     text-decoration: none;

@@ -6,7 +6,7 @@ class EventItem < ApplicationRecord
   validates :price, numericality: { greater_than: 0 }
   validates :tax, numericality: { less_than: 0.99 }
   validates :min_freq, :max_event, :max_order, numericality: { only_integer: true , greater_than: 0 }
-  validate :valid_min_freq
+  #validate :valid_min_freq
 
   private
   def valid_min_freq
