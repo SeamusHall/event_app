@@ -1,6 +1,5 @@
 include AuthorizeNet::API
 class OrdersController < ApplicationController
-  skip_before_action :verify_authenticity_token
   load_and_authorize_resource
   before_action :authenticate_user!
   respond_to :js, :json
