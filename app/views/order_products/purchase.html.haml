@@ -1,5 +1,5 @@
 .row
-  .col-md-6
+  .col-lg-12
     %h1 Order Information
     %p
       %strong Order ID:
@@ -28,8 +28,7 @@
     %h4
       %strong Price:
       = number_to_currency(@order_product.total)
-  .col-md-6
-    %h1= render file: "layouts/seal", class: 'purchase'
+
 .container
   .row
     .col-md-12.col-md-4
@@ -37,6 +36,7 @@
         .panel-heading.display-table
           .row.display-tr
             %h3.panel-title.display-td Payment Details
+            = render "layouts/seal", class: 'purchase'
             .display-td
               = image_tag "http://i76.imgup.net/accepted_c22e0.png", alt: 'cards', class: 'img-responsive pull-right'
         .panel-body
