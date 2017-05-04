@@ -16,7 +16,7 @@ class Order < ApplicationRecord
   before_validation :perform_total_calculation
   before_validation :update_finalized_on
 
-  validate :valid_dates
+  #validate :valid_dates
   validate :quantity_less_than_max_order
 
   validates :status, inclusion: { in: STATUSES.keys }, presence: true

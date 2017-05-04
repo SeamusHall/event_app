@@ -14,13 +14,19 @@ module Admin
 
     def create
       @product = Product.new(product_params)
-      @product.save
-      redirect_to admin_product_path(@product), notice: 'Product was successfully created.'
+      if @product.save
+        redirect_to admin_product_path(@product), notice: 'Product was successfully created.'
+      else
+        render "new"
+      end
     end
 
     def update
-      @product.update(product_params)
-      redirect_to admin_product_path(@product), notice: 'Product was successfully updated.'
+      if @product.update(product_params)
+        redirect_to admin_product_path(@product), notice: 'Product was successfully updated.'
+      else
+        render "edit"
+      end
     end
 
     def destroy

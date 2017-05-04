@@ -2,6 +2,7 @@
 
 footer {
   margin: auto !important;
+  height: 100%;
   background-color: #222;
   color: $white;
   bottom: 0 !important;
@@ -15,6 +16,7 @@ footer {
     ul {
       margin-top: 0;
       list-style-type: none;
+      padding-left: 0px;
       li {
         text-transform: uppercase;
         margin-bottom: $line-height;
@@ -25,7 +27,10 @@ footer {
         padding-right: $half-line-height / 2;
       }
       color: $white;
-      text-decoration: none;
+      text-decoration: none !important;
+    }
+    a:hover {
+      color: $white;
     }
     p {
       margin-top: $line-height;
@@ -41,7 +46,14 @@ footer {
   .footer-wrapper {
     max-width: 1400px;
     margin: 0 auto;
-    padding-bottom: 50px;
+    padding-bottom: 100px;
+    /* force footer to look good */
+    @media screen and (max-width: 2100px){ padding-bottom: 100px; }
+    @media screen and (max-width: 1700px){ padding-bottom: 150px;  }
+    @media screen and (max-width: 1200px){ padding-bottom: 200px;  }
+    @media screen and (max-width: 1000px){ padding-bottom: 250px;  }
+    @media screen and (max-width: 800px) { padding-bottom: 300px;  }
+    @media screen and (max-width: 500px) { padding-bottom: 100%; }
     padding-top: 50px;
     border-top: 1px solid #4D4D4D;
   }

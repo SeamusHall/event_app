@@ -26,5 +26,8 @@
 # Ignore Public Uploads
 /public/uploads/*
 
+# Ignore Public assets
+public/assets/
+
 # Ignore Shared
 /shared/*
