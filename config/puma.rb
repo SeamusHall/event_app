@@ -41,5 +41,5 @@ end
 before_fork do
   require 'puma_worker_killer'
 
-  PumaWorkerKiller.enable_rolling_restart(12 * 3600) # 12 hours in seconds
+  PumaWorkerKiller.enable_rolling_restart(4 * 3600) # 4 hours in seconds
 end
