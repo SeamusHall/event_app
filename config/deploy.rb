@@ -23,7 +23,8 @@ set :puma_worker_timeout, 4 * 3600      # 4 hours in seconds
 set :puma_init_active_record, true  # Change to false when not using ActiveRecord
 
 ## Defaults:
-# set :scm,           :git
+set :repository, "deployer@131.230.116.221:/var/www/events"
+set :scm,           :git
 set :branch,        :master
 set :format,        :pretty
 set :log_level,     :debug
