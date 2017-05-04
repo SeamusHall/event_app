@@ -3,8 +3,11 @@ class UsersController < ApplicationController
   load_and_authorize_resource
 
   def update
-    @user.update(user_params)
-    respond_with @user, location: -> { users_path }
+    if @user.update(user_params)
+      respond_with @user, location: -> { users_path }, notice: "User was successfully updated"
+    else
+      render "edit"
+    end
   end
 
   private

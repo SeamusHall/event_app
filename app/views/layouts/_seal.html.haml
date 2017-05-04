@@ -2,7 +2,6 @@
 .AuthorizeNetSeal
   %script{:language => "javascript", :type => "text/javascript"}
     var ANS_customer_id="d67a93bc-4ae7-4789-b038-05a8a8c214ea";
-  %script{:language => "javascript", :src => "//verify.authorize.net/anetseal/seal.js", :type => "text/javascript"}
   %a{:href => "https://verify.authorize.net/anetseal/?pid=d67a93bc-4ae7-4789-b038-05a8a8c214ea", :onclick => "window.open('https://verify.authorize.net/anetseal/?pid=d67a93bc-4ae7-4789-b038-05a8a8c214ea','AuthorizeNetVerification','width=600,height=430,dependent=yes,resizable=yes,scrollbars=yes,menubar=no,toolbar=no,status=no,directories=no,location=yes'); return false;", :onmouseout => "window.status=''; return true;", :onmouseover => "window.status='http://www.authorize.net/'; return true;", :target => "_blank"}
     %img{:alt => "Authorize.Net Merchant - Click to Verify", :border => "0", :height => "72", :src => "https://verify.authorize.net/anetseal/images/secure90x72.gif", :width => "90"}/
   %a#AuthorizeNetText{:href => "http://www.authorize.net/", :target => "_blank"} Credit Card Processing

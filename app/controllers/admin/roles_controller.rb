@@ -8,13 +8,19 @@ module Admin
     end
 
     def create
-      @role.save
-      redirect_to admin_role_path(@role), notice: 'Role was successfully created.'
+      if @role.save
+        redirect_to admin_role_path(@role), notice: 'Role was successfully created.'
+      else
+        render "new"
+      end
     end
 
     def update
-      @role.update(role_params)
-      redirect_to admin_role_path(@role), notice: 'Role was successfully updated.'
+      if @role.update(role_params)
+        redirect_to admin_role_path(@role), notice: 'Role was successfully updated.'
+      else
+        render "edit"
+      end
     end
 
     def destroy

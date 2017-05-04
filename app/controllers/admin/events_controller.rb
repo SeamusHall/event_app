@@ -2,8 +2,6 @@ module Admin
   class EventsController < AdminController
     before_action :set_event, only: [:edit,:show,:update]
 
-    # Not to sure about the one, seems to stop people if not admin
-    # Should make sure though Adam if you see this
     def index
       @events = Event.all.page params[:page]
     end
@@ -19,13 +17,19 @@ module Admin
 
     def create
       @event = Event.new(event_params)
-      @event.save
-      redirect_to admin_events_path, notice: 'Event was successfully created.'
+      if @event.save
+        redirect_to admin_events_path, notice: 'Event was successfully created.'
+      else
+        render "new"
+      end
     end
 
     def update
-      @event.update(event_params)
-      redirect_to admin_events_path, notice: 'Event was successfully updated.'
+      if @event.update(event_params)
+        redirect_to admin_events_path, notice: 'Event was successfully updated.'
+      else
+        render "edit"
+      end
     end
 
     def destroy

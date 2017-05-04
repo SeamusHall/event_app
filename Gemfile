@@ -8,6 +8,8 @@ git_source(:github) do |repo_name|
 end
 
 gem 'rails', '~> 5.0.2'
+
+# Deployment Gems
 gem 'puma', '~> 3.0'
 gem 'puma_worker_killer'
 
@@ -54,9 +56,6 @@ gem 'redis-rails'
 gem 'redis-rack-cache'
 gem 'concurrent-ruby', require: 'concurrent'
 
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
-
 group :production do
   gem 'mysql2', '~> 0.4.5'
 end
@@ -75,6 +74,13 @@ group :development do
   gem 'listen', '~> 3.0.5'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+
+  # Deployment Gems
+  gem 'capistrano',         require: false
+  gem 'capistrano-rvm',     require: false
+  gem 'capistrano-rails',   require: false
+  gem 'capistrano-bundler', require: false
+  gem 'capistrano3-puma',   require: false
 end
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

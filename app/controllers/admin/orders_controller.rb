@@ -10,8 +10,11 @@ module Admin
     end
 
     def update
-      @order.update(order_params)
-      redirect_to admin_order_path(@order), notice: 'Order was successfully updated.'
+      if @order.update(order_params)
+        redirect_to admin_order_path(@order), notice: 'Order was successfully updated.'
+      else
+        render "edit"
+      end
     end
 
     def destroy
