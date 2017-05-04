@@ -8,8 +8,11 @@ module Admin
     end
 
     def update
-      @user.update(user_params)
-      redirect_to admin_user_path(@user), notice: 'User was successfully updated.'
+      if @user.update(user_params)
+        redirect_to admin_user_path(@user), notice: 'User was successfully updated.'
+      else
+        render "edit"
+      end
     end
 
     private
