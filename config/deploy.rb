@@ -40,6 +40,7 @@ namespace :puma do
       execute "mkdir /var/www/events/shared/ -p"
       execute "mkdir /var/www/events/shared/tmp/sockets -p"
       execute "mkdir /var/www/events/shared/tmp/pids -p"
+      execute "mkdir /var/www/events/current/public -p"
     end
   end
 
