@@ -7,14 +7,14 @@ shared_dir = "#{app_dir}/shared"
 set :repo_url,        'git@github.com:UniversityHousing/events.git'
 set :application,     'events'
 set :user,            'deployer'
-set :puma_threads,    [8, 32]
+set :puma_threads,    [5, 5]
 set :puma_workers,    2      # Server can handle it
 
 set :pty,             true
 set :use_sudo,        false
 set :stage,           :production
 set :deploy_via,      :remote_cache
-set :deploy_to,       "/home/#{fetch(:user)}/apps/#{fetch(:application)}"
+set :deploy_to,       "/var/www/#{fetch(:application)}"
 set :puma_bind,       "unix://#{shared_path}/tmp/sockets/puma.sock"
 set :puma_state,      "#{shared_path}/tmp/pids/puma.state"
 set :puma_pid,        "#{shared_path}/tmp/pids/puma.pid"
