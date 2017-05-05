@@ -72,7 +72,7 @@
                 .col-sm-4
                   .form-group
                     = f.label :start_date
-                    = f.select :start_date, options_for_select((@event.starts_on.to_date..@event.ends_on.to_date).map{ |d| [d.strftime('%a, %b %d, %Y'), d.strftime('%Y-%m-%d')] }), {prompt: 'start date'}, {class: 'form-control selectpicker', required: true}
+                    = f.select :start_date, options_for_select((@event.starts_on.to_date..@event.ends_on.to_date).map{ |d| [d.strftime('%a, %b %d, %Y'), d.strftime('%Y-%m-%d')] }), {prompt: 'check-in date'}, {class: 'form-control selectpicker', required: true}
                 .col-sm-4
                   .form-group
                     = f.label :end_date
