@@ -7,7 +7,7 @@ plugin :tmp_restart
 workers 2 # 4 or 8 ;)
 
 # Min and Max threads per worker
-threads 8, 32 # Only because the server can handle it ;)
+threads 5, 5
 
 port ENV.fetch("PORT") { 3000 }
 

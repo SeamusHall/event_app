@@ -46,7 +46,7 @@
 - if current_user
   - @event.event_items.each do |ei|
     .modal.fade{tabindex: '-1', role: 'dialog', id: "order-modal-#{ei.id}"}
-      = form_for @order, remote: true, data: { rel: "#modal-header-#{ei.id}", target: "#errors-#{ei.id}" } do |f|
+      = form_for @order, remote: true, authenticity_token: true, data: { rel: "#modal-header-#{ei.id}", target: "#errors-#{ei.id}" } do |f|
         .modal-dialog.modal-md{role: 'document'}
           .modal-content
             .modal-header{id: "modal-header-#{ei.id}"}
