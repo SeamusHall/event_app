@@ -73,5 +73,4 @@ namespace :deploy do
   after  :finishing,    :compile_assets
   after  :finishing,    :migrate
   after  :finishing,    :cleanup
-  after  :finishing,    :restart
 end
