@@ -22,7 +22,7 @@ test:
 
 production:
   adapter: mysql2
-  database: eclipse_production
+  database: events_production
   host: 127.0.0.1
-  username: eclipse_user
+  username: event_user
   password: h0us1ngw#b
