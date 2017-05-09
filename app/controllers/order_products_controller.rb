@@ -54,7 +54,7 @@ class OrderProductsController < ApplicationController
 
   def make_purchase
     # create transation and request with Authorize
-    transaction = Transaction.new(AUTHORIZE_NET_CONFIG['api_login_id'], AUTHORIZE_NET_CONFIG['api_transaction_key'], :gateway => :sandbox)
+    transaction = Transaction.new(AUTHORIZE_NET_CONFIG['api_login_id'], AUTHORIZE_NET_CONFIG['api_transaction_key'], :gateway => :production)
     # transaction = Transaction.new('API_LOGIN', 'API_KEY', :gateway => :sandbox)
     request = CreateTransactionRequest.new
 
