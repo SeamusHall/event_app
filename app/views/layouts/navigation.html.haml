@@ -10,7 +10,7 @@
         = link_to image_tag("siu-logo-horizontal.png", alt: "Southern Illinois University Logo",class: 'navbar-brand'), "http://siu.edu"
     .collapse.navbar-collapse
       %ul.nav.navbar-nav.navbar-right.right
-        -#%li= link_to 'products', products_path
+        %li= link_to 'products', products_path
         %li= link_to 'events', events_path
         - if current_user
           %li.dropdown
@@ -52,10 +52,10 @@
           = link_to 'University Housing Events', root_path
       .navbar-nav.navbar-right
         .row
-        -#  .col-sm-5
-        -#  %h4
-        -#      618.453.2301
-        -#      %br
-        -#      != "#{mail_to 'housing@siu.edu', 'housing@siu.edu', encode: :hex}"
-        -#  .col-sm-7
-        -#    = render "layouts/cart"
+          .col-sm-5
+            %h4
+              618.453.2301
+              %br
+              != "#{mail_to 'housing@siu.edu', 'housing@siu.edu', encode: :hex}"
+          .col-sm-7
+            = render "layouts/cart"
