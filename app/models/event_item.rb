@@ -10,6 +10,6 @@ class EventItem < ApplicationRecord
 
   private
   def valid_min_freq
-    errors.add(:min_freq, 'needs to be less than Check-In Date to end date') if self.min_freq >= (self.event.ends_on - self.event.starts_on) / 1.day
+    errors.add(:min_freq, 'needs to be less than start date to end date') if self.min_freq >= (self.event.ends_on - self.event.starts_on) / 1.day
   end
 end

@@ -48,10 +48,10 @@
           %p= event.description
           %p= link_to 'show', event, class: 'btn btn-default'
 
--#%hr
--#.row.text-center
--#  .col-lg-12
--#  %h3 Latest Products
+%hr
+.row.text-center
+  .col-lg-12
+    %h3 Latest Products
 
 .row.text-center
   - @products.each do |product|
