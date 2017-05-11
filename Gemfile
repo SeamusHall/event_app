@@ -45,9 +45,6 @@ gem 'paranoia', '~> 2.2'
 gem 'authorizenet', '1.9.1'
 gem "recaptcha", require: "recaptcha/rails"
 
-# See https://github.com/rails/execjs#readme for more supported runtimes
-# gem 'therubyracer', platforms: :ruby
-
 # For Running Back Ground Jobs and Implementation of Multithreaded Processing (Later)
 # Remember these!!!!
 gem 'redis'
