@@ -16,7 +16,7 @@ class EventsController < ApplicationController
   end
 
   def load_nested_attributes
-    @event.event_items.to_a.size.upto 1 do
+    @event.event_items.to_a.size.upto 11 do
       @event.event_items.build
     end
   end
