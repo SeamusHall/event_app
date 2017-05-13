@@ -26,7 +26,7 @@ set :puma_init_active_record, true  # Change to false when not using ActiveRecor
 set :branch,        :master
 set :format,        :pretty
 set :log_level,     :debug
-set :keep_releases, 2 # should only keep the previous 2 release versions
+set :keep_releases, 3 # should only keep the previous 2 release versions
 set :migration_role, :db # Defaults to :db role
 set :migration_servers, -> { primary(fetch(:migration_role)) } # Defaults to the primary :db server
 set :conditionally_migrate, true # Skip migration if files in db/migrate were not modified
