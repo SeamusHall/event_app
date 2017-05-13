@@ -1,9 +1,6 @@
 
 server '131.230.116.221', port: 22, roles: [:web, :app, :db], primary: true
 
-app_dir = File.expand_path("../..", __FILE__)
-shared_dir = "#{app_dir}/shared"
-
 set :repo_url,        'git@github.com:UniversityHousing/events.git'
 set :application,     'events'
 set :user,            'deployer'
@@ -29,7 +26,13 @@ set :puma_init_active_record, true  # Change to false when not using ActiveRecor
 set :branch,        :master
 set :format,        :pretty
 set :log_level,     :debug
-# set :keep_releases, 5
+set :keep_releases, 3 # should only keep the previous 2 release versions
+set :migration_role, :db # Defaults to :db role
+set :migration_servers, -> { primary(fetch(:migration_role)) } # Defaults to the primary :db server
+set :conditionally_migrate, true # Skip migration if files in db/migrate were not modified
+set :assets_roles, [:web, :app] # Defaults to [:web]
+set :rails_assets_groups, :assets # RAILS_GROUPS env value for the assets:precompile task. Default to nil.
+set :keep_assets, 2 # set this to the number of versions to keep
 
 namespace :puma do
   desc 'Create Directories for Puma Pids and Socket'
