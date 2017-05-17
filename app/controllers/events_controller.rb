@@ -12,11 +12,11 @@ class EventsController < ApplicationController
   private
   def event_params
     params.require(:event).permit(:name, :description, :page_body, :available_at, :unavailable_at, :starts_on, :ends_on,
-      event_items_attributes: [:id, :event_id, :description, :price, :tax, :min_freq, :max_event, :max_order, :flat_rate])
+      event_items_attributes: [:id, :event_id, :description, :price, :tax, :max_event, :max_order, :flat_rate])
   end
 
   def load_nested_attributes
-    @event.event_items.to_a.size.upto 2 do
+    @event.event_items.to_a.size.upto 1 do
       @event.event_items.build
     end
   end
