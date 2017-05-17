@@ -20,10 +20,8 @@
             %th Description
             %th Price
             %th Tax
-            %th Flat Rate
             %th Maximum per Event
             %th Maximum per Order
-            %th Minimum Days
             %th
         %tbody
           - @event.event_items.each do |ei|
@@ -31,9 +29,7 @@
               %td= ei.description
               %td= number_to_currency(ei.price)
               %td= ei.tax > 0.0 ? ei.tax : '--'
-              %td= ei.flat_rate ? "Y" : "N"
               %td= ei.max_event
               %td= ei.max_order
-              %td= ei.min_freq
               %td
 = link_to 'back', admin_events_path, class: 'btn btn-danger'
