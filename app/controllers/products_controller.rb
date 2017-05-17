@@ -5,8 +5,7 @@ class ProductsController < ApplicationController
   respond_to :html
 
   def index
-    @products = Product.all
-    respond_with(@products)
+    @products = Product.all.where(published: true)
   end
 
   def show
@@ -14,11 +13,9 @@ class ProductsController < ApplicationController
   end
 
   private
-    def set_product
-      @product = Product.find(params[:id])
-    end
 
-    def product_params
-      params.require(:product).permit(:name, :price, :image, :description)
-    end
+  def set_product
+    @product = Product.find(params[:id])
+  end
+
 end

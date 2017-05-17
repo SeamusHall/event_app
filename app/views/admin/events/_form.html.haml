@@ -1,37 +1,46 @@
 = form_for ["admin", @event] do |f|
   = errors_for @event
-
   .row
     .col-sm-6
+    .col-sm-4
+    .col-sm-2
+      .actions
+        = f.submit 'Submit', class: 'btn btn-success btn-lg'
+        = link_to 'Back', :back, class: 'btn btn-danger btn-lg'
+
+  .row
+    .col-sm-4
       .form-group
         = f.label :name
         = f.text_field :name, placeholder: 'name', class: 'form-control', autofocus: true
       .form-group
         = f.label :description
         = f.text_area :description, placeholder: 'description', class: 'form-control'
+    .col-sm-4
+      .form-group
+        = f.label :available_at
+        = f.text_field :available_at, class: 'form-control'
+      .form-group
+        = f.label :unavailable_at
+        = f.text_field :unavailable_at, class: 'form-control'
+    .col-sm-4
+      .form-group
+        = f.label 'check-in date'
+        = f.text_field :starts_on, class: 'form-control'
+      .form-group
+        = f.label 'check-out date'
+        = f.text_field :ends_on, class: 'form-control'
+  .row
+    .col-sm-12
+      .form-group
+        = f.label :attachment
+        = f.file_field :attachment, class: 'form-control'
+      %i Supported formats: .jpg .jpeg .gif .png .avi .mov .mpg .mpeg .divx .mp4 .mpv
+  .row
+    .col-sm-12
       .form-group
         = f.label :page_body
-        = f.text_area :page_body, placeholder: 'page body', class: 'form-control', size: 'x15'
-        %i markdown format
-    .col-sm-6
-      .row
-        .col-sm-6
-          .form-group
-            = f.label :available_at
-            = f.text_field :available_at, class: 'form-control'
-        .col-sm-6
-          .form-group
-            = f.label :unavailable_at
-            = f.text_field :unavailable_at, class: 'form-control'
-      .row
-        .col-sm-6
-          .form-group
-            = f.label :starts_on
-            = f.text_field :starts_on, class: 'form-control'
-        .col-sm-6
-          .form-group
-            = f.label :ends_on
-            = f.text_field :ends_on, class: 'form-control'
+        = f.cktext_area :page_body, placeholder: 'page body', class: 'form-control', size: 'x15'
       %hr
       = f.fields_for :event_items do |event_item_form|
         %p Event Item
@@ -65,12 +74,11 @@
           .col-sm-3
             .form-group
               = event_item_form.text_field :max_order, placeholder: 'max per order', class: 'form-control'
-        %hr
 
   .row
     .actions.right
-      = f.submit 'Submit', class: 'btn btn-success'
-      = link_to 'Back', :back, class: 'btn btn-danger'
+      = f.submit 'Submit', class: 'btn btn-success btn-lg'
+      = link_to 'Back', :back, class: 'btn btn-danger btn-lg'
 
 :javascript
   $('#event_available_at').datetimepicker({format: 'YYYY-MM-DD HH:mm:ss ZZ', sideBySide: true});

@@ -6,7 +6,7 @@
     %br
     Event Dates:
     = @event.dates
-%hr
+= image_tag @event.attachment.url, height: "300"
 = @event.page_body.html_safe
 
 %hr

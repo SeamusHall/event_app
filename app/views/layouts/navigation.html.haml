@@ -1,17 +1,12 @@
-%nav.navbar.navbar-default.navbar-fixed-top
+%nav.navbar.navbar-default.navbar-fixed-top.admin
   .container-top
     .navbar-header
-      %button.navbar-toggle.collapsed{"data-toggle" => "collapse", "data-target" => "#navbar", "aria-expanded" => "false", "aria-controls" => "navbar"}
-        %span.sr-only Toggle Navigation
-        %span.icon-bar
-        %span.icon-bar
-        %span.icon-bar
       .logo
         = link_to image_tag("siu-logo-horizontal.png", alt: "Southern Illinois University Logo",class: 'navbar-brand'), "http://siu.edu"
     .collapse.navbar-collapse
       %ul.nav.navbar-nav.navbar-right.right
-        -#%li= link_to 'products', products_path
-        -#%li= link_to 'events', events_path
+        %li
+        %li
         - if current_user
           %li.dropdown
             %a.dropdown-toggle{"data-toggle" => "dropdown", "role" => "button", "aria-haspopup" => "true", "aria-expanded" => "false"}
@@ -47,15 +42,32 @@
           %li= link_to 'Login', new_session_path(User.new)
   %nav.navbar.navbar-default.navbar-lower{role: "navigation"}
     .collapse.navbar-collapse
-      %h2.navbar-nav.navbar-left
-        %strong
-          = link_to 'University Housing Events', root_path
-      .navbar-nav.navbar-right
-        .row
-        -#  .col-sm-5
-        -#    %h4
-        -#      618.453.2301
-        -#      %br
-        -#      != "#{mail_to 'housing@siu.edu', 'housing@siu.edu', encode: :hex}"
-        -#  .col-sm-7
-        -#    = render "layouts/cart"
+      .row
+        .col-sm-1
+        .col-sm-5
+          %h2.navbar-nav.navbar-left
+            %strong
+              = link_to 'University Housing Events', root_path
+        .col-sm-5
+          .navbar-nav.navbar-right
+            .row
+              .col-sm-5
+                %h4
+                  618.453.2301
+                  %br
+                  != "#{mail_to 'housing@siu.edu', 'housing@siu.edu', encode: :hex}"
+              .col-sm-7
+                = render "layouts/cart"
+        .col-sm-1
+.parent2
+  .test1
+    %i= link_to "", edit_user_registration_path, class: 'fa fa-user fa-2x white'
+  .test2
+    %i= link_to '', events_path, class: 'fa fa-calendar fa-2x white'
+  .test3
+    %i= link_to '', products_path, class: 'fa fa-diamond fa-2x white'
+
+  .test4
+    %i.fa.fa-envelope-o.fa-2x
+  .mask2
+    %i.fa.fa-home.fa-3x= link_to '', root_path

@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
+  require 'sidekiq/web'
 
+  mount Sidekiq::Web => '/sidekiq' 
+  mount Ckeditor::Engine => '/ckeditor'
   resources :orders, except: [:destroy] do
     member do
       get :purchase

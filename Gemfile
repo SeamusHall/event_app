@@ -27,9 +27,12 @@ gem 'haml-rails'
 # gem 'pandoc-ruby' # markdown
 gem 'kaminari'
 gem 'gravtastic'
+gem 'ckeditor'
 
-# For image Uploading
+# For image and Video Uploading
 gem 'carrierwave'
+gem 'carrierwave-video', github: 'rheaton/carrierwave-video', branch: 'master'
+gem 'carrierwave-video-thumbnailer'
 gem "mini_magick"
 
 gem 'momentjs-rails', '>= 2.9.0'
@@ -46,11 +49,12 @@ gem 'authorizenet', '1.9.1'
 gem "recaptcha", require: "recaptcha/rails"
 
 # For Running Back Ground Jobs and Implementation of Multithreaded Processing (Later)
-# Remember these!!!!
 gem 'redis'
 gem 'redis-namespace'
 gem 'redis-rails'
 gem 'redis-rack-cache'
+gem 'sidekiq'
+gem 'sinatra', github: 'sinatra/sinatra'
 gem 'concurrent-ruby', require: 'concurrent'
 
 group :production do

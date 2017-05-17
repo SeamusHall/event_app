@@ -1,71 +1,43 @@
 %nav.navbar.navbar-default.navbar-fixed-top
   .container
-    .navbar-header
-      %button.navbar-toggle.collapsed{"data-toggle" => "collapse", "data-target" => "#navbar", "aria-expanded" => "false", "aria-controls" => "navbar"}
-        %span.sr-only Toggle Navigation
-        %span.icon-bar
-        %span.icon-bar
-        %span.icon-bar
-      = link_to "Event Admin", admin_path, class: "navbar-brand"
-    .collapse.navbar-collapse
-      - if current_user
-        %ul.nav.navbar-nav.navbar-right
-          %li.dropdown
-            %a.dropdown-toggle{"data-toggle" => "dropdown", "role" => "button", "aria-haspopup" => "true", "aria-expanded" => "false"}
-              = current_user.email
-              %span.glyphicon.glyphicon-user
-              %strong Profile
-              %span.glyphicon.glyphicon-chevron-down
-            %ul.dropdown-menu
-              %li
-                .navbar-login
-                  .row
-                    .col-lg-12
-                      %p= link_to 'Logout', destroy_user_session_path, class: 'btn btn-danger btn-block', method: :delete
-                  .row
-                    .col-lg-12
-                      .card.hovercard
-                        .cardheader
-                          = image_tag current_user.gravatar_url(secure: true)
-                        .bottom
+    .row
+      .col-sm-4
+        .navbar-header
+          %button.navbar-toggle.collapsed{"data-toggle" => "collapse", "data-target" => "#navbar", "aria-expanded" => "false", "aria-controls" => "navbar"}
+            %span.sr-only Toggle Navigation
+            %span.icon-bar
+            %span.icon-bar
+            %span.icon-bar
+      .col-sm-4
+        %strong
+          = link_to "Event Admin", admin_path, class: "navbar-brand"
+      .col-sm-4
+        .collapse.navbar-collapse
+          - if current_user
+            %ul.nav.navbar-nav.navbar-right
+              %li.dropdown
+                %a.dropdown-toggle{"data-toggle" => "dropdown", "role" => "button", "aria-haspopup" => "true", "aria-expanded" => "false"}
+                  = current_user.email
+                  %span.glyphicon.glyphicon-user
+                  %strong Profile
+                  %span.glyphicon.glyphicon-chevron-down
+                %ul.dropdown-menu
+                  %li
+                    .navbar-login
+                      .row
+                        .col-lg-12
+                          %p= link_to 'Logout', destroy_user_session_path, class: 'btn btn-danger btn-block', method: :delete
+                      .row
+                        .col-lg-12
+                          .card.hovercard
+                            .cardheader
+                              = image_tag current_user.gravatar_url(secure: true)
+                            .bottom
 
-              %li= link_to 'Event Admin', admin_path if current_user && current_user.has_role?(:admin)
-              %li= link_to 'Orders', orders_path
-              %li= link_to 'Site', root_path
-              %li.divider{role: "separator"}
-              %li= link_to "Account", edit_user_registration_path
-      - else
-        %li= link_to 'Login', new_session_path(User.new)
-
-
-  .navbar-default.sidebar{:role => "navigation"}
-    .sidebar-nav.navbar-collapse
-      %ul#side-menu.nav.in
-        %li
-          = link_to admin_path do
-            = text_icon :tachometer
-            Dashboard
-        %li
-          = link_to admin_users_path do
-            = text_icon :users
-            Users
-        %li
-          = link_to admin_roles_path do
-            = text_icon :wrench
-            Roles
-        %li
-          = link_to admin_events_path do
-            = text_icon :calendar
-            Events
-        %li
-          = link_to admin_products_path do
-            = text_icon :shopping_cart
-            Products
-        %li
-          = link_to admin_orders_path do
-            = text_icon :shopping_cart
-            Orders
-        %li
-          = link_to admin_order_products_path do
-            = text_icon :shopping_cart
-            Product Orders
+                  %li= link_to 'Event Admin', admin_path if current_user && current_user.has_role?(:admin)
+                  %li= link_to 'Orders', orders_path
+                  %li= link_to 'Site', root_path
+                  %li.divider{role: "separator"}
+                  %li= link_to "Account", edit_user_registration_path
+          - else
+            %li= link_to 'Login', new_session_path(User.new)

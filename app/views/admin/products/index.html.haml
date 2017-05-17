@@ -15,10 +15,15 @@
         %tr
           %td= product.name
           %td= number_to_currency product.price
-          %td= image_tag product.image.thumb
+          %td
+            - product.attachments.each do |at|
+              - if (at.content_type.include? 'video')
+                = video_tag at.thumb.url
+              - else
+                = image_tag at.image_thumb.url
           %td= product.description
           %td
             = link_to 'Show', admin_product_path(product), class: 'btn btn-success btn-block'
             = link_to 'Edit', edit_admin_product_path(product), class: 'btn btn-warning btn-block'
 
-= link_to 'New Product', new_admin_product_path, class: 'btn btn-block btn-success'
+= link_to 'New Product', new_admin_product_path, class: 'btn btn-block btn-success btn-lg'

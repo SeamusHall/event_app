@@ -42,7 +42,7 @@
   - @events.each do |event|
     .col-md-3.col-sm-6.hero-feature
       .thumbnail
-        = image_tag 'eclipse-04.jpg', alt: 'eclipse'
+        = image_tag event.attachment, alt: 'eclipse'
         .caption
           %h3= event.name
           %p= event.description
@@ -57,7 +57,7 @@
   - @products.each do |product|
     .col-md-3.col-sm-6.hero-feature
       .thumbnail
-        = image_tag product.image
+        //= image_tag product.attachments.first.url
         .caption
           %h3= product.name
           %p= product.description
