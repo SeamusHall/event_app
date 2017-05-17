@@ -31,3 +31,6 @@ public/assets/
 
 # Ignore Shared
 /shared/*
+
+# Ignore Redis Dump
+dump.rdb

@@ -1,58 +1,123 @@
-%h2 Order Details
-%hr
-.row
-  .col-sm-6
-    %p
-      %strong Order ID:
-      = @order.id
-    %p
-      %strong Order Date:
-      = @order.created_at
-    %p
-      %strong Order Status:
-      = @order.extended_status
-    %p
-      %strong Event:
-      = @order.event_item.event.name
-    %p
-      %strong Event Item:
-      = @order.event_item.description
-    %p
-      %strong Item Price:
-      = number_to_currency(@order.event_item.price)
-    %p
-      %strong Item Tax:
-      = @order.event_item.tax > 0.0 ? @order.event_item.tax : '--'
-    %p
-      %strong Order Quantity:
-      = @order.quantity
-    %p
-      %strong Order Dates for Event:
-      = @order.dates
-    %p
-      %strong Order Name:
-      = @order.first_name + ' ' + @order.last_name
-  .col-sm-6
-    - if @order.placed_at
-      %p
-        %strong Auth Code:
-        = @order.auth_code
-      %p
-        %strong Transaction ID:
-        = @order.transaction_id
-      %p
-        %strong Placed At:
-        = @order.placed_at.strftime('%m/%d/%Y %l:%M%p')
-    - if @order.finalized_on
-      %p
-        %strong Finalized On:
-        = @order.finalized_on.strftime('%m/%d/%Y %l:%M%p')
-%hr
-%h4
-  %strong Order Total:
-  = number_to_currency(@order.total)
-
+%h1 Order Details
+.container
+  .row
+    .col-lg-12
+      .panel.panel-default
+        .panel-heading
+          %h3.text-center
+            %strong Order summary
+        .panel-body
+          .table-responsive
+            %table.table.table-condensed
+              %thead
+                %tr
+                  %td
+                    %strong Item Name
+                  %td.text-center
+                    %strong Item Tax
+                  %td.text-center
+                    %strong Item Quantity
+                  %td.text-center
+                    %strong Order Date
+                  %td.text-center
+                    %strong Order Name
+                  %td.text-right
+                    %strong Price
+              %tbody
+                %tr
+                  %td= @order.event_item.event.name
+                  %td.text-center= @order.event_item.tax > 0.0 ? number_to_percentage(@order.event_item.tax) : '--'
+                  %td.text-center= @order.quantity
+                  %td.text-center= @order.dates
+                  %td.text-center= @order.first_name + ' ' + @order.last_name
+                  %td.text-right= number_to_currency(@order.event_item.price)
+                -# %tr
+                  %td.highrow
+                  %td.highrow
+                  %td.highrow
+                  %td.highrow
+                  %td.highrow.text-center
+                    %strong Subtotal
+                  %td.highrow.text-right $958.00
+                  %tr
+                    %td.emptyrow
+                    %td.emptyrow
+                    %td.emptyrow
+                    %td.emptyrow
+                    %td.emptyrow.text-center
+                      %strong Shipping
+                    %td.emptyrow.text-right $20
+                %tr
+                  %td.highrow
+                  %td.highrow
+                  %td.highrow
+                  %td.highrow
+                  %td.highrow.text-center
+                    %strong Total
+                  %td.highrow.text-right= number_to_currency(@order.total)
 %br
-= link_to 'Orders', orders_path, class: 'btn btn-primary'
-= link_to 'Modify Order', edit_order_path(@order), class: 'btn btn-info' if can? :edit, @order
-= link_to 'Proceed to Checkout', purchase_order_path(@order), class: 'btn btn-success' if @order.status == Order::PENDING_STATUS
+= link_to 'Orders', orders_path, class: 'btn btn-primary btn-lg'
+= link_to 'Modify Order', edit_order_path(@order), class: 'btn btn-info btn-lg' if can? :edit, @order
+= link_to 'Proceed to Checkout', purchase_order_path(@order), class: 'btn btn-success btn-lg' if @order.status == Order::PENDING_STATUS
+
+
+-# Possible Additions
+  %hr/
+  .row
+    .col-xs-12.col-md-3.col-lg-3.pull-left
+      .panel.panel-default.height
+        .panel-heading Billing Details
+        .panel-body
+          %strong David Peere:
+          %br/
+          1111 Army Navy Drive
+          %br/
+          Arlington
+          %br/
+          VA
+          %br/
+          %strong 22 203
+          %br/
+    .col-xs-12.col-md-3.col-lg-3
+      .panel.panel-default.height
+        .panel-heading Payment Information
+        .panel-body
+          %strong Card Name:
+          Visa
+          %br/
+          %strong Card Number:
+          ***** 332
+          %br/
+          %strong Exp Date:
+          09/2020
+          %br/
+    .col-xs-12.col-md-3.col-lg-3
+      .panel.panel-default.height
+        .panel-heading Order Preferences
+        .panel-body
+          %strong Gift:
+          No
+          %br/
+          %strong Express Delivery:
+          Yes
+          %br/
+          %strong Insurance:
+          No
+          %br/
+          %strong Coupon:
+          No
+          %br/
+    .col-xs-12.col-md-3.col-lg-3.pull-right
+      .panel.panel-default.height
+        .panel-heading Shipping Address
+        .panel-body
+          %strong David Peere:
+          %br/
+          1111 Army Navy Drive
+          %br/
+          Arlington
+          %br/
+          VA
+          %br/
+          %strong 22 203
+          %br/

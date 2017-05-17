@@ -3,6 +3,6 @@ class HomeController < ApplicationController
 
   def index
     @events = Event.available
-    @products = Product.all
+    @products = Product.all.where(published: true)
   end
 end

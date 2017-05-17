@@ -17,9 +17,8 @@
 
   %body{style: 'margin-top: 50px'}
     = render file: "layouts/admin_navigation"
-    .container
-      .row
-        #wrapper
-          #page-wrapper
-            = display_flash
-            = yield
+    #main{role: 'main'}
+      #mySidenav.sidenav
+        = render 'layouts/sidebar_navigation'
+      = display_flash
+      = yield

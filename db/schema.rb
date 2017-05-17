@@ -10,7 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170423054234) do
+ActiveRecord::Schema.define(version: 20170514233552) do
+
+  create_table "ckeditor_assets", force: :cascade do |t|
+    t.string   "data_file_name",               null: false
+    t.string   "data_content_type"
+    t.integer  "data_file_size"
+    t.string   "type",              limit: 30
+    t.integer  "width"
+    t.integer  "height"
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.index ["type"], name: "index_ckeditor_assets_on_type"
+  end
 
   create_table "event_items", force: :cascade do |t|
     t.integer  "event_id"
@@ -39,6 +51,7 @@ ActiveRecord::Schema.define(version: 20170423054234) do
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
     t.datetime "deleted_at"
+    t.string   "attachment"
     t.index ["deleted_at"], name: "index_events_on_deleted_at"
   end
 
@@ -48,6 +61,8 @@ ActiveRecord::Schema.define(version: 20170423054234) do
     t.integer  "quantity"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_order_product_items_on_deleted_at"
     t.index ["order_product_id"], name: "index_order_product_items_on_order_product_id"
     t.index ["product_id"], name: "index_order_product_items_on_product_id"
   end
@@ -65,6 +80,8 @@ ActiveRecord::Schema.define(version: 20170423054234) do
     t.datetime "finalized_on"
     t.datetime "created_at",                              null: false
     t.datetime "updated_at",                              null: false
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_order_products_on_deleted_at"
     t.index ["user_id"], name: "index_order_products_on_user_id"
   end
 
@@ -96,11 +113,16 @@ ActiveRecord::Schema.define(version: 20170423054234) do
   create_table "products", force: :cascade do |t|
     t.string   "name"
     t.float    "price"
-    t.string   "image"
     t.text     "description"
-    t.boolean  "sold_out"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.string   "status"
+    t.boolean  "published"
+    t.string   "attachments"
+    t.string   "check_status"
+    t.text     "page_body"
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_products_on_deleted_at"
   end
 
   create_table "roles", force: :cascade do |t|

@@ -1,4 +1,5 @@
 class OrderProduct < ActiveRecord::Base
+  acts_as_paranoid
   paginates_per 25
   belongs_to :user
   has_many :order_product_items

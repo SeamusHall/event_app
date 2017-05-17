@@ -18,6 +18,8 @@ h2 {
 }
 
 .container {
+  padding-left: 100px;
+  padding-right: 100px;
   width: 100%;
 }
 .alert-warning {
@@ -31,17 +33,11 @@ h2 {
 }
 .navbar {
   background-color: $maroon;
-  .logo {
-    width: 100%;
-    height:auto;
-    position: absolute;
-  }
 }
 .navbar-brand {
   color: $white !important;
-  font-size: 30px;
+  font-size: 60px;
   text-align: center;
-  text-shadow: $yellow-glow;
 }
 .navbar-header.white {
   background-color: $white;
@@ -56,9 +52,39 @@ h2 {
     margin-top: 0;
     border-top-right-radius: 0;
     border-top-left-radius: 0;
-    background-color: $black;
-    box-shadow: $yellow-glow;
+    background-color: $maroon;
     a {
       color: $white;
     }
+}
+
+.sidenav {
+    height: 100%;
+    width: 300px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: $black;
+    overflow-x: hidden;
+    padding-top: 100px;
+    transition: 0.5s;
+}
+
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s
+}
+
+.sidenav a:hover, .offcanvas a:focus{
+    color: #f1f1f1;
+}
+
+#main {
+    margin-left: 300px;
+    padding: 50px;
 }

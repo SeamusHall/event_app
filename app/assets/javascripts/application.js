@@ -17,4 +17,5 @@
 //= require turbolinks
 //= require moment
 //= require bootstrap-datetimepicker
+//= require ckeditor/init
 //= require_tree .
