@@ -2,10 +2,17 @@ include AuthorizeNet::API
 class OrdersController < ApplicationController
   load_and_authorize_resource
   before_action :authenticate_user!
+  before_filter :cart_initializer
   respond_to :js, :json
 
   def index
-    @orders = Order.all.where(user_id: current_user.id).page params[:page] # current user should only see the orders they placed
+    # current user should only see the orders they placed
+    @orders = Order.all.where(user_id: current_user.id).page params[:page]
+    @orders.each do |order|
+      if order.status == Order::PROGRESS_STATUS || order.status == Order::VALIDATED_STATUS
+        @products = Product.all.where(check_status: Order::PROGRESS_STATUS)
+      end
+    end
   end
 
   def create

@@ -1,10 +1,46 @@
 %p#notice= notice
 
 %h1= @product.name
-%p= number_to_currency @product.price
-%p= image_tag @product.image, height: "300"
-
-%p= link_to "Add to cart", add_cart_path, method: :post, class: 'btn btn-success'
-%p= link_to "Clear cart", clear_cart_path, method: :post, class: 'btn btn-warning'
-%p= link_to "Remove from cart", remove_cart_path, method: :post, class: 'btn btn-danger'
-%p= link_to 'Back', products_path, class: 'btn btn-danger'
+.container-fluid
+  .content-wrapper
+    .item-container
+      .container
+        .col-md-12
+          - @product.attachments.each do |attach|
+            = image_tag attach, height: "300", width: "300"
+        .col-md-7
+          .product-title= @product.name
+          .product-desc= @product.description
+          -#.product-rating
+            %i.fa.fa-star.gold
+            %i.fa.fa-star.gold
+            %i.fa.fa-star.gold
+            %i.fa.fa-star.gold
+            %i.fa.fa-star-o
+          %hr
+          .product-price= number_to_currency @product.price
+          .product-stock= @product.status
+          %hr
+          .btn-group
+            = link_to 'add to cart', add_cart_path, method: :post, class: 'btn btn-success'
+          .btn-group
+            = link_to "Remove from cart", remove_cart_path, method: :post, class: 'btn btn-danger'
+          .btn-group
+            = link_to "clear cart", clear_cart_path, method: :post, class: 'btn btn-warning'
+    .container-fluid
+      .col-md-12.product-info
+        %ul#myTab.nav.nav-tabs.nav_tabs
+          %li.active
+            = link_to 'Description', '#service-one', "data-toggle" => "tab"
+          -#%li
+            %a{"data-toggle" => "tab", :href => "#service-two"} PRODUCT INFO
+            %li
+              %a{"data-toggle" => "tab", :href => "#service-three"} REVIEWS
+        #myTabContent.tab-content
+          #service-one.tab-pane.fade.in.active
+            %section.container.product-info
+              = @product.page_body.html_safe
+          #service-two.tab-pane.fade
+            %section.container
+          #service-three.tab-pane.fade
+        %hr

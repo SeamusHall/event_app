@@ -1,29 +1,49 @@
-%h2 Orders
-
-%div{style: "overflow-x:auto;"}
-  %table.table
-    %thead
-      %tr
-        %th ID
-        %th Status
-        %th Date
-        %th Quantity
-        %th Total
-        %th First Name
-        %th Last Name
-        %th
-    %tbody
-      - @orders.each do |order|
-        %tr{class: ('success' if order.status == Order::VALIDATED_STATUS)}
-          %td= order.id
-          %td= current_user.has_role?(:admin) ? order.status : order.extended_status
-          %td= order.created_at.strftime('%m-%e-%y %H:%M')
-          %td= order.quantity
-          %td= number_to_currency(order.total)
-          %td= order.first_name
-          %td= order.last_name
-          %td
+%h1 Orders
+.pricing-table.pricing-three-column.row
+  - @orders.each do |order|
+    .plan.col-sm-4.col-lg-4
+      - if order.status == Order::VALIDATED_STATUS
+        .plan-name-gold
+          %h2= "#{order.first_name} #{order.last_name}"
+          %span= number_to_currency(order.total)
+        %ul
+          %li.plan-feature= "quantity: #{order.quantity}"
+          %li.plan-feature= current_user.has_role?(:admin) ? order.status : order.extended_status
+          %li.plan-feature
             = link_to 'Show', order, class: 'btn btn-success'
-            |
+            = link_to 'edit', edit_order_path(order), class: 'btn btn-warning'
+      - elsif order.status == Order::PROGRESS_STATUS
+        .plan-name-silver
+          %h2= "#{order.first_name} #{order.last_name}"
+          %span= number_to_currency(order.total)
+        %ul
+          %li.plan-feature= "quantity: #{order.quantity}"
+          %li.plan-feature= current_user.has_role?(:admin) ? order.status : order.extended_status
+          %li.plan-feature
+            = link_to 'Show', order, class: 'btn btn-success'
+            = link_to 'edit', edit_order_path(order), class: 'btn btn-warning'
+      - else
+        .plan-name-maroon
+          %h2= "#{order.first_name} #{order.last_name}"
+          %span= number_to_currency(order.total)
+        %ul
+          %li.plan-feature= "quantity: #{order.quantity}"
+          %li.plan-feature= current_user.has_role?(:admin) ? order.status : order.extended_status
+          %li.plan-feature
+            = link_to 'Show', order, class: 'btn btn-success'
             = link_to 'edit', edit_order_path(order), class: 'btn btn-warning'
 = paginate @orders
+
+%hr
+.row.text-center
+  - @products.each do |prod|
+    .col-md-3.col-sm-6.hero-feature
+      .thumbnail
+        //= image_tag product.attachments.first.url
+        .caption
+          %h3= prod.name
+          %p= prod.description
+          %p= number_to_currency prod.price
+          %p
+            = link_to 'add to cart', add_cart_path(prod), method: :post, class: 'btn btn-success'
+            = link_to 'Show', prod, class: 'btn btn-default'

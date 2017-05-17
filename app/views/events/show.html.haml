@@ -1,12 +1,12 @@
 .row
   .col-sm-8
     %h1= @event.name
-    %h4= @event.description
   .col-sm-4.right
     %br
     Event Dates:
     = @event.dates
-%hr
+= image_tag @event.attachment, height: "300"
+%h4= @event.description
 = @event.page_body.html_safe
 
 %hr

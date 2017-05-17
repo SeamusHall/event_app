@@ -2,7 +2,13 @@
 
 %h1= @product.name
 %p= number_to_currency @product.price
-%p= image_tag @product.image, height: "300"
+- @product.attachments.each do |at|
+  - if (at.content_type.include? 'video')
+    = video_tag at.url
+  - else
+    = image_tag at.url
+= @product.page_body.html_safe
+
 %p
   = link_to 'Edit', edit_admin_product_path(@product), class: 'btn btn-warning'
   = link_to 'Back', admin_products_path, class: 'btn btn-danger'

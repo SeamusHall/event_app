@@ -1,53 +1,54 @@
-%h2 Order Details
-%hr
-.row
-  .col-sm-6
-    %p
-      %strong Order ID:
-      = @order_product.id
-    %p
-      %strong Order Date:
-      = @order_product.created_at
-    %p
-      %strong Order Status:
-      = @order_product.extended_status
-    - @order_product.order_product_items.each do |opi|
-      %p
-        %strong Product:
-        = opi.product.name
-      %p
-        %strong Product Description:
-        = opi.product.description
-      %p
-        %strong Item Price:
-        = number_to_currency(opi.product.price)
-      %p
-        %strong Product Quantity:
-        = opi.quantity
-    %p
-      %strong Order Name:
-      = @order_product.first_name + ' ' + @order_product.last_name
-  .col-sm-6
-    - if @order_product.placed_at
-      %p
-        %strong Auth Code:
-        = @order_product.auth_code
-      %p
-        %strong Transaction ID:
-        = @order_product.transaction_id
-      %p
-        %strong Placed At:
-        = @order_product.placed_at.strftime('%m/%d/%Y %l:%M%p')
-    - if @order_product.finalized_on
-      %p
-        %strong Finalized On:
-        = @order_product.finalized_on.strftime('%m/%d/%Y %l:%M%p')
-%hr
-%h4
-  %strong Order Total:
-  = number_to_currency(@order_product.total)
-
+%h1 Order Details
+.container
+  .row
+    .col-lg-12
+      .panel.panel-default
+        .panel-heading
+          %h3.text-center
+            %strong Order summary
+        .panel-body
+          .table-responsive
+            %table.table.table-condensed
+              %thead
+                %tr
+                  %td
+                    %strong Item Name
+                  %td.text-center
+                    %strong Item Quantity
+                  %td.text-right
+                    %strong Item Price
+              %tbody
+                - @order_product.order_product_items.each do |opi|
+                  %tr
+                    %td= opi.product.name
+                    %td.text-center= opi.quantity
+                    %td.text-right= number_to_currency(opi.product.price)
+                %tr
+                  %td.highrow
+                  %td.highrow.text-center
+                    %strong Total
+                  %td.highrow.text-right= number_to_currency(@order_product.total)
 %br
-= link_to 'Orders', order_products_path, class: 'btn btn-primary'
-= link_to 'Modify Order', edit_order_product_path(@order_product), class: 'btn btn-info' if can? :edit, @order_product
-= link_to 'Proceed to Checkout', purchase_order_product_path(@order_product), class: 'btn btn-success' if @order_product.status == Order::PENDING_STATUS
+= link_to 'Orders', order_products_path, class: 'btn btn-primary btn-lg'
+= link_to 'Modify Order', edit_order_product_path(@order_product), class: 'btn btn-info btn-lg' if can? :edit, @order_product
+= link_to 'Proceed to Checkout', purchase_order_product_path(@order_product), class: 'btn btn-success btn-lg' if @order_product.status == Order::PENDING_STATUS
+
+-# Send in email
+  .col-sm-6
+      %p
+        %strong Order Name:
+        = @order_product.first_name + ' ' + @order_product.last_name
+  - if @order_product.placed_at
+    %p
+      %strong Auth Code:
+      = @order_product.auth_code
+    %p
+      %strong Transaction ID:
+      = @order_product.transaction_id
+    %p
+      %strong Placed At:
+      = @order_product.placed_at.strftime('%m/%d/%Y %l:%M%p')
+  - if @order_product.finalized_on
+    %p
+      %strong Finalized On:
+      = @order_product.finalized_on.strftime('%m/%d/%Y %l:%M%p')

@@ -16,7 +16,7 @@
       - @events.each do |event|
         %tr
           %td= event.name
-          %td= event.available_at
+          %td= event.available_at.strftime('%d/%m/%Y')
           %td= event.unavailable_at
           %td= event.starts_on
           %td= event.ends_on
@@ -25,4 +25,4 @@
             = link_to 'Edit', edit_admin_event_path(event), class: 'btn btn-warning btn-block'
 .row
   .col-lg-12
-    = link_to 'New Event', new_admin_event_path, class: 'btn btn-success btn-large btn-block'
+    = link_to 'New Event', new_admin_event_path, class: 'btn btn-success btn-lg btn-block'
