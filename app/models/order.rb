@@ -47,7 +47,7 @@ class Order < ApplicationRecord
       errors.add(:end_date, 'must occur after check-in date') if start_date == end_date
       errors.add(:start_date, 'must occur inside event dates') if start_date < self.event_item.event.starts_on or start_date > self.event_item.event.ends_on
       errors.add(:end_date, 'must occur inside event dates') if end_date < self.event_item.event.starts_on or end_date > self.event_item.event.ends_on
-      errors.add(:base, 'minimum date freqency not met') if (end_date - start_date) + 1.day / 1.day < self.event_item.min_freq
+      #errors.add(:base, 'minimum date freqency not met') if (end_date - start_date) + 1.day / 1.day < self.event_item.min_freq
     end
   end
 
