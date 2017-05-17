@@ -34,16 +34,17 @@
             = link_to 'edit', edit_order_path(order), class: 'btn btn-warning'
 = paginate @orders
 
-%hr
-.row.text-center
-  - @products.each do |prod|
-    .col-md-3.col-sm-6.hero-feature
-      .thumbnail
-        //= image_tag product.attachments.first.url
-        .caption
-          %h3= prod.name
-          %p= prod.description
-          %p= number_to_currency prod.price
-          %p
-            = link_to 'add to cart', add_cart_path(prod), method: :post, class: 'btn btn-success'
-            = link_to 'Show', prod, class: 'btn btn-default'
+- if !@products.nil?
+  %hr
+  .row.text-center
+    - @products.each do |prod|
+      .col-md-3.col-sm-6.hero-feature
+        .thumbnail
+          //= image_tag product.attachments.first.url
+          .caption
+            %h3= prod.name
+            %p= prod.description
+            %p= number_to_currency prod.price
+            %p
+              = link_to 'add to cart', add_cart_path(prod), method: :post, class: 'btn btn-success'
+              = link_to 'Show', prod, class: 'btn btn-default'
