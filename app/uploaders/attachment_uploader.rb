@@ -3,8 +3,6 @@ class AttachmentUploader < CarrierWave::Uploader::Base
   # Include RMagick or MiniMagick support:
   #include CarrierWave::RMagick
   include CarrierWave::MiniMagick
-  include CarrierWave::Video
-  include CarrierWave::Video::Thumbnailer
 
   # Choose what kind of storage to use for this uploader:
   storage :file
@@ -16,20 +14,17 @@ class AttachmentUploader < CarrierWave::Uploader::Base
     "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
   end
 
-  version :image_thumb do
-    process :resize_to_fit => [250, 250]
+  def rename(new_name, product_id, attach_index)
+    sf = Product.find(product_id).attachments[attach_index]
+    new_path = File.join( File.dirname( sf.file ) , "#{new_name}#{File.extname( sf.file )}")
+    new_sf = CarrierWave::SanitizedFile.new sf.move_to(new_path)
+    sf.store!(new_sf)
+    return sf
   end
+  # version :thumb do
+  #   process :resize_to_fit => [250, 250]
+  # end
 
-  version :thumb do
-    process thumbnail: [{format: 'png', quality: 10, size: 192, strip: true, logger: Rails.logger}]
-    def full_filename for_file
-      png_name for_file, version_name
-    end
-  end
-
-  def png_name for_file, version_name
-    %Q{#{version_name}_#{for_file.chomp(File.extname(for_file))}.png}
-  end
   # Provide a default URL as a default if there hasn't been a file uploaded:
   # def default_url
   #   # For Rails 3.1+ asset pipeline compatibility:
@@ -48,7 +43,7 @@ class AttachmentUploader < CarrierWave::Uploader::Base
   # Add a white list of extensions which are allowed to be uploaded.
   # For images you might use something like this:
   def extension_whitelist
-    %w(jpg jpeg gif png avi mov mpg mpeg divx mp4 mpv)
+    %w(jpg jpeg gif png mp4)
   end
 
   # Override the filename of the uploaded files:
@@ -59,11 +54,11 @@ class AttachmentUploader < CarrierWave::Uploader::Base
 
   protected
 
-    def video?(video)
-      self.content_type.include? 'video'
+    def video?(new_file)
+      new_file.content_type.include? 'video'
     end
 
-    def image?(image)
-      self.content_type.include? 'image'
+    def image?(new_file)
+      new_file.content_type.include? 'image'
     end
 end

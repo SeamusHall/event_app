@@ -25,7 +25,7 @@
     .col-sm-3
       .form-group
         = f.label 'Order Status'
-        = f.select :check_status, options_for_select(Order::STATUSES.keys), {prompt: 'order status'}, {class: 'form-control selectpicker', required: true}
+        = f.select :check_status, options_for_select(Order::STATUSES.keys), {prompt: 'order status'}, {class: 'form-control selectpicker'}
     .col-sm-3
       .form-group
         = f.label 'Product Status'

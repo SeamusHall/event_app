@@ -17,10 +17,10 @@
           %td= number_to_currency product.price
           %td
             - product.attachments.each do |at|
-              - if (at.content_type.include? 'video')
-                = video_tag at.thumb.url
+              - if (at.content_type.include? 'image')
+                = image_tag at.url, width: "400"
               - else
-                = image_tag at.image_thumb.url
+                = videojs_rails sources: { mp4: at.url }, width: "400"
           %td= product.description
           %td
             = link_to 'Show', admin_product_path(product), class: 'btn btn-success btn-block'

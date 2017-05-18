@@ -31,9 +31,8 @@ gem 'ckeditor'
 
 # For image and Video Uploading
 gem 'carrierwave'
-gem 'carrierwave-video', github: 'rheaton/carrierwave-video', branch: 'master'
-gem 'carrierwave-video-thumbnailer'
 gem "mini_magick"
+gem 'videojs_rails'
 
 gem 'momentjs-rails', '>= 2.9.0'
 gem 'bootstrap3-datetimepicker-rails', '~> 4.17.47'

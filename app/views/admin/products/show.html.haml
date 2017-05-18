@@ -3,10 +3,10 @@
 %h1= @product.name
 %p= number_to_currency @product.price
 - @product.attachments.each do |at|
-  - if (at.content_type.include? 'video')
-    = video_tag at.url
+  - if (at.content_type.include? 'image')
+    = image_tag at.url, width: "500"
   - else
-    = image_tag at.url
+    = videojs_rails sources: { mp4: at.url }, width: "500"
 = @product.page_body.html_safe
 
 %p
