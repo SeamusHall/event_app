@@ -1,8 +1,19 @@
-class ProductWorker < AttachmentUploader
+class ProductWorker
   include Sidekiq::Worker
   sidekiq_options retry: false
 
-  def perform
-    process encode_video: [:mp4, callbacks: { after_transcode: :set_success } ]
+  def perform(product_id,attach_index)
+    video = Product.find(product_id).attachments[attach_index]
+    path = video.path
+    output = "/tmp/#{Time.now.getutc.to_f.to_s.delete('.')}.mp4"
+    #_command = `ffmpeg -i #{path} -f mp4 -vcodec h264 -acodec aac -strict -2 #{output}`
+    _command = `ffmpeg -i #{path} -c:v libx264 -crf 19 -preset slow -c:a aac -b:a 192k -ac 2 #{output}`
+    if $?.to_i == 0
+      video.rename(File.open(output, 'r'),product_id,attach_index)
+      Product.find(product_id).save
+      FileUtils.rm(output)
+    else
+      raise $?
+    end
   end
 end

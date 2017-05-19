@@ -2,11 +2,16 @@
 
 %h1= @product.name
 %p= number_to_currency @product.price
-- @product.attachments.each do |at|
-  - if (at.content_type.include? 'video')
-    = video_tag at.url
-  - else
-    = image_tag at.url
+
+%div.slider
+  %div.bx-wrapper
+    %div.bx-viewport
+      = bx_slider do
+        - @product.attachments.each do |at|
+          - if (at.content_type.include? 'image')
+            %li= image_tag at.url
+          - else
+            %li= videojs_rails sources: { mp4: at.url }
 = @product.page_body.html_safe
 
 %p

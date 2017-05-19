@@ -18,4 +18,5 @@
 //= require moment
 //= require bootstrap-datetimepicker
 //= require ckeditor/init
+//= require video
 //= require_tree .

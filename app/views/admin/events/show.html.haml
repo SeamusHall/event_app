@@ -6,7 +6,10 @@
     %br
     Event Dates:
     = @event.dates
-= image_tag @event.attachment.url, height: "300"
+- if (@event.attachment.content_type.include? 'image')
+  = image_tag @event.attachment.url, height: "300"
+- else
+  = videojs_rails sources: { mp4: @event.attachment.url }
 = @event.page_body.html_safe
 
 %hr

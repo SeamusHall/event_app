@@ -12,3 +12,5 @@ Rails.application.config.assets.version = '1.0'
 
 Rails.application.config.assets.precompile += %w( sb-admin-2.css sb-admin-2.js admin.scss )
 Rails.application.config.assets.precompile += %w( siu-logo-horizontal.png eclipse-04.jpg accepted_c22e0.png )
+Rails.application.config.assets.precompile += %w( video-js.swf vjs.eot vjs.svg vjs.ttf vjs.woff )
+Rails.application.config.assets.precompile += %w( jssor.slider-23.1.6.min.js )
