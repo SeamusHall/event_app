@@ -37,47 +37,68 @@ $(document).on "turbolinks:load", ->
       $('.fancy-spinner').fadeOut 200, ->
         $(@).remove()
 
-    active1 = false
-    active2 = false
-    active3 = false
-    active4 = false
-    $('.parent2').on 'mousedown touchstart', ->
-      if !active1
-        $(this).find('.test1').css
-          'background-color': 'gray'
-          'transform': 'translate(-0px,125px)'
-      else
-        $(this).find('.test1').css
-          'background-color': 'dimGray'
-          'transform': 'none'
-      if !active2
-        $(this).find('.test2').css
-          'background-color': 'gray'
-          'transform': 'translate(-60px,105px)'
-      else
-        $(this).find('.test2').css
-          'background-color': 'darkGray'
-          'transform': 'none'
-      if !active3
-        $(this).find('.test3').css
-          'background-color': 'gray'
-          'transform': 'translate(-105px,60px)'
-      else
-        $(this).find('.test3').css
-          'background-color': 'silver'
-          'transform': 'none'
-      if !active4
-        $(this).find('.test4').css
-          'background-color': 'gray'
-          'transform': 'translate(-125px,0px)'
-      else
-        $(this).find('.test4').css
-          'background-color': 'silver'
-          'transform': 'none'
-      active1 = !active1
-      active2 = !active2
-      active3 = !active3
-      active4 = !active4
-      return
+  active1 = false
+  active2 = false
+  active3 = false
+  active4 = false
+  $('.parent2').on 'mousedown touchstart', ->
+    if !active1
+      $(this).find('.test1').css
+        'background-color': 'gray'
+        'transform': 'translate(-0px,125px)'
+    else
+      $(this).find('.test1').css
+        'background-color': 'dimGray'
+        'transform': 'none'
+    if !active2
+      $(this).find('.test2').css
+        'background-color': 'gray'
+        'transform': 'translate(-60px,105px)'
+    else
+      $(this).find('.test2').css
+        'background-color': 'darkGray'
+        'transform': 'none'
+    if !active3
+      $(this).find('.test3').css
+        'background-color': 'gray'
+        'transform': 'translate(-105px,60px)'
+    else
+      $(this).find('.test3').css
+        'background-color': 'silver'
+        'transform': 'none'
+    if !active4
+      $(this).find('.test4').css
+        'background-color': 'gray'
+        'transform': 'translate(-125px,0px)'
+    else
+      $(this).find('.test4').css
+        'background-color': 'silver'
+        'transform': 'none'
+    active1 = !active1
+    active2 = !active2
+    active3 = !active3
+    active4 = !active4
     return
+  return
+  $(document).ready ->
+    $('.bxslider').bxSlider
+      video: true
+      useCSS: false
+    return
+
+  # https://www.driftingruby.com/episodes/refile-uploads-with-progress-bar
+  $(document).on "upload:start", "form", (e) ->
+    $(this).find("input[type=submit]").attr "disabled", true
+    $("#progress-bar").slideDown('fast')
+
+  $(document).on "upload:progress", "form", (e) ->
+    detail          = e.originalEvent.detail
+    percentComplete = Math.round(detail.loaded / detail.total * 100)
+    $('.progress-bar').width("#{percentComplete}%");
+    $("#progress-bar-text").text("#{percentComplete}% Complete")
+
+  $(document).on "upload:success", "form", (e) ->
+    $(this).find("input[type=submit]").removeAttr "disabled"  unless $(this).find("input.uploading").length
+    $("#progress-bar").slideUp('fast')
+
 spin = -> return "<div class='fancy-spinner' style='position: absolute !important; left: 0px; width: 100%; height: 100%; margin-top: 10px'><h2 class='center'><i class='fa fa-circle-o-notch fa-spin'></i></h2></div>"

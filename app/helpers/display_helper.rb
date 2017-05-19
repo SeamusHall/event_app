@@ -1,0 +1,3 @@
+module DisplayHelper
+
+end

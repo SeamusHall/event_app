@@ -16,7 +16,7 @@ module Admin
       @product = Product.new(product_params)
       if @product.save
         #set_background_job
-        redirect_to admin_product_path(@product), notice: 'Product was successfully added to the working queue.'
+        redirect_to admin_product_path(@product), notice: 'Product was successfully added.'
       else
         render "new"
       end
@@ -25,7 +25,7 @@ module Admin
     def update
       if @product.update(product_params)
         #set_background_job
-        redirect_to admin_product_path(@product), notice: 'Product was successfully added to the working queue.'
+        redirect_to admin_product_path(@product), notice: 'Product was successfully updated.'
       else
         render "edit"
       end
@@ -42,10 +42,12 @@ module Admin
     end
 
     def set_background_job
+      count = 0
       @product.attachments.each do |attach|
         if attach.content_type.include? 'video'
-          ProductWorker.perform_async
+          ProductWorker.perform_async(@product.id, count)
         end
+        count += 1
       end
     end
 
