@@ -1,3 +1,7 @@
+#progress-bar.progress{:style => "display:none;"}
+  .progress-bar.progress-bar-striped.active{:role => "progressbar", :style => "width: 0%"}
+    %span#progress-bar-text.sr-only
+
 = form_for ["admin", @event] do |f|
   = errors_for @event
   .row
@@ -5,7 +9,7 @@
     .col-sm-4
     .col-sm-2
       .actions
-        = f.submit 'Submit', class: 'btn btn-success btn-lg'
+        = f.submit 'Submit', class: 'btn btn-success btn-lg', id: 'progress-bar'
         = link_to 'Back', :back, class: 'btn btn-danger btn-lg'
 
   .row
@@ -77,7 +81,7 @@
 
   .row
     .actions.right
-      = f.submit 'Submit', class: 'btn btn-success btn-lg'
+      = f.submit 'Submit', class: 'btn btn-success btn-lg', id: 'fileUpload', data: { disable_with: 'Uploading' }
       = link_to 'Back', :back, class: 'btn btn-danger btn-lg'
 
 :javascript

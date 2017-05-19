@@ -34,6 +34,9 @@ gem 'carrierwave'
 gem "mini_magick"
 gem 'videojs_rails'
 
+# For slider system
+gem 'bxslider', github: 'EasyIP2023/bxslider'
+
 gem 'momentjs-rails', '>= 2.9.0'
 gem 'bootstrap3-datetimepicker-rails', '~> 4.17.47'
 
