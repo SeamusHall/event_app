@@ -22,7 +22,7 @@
       = number_to_currency(@order.event_item.price)
     %p
       %strong Item Tax:
-      = @order.event_item.tax > 0.0 ? @order.event_item.tax : '--'
+      = @order.event_item.tax > 0.0 ? number_to_currency(@order.event_item.tax * 100, precision: 0) : '--'
     %p
       %strong Order Quantity:
       = @order.quantity

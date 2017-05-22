@@ -2,15 +2,15 @@
   .progress-bar.progress-bar-striped.active{:role => "progressbar", :style => "width: 0%"}
     %span#progress-bar-text.sr-only
 
-= form_for ["admin", @event] do |f|
+= nested_form_for ["admin", @event] do |f|
   = errors_for @event
   .row
     .col-sm-6
     .col-sm-4
     .col-sm-2
       .actions
-        = f.submit 'Submit', class: 'btn btn-success btn-lg', id: 'progress-bar'
-        = link_to 'Back', :back, class: 'btn btn-danger btn-lg'
+        = f.submit 'Submit', class: 'btn btn-success btn-lg', id: 'progress-bar', data: { disable_with: 'Uploading' }
+        = link_to 'Back', :back, class: 'btn btn-danger btn-lg', data: { disable_with: 'Please wait' }
 
   .row
     .col-sm-4
@@ -36,10 +36,10 @@
         = f.text_field :ends_on, class: 'form-control'
   .row
     .col-sm-12
+      %i Supported formats: .jpg .jpeg .gif .png .mp4
       .form-group
         = f.label :attachment
         = f.file_field :attachment, class: 'form-control'
-      %i Supported formats: .jpg .jpeg .gif .png .mp4
   .row
     .col-sm-12
       .form-group
@@ -52,9 +52,9 @@
           .col-sm-6
             .form-group
               = event_item_form.text_field :description, placeholder: 'description', class: 'form-control'
-          -#.col-sm-3
-            -#.form-group
-              -#= event_item_form.text_field :min_freq, placeholder: 'min days', class: 'form-control'
+          .col-sm-3
+            .form-group
+              = event_item_form.text_field :min_freq, placeholder: 'min days', class: 'form-control'
           .col-sm-3
             .form-group
               = event_item_form.check_box :flat_rate
@@ -78,11 +78,16 @@
           .col-sm-3
             .form-group
               = event_item_form.text_field :max_order, placeholder: 'max per order', class: 'form-control'
-
+        .row
+          .col-sm-6
+          .col-sm-6
+            = event_item_form.link_to_remove "Remove Item", class: 'btn btn-danger btn-lg btn-block', data: { confirm: "Note that by destroying this if someone has made a purchase on this item. The database will get screwed up." }
+      = f.link_to_add "Add Item", :event_items, class: 'btn btn-success btn-lg btn-block'
+  %hr
   .row
     .actions.right
-      = f.submit 'Submit', class: 'btn btn-success btn-lg', id: 'fileUpload', data: { disable_with: 'Uploading' }
-      = link_to 'Back', :back, class: 'btn btn-danger btn-lg'
+      = f.submit 'Submit', class: 'btn btn-success btn-lg', id: 'progress-bar', data: { disable_with: 'Uploading' }
+      = link_to 'Back', :back, class: 'btn btn-danger btn-lg', data: { disable_with: 'Please wait' }
 
 :javascript
   $('#event_available_at').datetimepicker({format: 'YYYY-MM-DD HH:mm:ss ZZ', sideBySide: true});

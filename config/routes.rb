@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   require 'sidekiq/web'
 
-  mount Sidekiq::Web => '/sidekiq' 
+  mount Sidekiq::Web => '/sidekiq'
   mount Ckeditor::Engine => '/ckeditor'
   resources :orders, except: [:destroy] do
     member do
@@ -16,7 +16,7 @@ Rails.application.routes.draw do
       post :make_purchase
     end
   end
-
+  get "layouts/terms"
   resources :events, only: [:index,:show]
   resources :products, only: [:index,:show]
   resource :cart, only: [:show] do
@@ -56,7 +56,13 @@ Rails.application.routes.draw do
         get :validate
       end
     end
-    resources :products
+    resources :products do
+      member do
+        post :publish
+        post :unpublish
+      end
+      resources :attachments, :only => [:create,:destroy]
+    end
   end
 
   root 'home#index'

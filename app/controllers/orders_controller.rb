@@ -45,12 +45,15 @@ class OrdersController < ApplicationController
 
   # new actions
   def purchase
+    # Just in case!!!!
+    if @order.event_item.max_event == 0
+      redirect_to :back, notice: 'Event is sold out!!!'
+    end
   end
 
   def make_purchase
     # create transation and request with Authorize
     transaction = Transaction.new(AUTHORIZE_NET_CONFIG['api_login_id'], AUTHORIZE_NET_CONFIG['api_transaction_key'], :gateway => :production)
-    # transaction = Transaction.new('API_LOGIN', 'API_KEY', :gateway => :sandbox)
     request = CreateTransactionRequest.new
 
     # set up transaction request information
@@ -101,6 +104,7 @@ class OrdersController < ApplicationController
       @order.payment_details = response.to_yaml
       @order.auth_code = response.transactionResponse.authCode
       @order.transaction_id = response.transactionResponse.transId
+      @order.decrement_max_order # decreases the amount left on maximum per event
       if @order.save
         respond_to do |format|
           format.html { redirect_to @order, notice: 'Order was successfully placed! Thank you for your order!' }
@@ -121,7 +125,7 @@ class OrdersController < ApplicationController
 
   private
   def order_params
-    permitted_params = [:event_item_id, :quantity, :start_date, :end_date, :first_name, :last_name]
+    permitted_params = [:event_item_id, :quantity, :start_date, :end_date, :first_name, :last_name, :terms]
     permitted_params << :status if current_user.has_role?(:admin)
     params.require(:order).permit(permitted_params)
   end

@@ -1,19 +1,82 @@
-%p#notice= notice
-
-%h1= @product.name
-%p= number_to_currency @product.price
-
-%div.slider
-  %div.bx-wrapper
-    %div.bx-viewport
-      = bx_slider do
-        - @product.attachments.each do |at|
-          - if (at.content_type.include? 'image')
-            %li= image_tag at.url
-          - else
-            %li= videojs_rails sources: { mp4: at.url }
-= @product.page_body.html_safe
-
 %p
-  = link_to 'Edit', edit_admin_product_path(@product), class: 'btn btn-warning'
-  = link_to 'Back', admin_products_path, class: 'btn btn-danger'
+  - if @product.published == true
+    = link_to "Unpublish Product", unpublish_admin_product_path(@product), method: :post, class: 'btn btn-danger btn-lg'
+  - else
+    = link_to "Publish Product", publish_admin_product_path(@product), method: :post, class: 'btn btn-success btn-lg'
+
+%i We are currently working on better views and a slider system for products. Whatever image you add the only one you'll see is the first attachment
+%h1= "#{@product.name} Sneak Peak"
+-#
+  %div
+    - @product.attachments.each_with_index do |at, index| #grab the index
+      %div
+        - if (at.content_type.include? 'image')
+          = image_tag at.url
+        - else
+          = videojs_rails sources: { mp4: at.url }
+        = link_to "Delete", admin_product_attachment_path(@product, index), method: :delete
+
+  = form_for @product, url: admin_product_attachments_path(@product), method: :post do |f| # use customized url endpoint
+    .field
+      = f.file_field :attachments, multiple: true
+    .actions
+      = f.submit "Add More Images", class: 'btn btn-primary'
+-#
+  %div.slider
+    %div.bx-wrapper
+      %div.bx-viewport
+        = bx_slider do
+          - @product.attachments.each do |at|
+            - if (at.content_type.include? 'image')
+              %li= image_tag at.url
+            - else
+              %li= videojs_rails sources: { mp4: at.url }
+.container-fluid
+  .content-wrapper
+    .item-container
+      .container
+        .col-md-1
+        .col-md-10
+          - if (@product.attachments.first.content_type.include? 'image')
+            = image_tag @product.attachments.first.url, class: 'product'
+          - else
+            = videojs_rails sources: { mp4: @product.attachments.first.url }, class: 'video'
+          %hr
+          .product-desc= @product.description
+          .product-rating
+            %i.fa.fa-star.gold
+            %i.fa.fa-star.gold
+            %i.fa.fa-star.gold
+            %i.fa.fa-star.gold
+            %i.fa.fa-star-o
+          %hr
+          .product-price= number_to_currency @product.price
+          .product-stock= @product.status
+          %hr
+          .btn-group
+            = link_to 'add to cart', "#", class: 'btn btn-success'
+          .btn-group
+            = link_to "Remove from cart", "#", class: 'btn btn-danger'
+          .btn-group
+            = link_to "clear cart", "#", class: 'btn btn-warning'
+        .col-md-1
+    .container-fluid
+      .col-md-12.product-info
+        %ul#myTab.nav.nav-tabs.nav_tabs
+          %li.active
+            = link_to 'Description', '#service-one', "data-toggle" => "tab"
+          %li
+            = link_to 'PRODUCT INFO', '#service-two', "data-toggle" => "tab"
+          %li
+            = link_to 'REVIEWS', '#service-three', "data-toggle" => "tab"
+        #myTabContent.tab-content
+          #service-one.tab-pane.fade.in.active
+            %section.container.product-info
+              = @product.page_body.html_safe
+          #service-two.tab-pane.fade
+            %section.container
+          #service-three.tab-pane.fade
+        %hr
+%p
+  = link_to 'Edit', edit_admin_product_path(@product), class: 'btn btn-warning btn-lg'
+  = link_to 'Back', admin_products_path, class: 'btn btn-danger btn-lg'

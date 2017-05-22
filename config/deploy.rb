@@ -4,7 +4,7 @@ server '131.230.116.221', port: 22, roles: [:web, :app, :db], primary: true
 set :repo_url,        'git@github.com:UniversityHousing/events.git'
 set :application,     'events'
 set :user,            'deployer'
-set :puma_threads,    [5, 5]
+set :puma_threads,    [8, 8]
 set :puma_workers,    2      # Server can handle it
 
 set :pty,             true

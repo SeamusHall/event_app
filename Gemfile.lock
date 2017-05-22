@@ -52,6 +52,7 @@ GEM
       activemodel (= 5.0.3)
       activesupport (= 5.0.3)
       arel (~> 7.0)
+    activerecord-reset-pk-sequence (0.2.1)
     activesupport (5.0.3)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (~> 0.7)
@@ -193,6 +194,7 @@ GEM
     multi_json (1.12.1)
     mustermann (1.0.0)
     mysql2 (0.4.6)
+    nested_form (0.3.2)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-ssh (4.1.0)
@@ -327,6 +329,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_record_query_trace
+  activerecord-reset-pk-sequence
   authorizenet (= 1.9.1)
   better_errors
   binding_of_caller
@@ -356,6 +359,7 @@ DEPENDENCIES
   mini_magick
   momentjs-rails (>= 2.9.0)
   mysql2 (~> 0.4.5)
+  nested_form
   paranoia (~> 2.2)
   puma (~> 3.0)
   puma_worker_killer
@@ -382,4 +386,4 @@ RUBY VERSION
    ruby 2.4.1p111
 
 BUNDLED WITH
-   1.14.6
+   1.15.0
