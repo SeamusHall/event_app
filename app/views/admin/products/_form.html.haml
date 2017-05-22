@@ -16,9 +16,15 @@
         = f.label :page_body
         = f.cktext_area :page_body, class: 'form-control'
       .form-group
+        = f.label 'Amount in stock'
+        = f.text_field :quantity, class: 'form-control'
+      .form-group
+        = f.label 'Max One Can Buy Per Order'
+        = f.text_field :max_to_sell, class: 'form-control'
+      %i Supported formats: .jpg .jpeg .gif .png .mp4
+      .form-group
         = f.label :attachments
-        = f.file_field :attachments, multiple: true, class: 'form-control'
-      %i Supported formats: .jpg .jpeg .gif .png .avi .mov .mpg .mpeg .divx .mp4 .mpv
+        = f.file_field :attachments, multiple: true, class: 'form-control', id: 'progress-bar', data: { disable_with: 'Uploading' }
     .col-sm-1
   .row
     .col-sm-2
@@ -26,6 +32,8 @@
       .form-group
         = f.label 'Order Status'
         = f.select :check_status, options_for_select(Order::STATUSES.keys), {prompt: 'order status'}, {class: 'form-control selectpicker'}
+      %i Used to hide product until an event is purchased
+      %i hint: progress
     .col-sm-3
       .form-group
         = f.label 'Product Status'
@@ -40,6 +48,6 @@
     .col-sm-2
     .col-sm-9
       .form-group
-        = f.submit 'Save', class: 'btn btn-success btn-lg'
-        = link_to 'Back', admin_products_path, class: 'btn btn-danger btn-lg'
+        = f.submit 'Save', class: 'btn btn-success btn-lg', id: 'progress-bar', data: { disable_with: 'Uploading' }
+        = link_to 'Back', admin_products_path, class: 'btn btn-danger btn-lg', data: { disable_with: 'Please wait' }
     .col-sm-1

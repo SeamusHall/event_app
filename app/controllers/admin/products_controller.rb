@@ -1,7 +1,7 @@
 module Admin
   class ProductsController < AdminController
     load_and_authorize_resource
-    before_action :set_product, only: [:show, :edit, :update, :destroy]
+    before_action :set_product, only: [:show, :edit, :update, :publish, :unpublish]
     respond_to :html
 
     def index
@@ -31,9 +31,22 @@ module Admin
       end
     end
 
-    def destroy
-      @product.destroy
-      redirect_to admin_product_path(@product), notice: 'Product was successfully destroyed.'
+    def publish
+      @product.published = true
+      if @product.save
+        redirect_to :back, notice: 'Products was successfully published'
+      else
+        redirect_to :back, notice: 'Product was not published. Try again :{'
+      end
+    end
+
+    def unpublish
+      @product.published = false
+      if @product.save
+        redirect_to :back, notice: 'Products was successfully unpublished'
+      else
+        redirect_to :back, notice: 'Product was not unpublished. Try again :{'
+      end
     end
 
     private
@@ -52,7 +65,7 @@ module Admin
     end
 
     def product_params
-      params.require(:product).permit(:name, :price, :description, :published, :status, :check_status, :page_body, {attachments: []})
+      params.require(:product).permit(:name, :price, :description, :published, :status, :check_status, :page_body, :max_to_sell, :quantity, {attachments: []})
     end
   end
 end

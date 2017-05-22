@@ -16,17 +16,36 @@ class OrderProductsController < ApplicationController
     @order_product.user = current_user
     @order_product.status = Order::PENDING_STATUS
 
-    if @order_product.save
+    if @order_product.save # for order_product verification
       @cart.items.each do |item|
         product_item = OrderProductItem.new
         product_item.order_product_id = @order_product.id
         product_item.product_id = item.product.id
         product_item.quantity = item.quantity
-        product_item.save
-      end
-      respond_to do |format|
-        format.html { redirect_to @order_product, notice: 'Order was successfully created.' }
-        format.js { redirect_to @order_product, notice: 'Order was successfully created.' }
+        if product_item.save # For order_product_items verification
+          # Fixes DoubleRenderError
+          if OrderProductItem.all.where(order_product_id: @order_product.id).count == @cart.items.length
+            respond_to do |format|
+              format.html { redirect_to @order_product, notice: 'Order was successfully created. Note that although created until you make a purchase it does not garentee that your item will be available.'}
+              format.js { redirect_to @order_product, notice: 'Order was successfully created. Note that although created until you make a purchase it does not garentee that your item will be available.' }
+            end
+          end
+        else
+          # TODO Fix DoubleRenderError
+          # TODO Fix errors message
+          respond_to do |format|
+            format.json { render json: product_item.errors, status: :unprocessable_entity}
+          end
+
+          # IF There are any errors find all instances of it
+          # Remove them from the Database
+          # Reset Table Id's
+          # This is needed to reset table Id's and make sure the db doesn't get bloated
+          OrderProductItem.all.where(order_product_id: @order_product.id).delete_all
+          OrderProductItem.reset_pk_sequence
+          OrderProduct.all.where(id: @order_product.id).delete_all # pointless to do it like this
+          OrderProduct.reset_pk_sequence
+        end
       end
     else
       respond_to do |format|
@@ -55,7 +74,6 @@ class OrderProductsController < ApplicationController
   def make_purchase
     # create transation and request with Authorize
     transaction = Transaction.new(AUTHORIZE_NET_CONFIG['api_login_id'], AUTHORIZE_NET_CONFIG['api_transaction_key'], :gateway => :production)
-    # transaction = Transaction.new('API_LOGIN', 'API_KEY', :gateway => :sandbox)
     request = CreateTransactionRequest.new
 
     # set up transaction request information
@@ -89,6 +107,7 @@ class OrderProductsController < ApplicationController
       @order_product.auth_code = response.transactionResponse.authCode
       @order_product.transaction_id = response.transactionResponse.transId
       if @order_product.save
+        decrement_product(@order_product) # decrease amount of product have left if saved
         respond_to do |format|
           format.html { redirect_to @order_product, notice: 'Order was successfully placed! Thank you for your order!' }
         end
@@ -116,6 +135,16 @@ class OrderProductsController < ApplicationController
 
   def set_order_product
     @order_product = OrderProduct.find(params[:id])
+  end
+
+  # Finds the product id of each order_product_item
+  # Updates the amount left on product in database
+  def decrement_product(order_product)
+    order_product.order_product_items.each do |opi|
+      product = Product.find(opi.product_id)
+      product.quantity -= opi.quantity
+      product.save
+    end
   end
 
   def build_order_product_items

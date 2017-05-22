@@ -1,91 +1,125 @@
-.row
-  .col-sm-8
-    %h1= @event.name
-  .col-sm-4.right
-    %br
-    Event Dates:
-    = @event.dates
-= image_tag @event.attachment, height: "300"
-%h4= @event.description
-= @event.page_body.html_safe
+%h1= @event.name
+.container-fluid
+  .content-wrapper
+    .item-container
+      .container
+        .col-md-1
+        .col-md-10
+          %h4= @event.description
+          %br
+            Event Dates:
+            = @event.dates
+          = @event.page_body.html_safe
+          -#.product-rating
+            %i.fa.fa-star.gold
+            %i.fa.fa-star.gold
+            %i.fa.fa-star.gold
+            %i.fa.fa-star.gold
+            %i.fa.fa-star-o
+        .col-md-1
+        %hr
+    .container-fluid
+      .col-md-12.product-info
+        %ul#myTab.nav.nav-tabs.nav_tabs
 
-%hr
-.row
-  .col-sm-12
-    %h4 Event Items
-    %div{style: "overflow-x:auto;"}
-      %table.table
-        %thead
-          %tr
-            %th Description
-            %th Price
-            %th Tax
-            %th Maximum per Event
-            %th Maximum per Order
-            %th
-        %tbody
-          - @event.event_items.each do |ei|
-            %tr
-              %td= ei.description
-              %td= number_to_currency(ei.price)
-              %td= ei.tax > 0.0 ? ei.tax : '--'
-              %td= ei.max_event
-              %td= ei.max_order
-              %td.right
-                - if current_user
-                  = link_to '#', "data-toggle" => "modal", "data-target" => "#order-modal-#{ei.id}" do
-                    %span.label.label-primary Order!
-                - else
-                  = link_to new_registration_path(User.new) do
-                    %span.label.label-primary Sign Up!
+          -#%li.active
+            = link_to 'Description', '#service-one', "data-toggle" => "tab"
+          %li.active
+            = link_to 'Event Items', "#service-one", "data-toggle" => "tab"
+          -#
+            %li
+              %a{"data-toggle" => "tab", :href => "#service-three"} REVIEWS
+        #myTabContent.tab-content
+          #service-one.tab-pane.fade.in.active
+            %section.container.product-info
+              .row
+                .col-sm-12
+                  %h4 Event Items
+                  %div{style: "overflow-x:auto;"}
+                    %table.table
+                      %thead
+                        %tr
+                          %th Description
+                          %th Price
+                          %th Tax
+                          %th Maximum per Event
+                          %th Maximum per Order
+                          %th
+                      %tbody
+                        - @event.event_items.each do |ei|
+                          - if ei.max_event != 0 # makes event_item disappear if it equals zero
+                            %tr
+                              %td= ei.description
+                              %td= number_to_currency(ei.price)
+                              %td= ei.tax > 0.0 ? number_to_percentage(ei.tax * 100, precision: 0) : '--'
+                              %td= ei.max_event
+                              %td= ei.max_order
+                              %td.right
+                                - if current_user
+                                  = link_to '#', "data-toggle" => "modal", "data-target" => "#order-modal-#{ei.id}" do
+                                    %btn.btn-primary.btn-lg Order!
+                                - else
+                                  = link_to new_registration_path(User.new) do
+                                    %btn.btn-primary.btn-lg Sign Up!
 
-- if current_user
-  - @event.event_items.each do |ei|
-    .modal.fade{tabindex: '-1', role: 'dialog', id: "order-modal-#{ei.id}"}
-      = form_for @order, remote: true, authenticity_token: true, data: { rel: "#modal-header-#{ei.id}", target: "#errors-#{ei.id}" } do |f|
-        .modal-dialog.modal-md{role: 'document'}
-          .modal-content
-            .modal-header{id: "modal-header-#{ei.id}"}
-              %button.close{type: 'button', "data-dismiss" => "modal", "aria-label" => "Close"}
-                %span{"aria-hidden" => "true"}
-                  &times;
-              %h4 Order Summary
-            .modal-body
-              %div{id: "errors-#{ei.id}"}
-              %h4= @event.name
-              %p
-                Item:
-                = ei.description
-              %hr
-              = f.hidden_field :event_item_id, value: ei.id
-              %strong Item Infomation
-              %br
-              .row
-                .col-sm-4
-                  .form-group
-                    = f.label :quantity
-                    = f.select :quantity, options_for_select((1..ei.max_order).to_a, selected: '1'), {prompt: 'quantity'}, {class: 'form-control selectpicker', required: true}
-                .col-sm-4
-                  .form-group
-                    = f.label :start_date
-                    = f.select :start_date, options_for_select((@event.starts_on.to_date..@event.ends_on.to_date).map{ |d| [d.strftime('%a, %b %d, %Y'), d.strftime('%Y-%m-%d')] }), {prompt: 'check-in date'}, {class: 'form-control selectpicker', required: true}
-                .col-sm-4
-                  .form-group
-                    = f.label :end_date
-                    = f.select :end_date, options_for_select((@event.starts_on.to_date..@event.ends_on.to_date).map{ |d| [d.strftime('%a, %b %d, %Y'), d.strftime('%Y-%m-%d')] }), {prompt: 'end date'}, {class: 'form-control selectpicker', required: true}
-              %hr
-              %strong Demographic Infomation
-              %br
-              .row
-                .col-sm-6
-                  .form-group
-                    = f.text_field :first_name, placeholder: 'first name', class: 'form-control', required: true
-                .col-sm-6
-                  .form-group
-                    = f.text_field :last_name, placeholder: 'last name', class: 'form-control', required: true
-                %br
-              %i NOTE: this does not submit your order, nor does it ensure availability of item
-            .modal-footer
-              %button.btn.btn-default{type: 'button', "data-dismiss" => "modal"}
-                Close
-              = f.submit 'Create Order', class: 'btn btn-success'
+              - if current_user
+                - @event.event_items.each do |ei|
+                  .modal.fade{tabindex: '-1', role: 'dialog', id: "order-modal-#{ei.id}"}
+                    = form_for @order, remote: true, authenticity_token: true, data: { rel: "#modal-header-#{ei.id}", target: "#errors-#{ei.id}" } do |f|
+                      .modal-dialog.modal-md{role: 'document'}
+                        .modal-content
+                          .modal-header{id: "modal-header-#{ei.id}"}
+                            %button.close{type: 'button', "data-dismiss" => "modal", "aria-label" => "Close"}
+                              %span{"aria-hidden" => "true"}
+                                &times;
+                            %h4 Order Summary
+                          .modal-body
+                            %div{id: "errors-#{ei.id}"}
+                            %h4= @event.name
+                            %p
+                              Item:
+                              = ei.description
+                            %hr
+                            = f.hidden_field :event_item_id, value: ei.id
+                            %strong Item Infomation
+                            %br
+                            .row
+                              .col-sm-4
+                                .form-group
+                                  = f.label :quantity
+                                  = f.select :quantity, options_for_select((1..ei.max_order).to_a, selected: '1'), {prompt: 'quantity'}, {class: 'form-control selectpicker', required: true}
+                              .col-sm-4
+                                .form-group
+                                  = f.label 'check-in date'
+                                  = f.select :start_date, options_for_select((@event.starts_on.to_date..@event.ends_on.to_date).map{ |d| [d.strftime('%a, %b %d, %Y'), d.strftime('%Y-%m-%d')] }), {prompt: 'check-in date'}, {class: 'form-control selectpicker', required: true}
+                              .col-sm-4
+                                .form-group
+                                  = f.label 'check-out date'
+                                  = f.select :end_date, options_for_select((@event.starts_on.to_date..@event.ends_on.to_date).map{ |d| [d.strftime('%a, %b %d, %Y'), d.strftime('%Y-%m-%d')] }), {prompt: 'end date'}, {class: 'form-control selectpicker', required: true}
+                            %hr
+                            %strong Demographic Infomation
+                            %br
+                            .row
+                              .col-sm-6
+                                .form-group
+                                  = f.text_field :first_name, placeholder: 'first name', class: 'form-control', required: true
+                              .col-sm-6
+                                .form-group
+                                  = f.text_field :last_name, placeholder: 'last name', class: 'form-control', required: true
+                            .row
+                              .col-sm-4
+                                = link_to 'Terms of service', layouts_terms_path, target: :_blank
+                              .col-sm-4
+                              .col-sm-4
+                                = f.label  'Agree to terms'
+                                = f.check_box :terms
+                              %br
+                            %i NOTE: this does not submit your order, nor does it ensure availability of item
+                          .modal-footer
+                            %button.btn.btn-default{type: 'button', "data-dismiss" => "modal"}
+                              Close
+                            = f.submit 'Create Order', class: 'btn btn-success'
+          #service-two.tab-pane.fade
+            %section.container
+          #service-three.tab-pane.fade
+        %hr

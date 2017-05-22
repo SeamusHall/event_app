@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170514233552) do
+ActiveRecord::Schema.define(version: 20170519215457) do
 
   create_table "ckeditor_assets", force: :cascade do |t|
     t.string   "data_file_name",               null: false
@@ -27,15 +27,16 @@ ActiveRecord::Schema.define(version: 20170514233552) do
   create_table "event_items", force: :cascade do |t|
     t.integer  "event_id"
     t.string   "description"
-    t.decimal  "price",       precision: 9, scale: 2
-    t.decimal  "tax",         precision: 6, scale: 5
+    t.decimal  "price",        precision: 9, scale: 2
+    t.decimal  "tax",          precision: 6, scale: 5
     t.integer  "max_event"
     t.integer  "max_order"
     t.integer  "min_freq"
-    t.boolean  "flat_rate",                           default: false
-    t.datetime "created_at",                                          null: false
-    t.datetime "updated_at",                                          null: false
+    t.boolean  "flat_rate",                            default: false
+    t.datetime "created_at",                                           null: false
+    t.datetime "updated_at",                                           null: false
     t.datetime "deleted_at"
+    t.string   "check_status"
     t.index ["deleted_at"], name: "index_event_items_on_deleted_at"
     t.index ["event_id"], name: "index_event_items_on_event_id"
   end
@@ -104,6 +105,7 @@ ActiveRecord::Schema.define(version: 20170514233552) do
     t.datetime "created_at",                              null: false
     t.datetime "updated_at",                              null: false
     t.datetime "deleted_at"
+    t.boolean  "terms"
     t.index ["deleted_at"], name: "index_orders_on_deleted_at"
     t.index ["event_item_id"], name: "index_orders_on_event_item_id"
     t.index ["status"], name: "index_orders_on_status"
@@ -122,6 +124,8 @@ ActiveRecord::Schema.define(version: 20170514233552) do
     t.string   "check_status"
     t.text     "page_body"
     t.datetime "deleted_at"
+    t.integer  "quantity"
+    t.integer  "max_to_sell"
     t.index ["deleted_at"], name: "index_products_on_deleted_at"
   end
 

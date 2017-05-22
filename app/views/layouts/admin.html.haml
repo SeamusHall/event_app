@@ -4,16 +4,18 @@
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}
     %title Event Admin
     = csrf_meta_tags
+    = favicon_link_tag 'favicon.ico'
 
-    = stylesheet_link_tag 'admin', media: 'all', 'data-turbolinks-track': 'reload'
-    = stylesheet_link_tag 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'
-    = stylesheet_link_tag 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css'
+  = stylesheet_link_tag 'admin', media: 'all', 'data-turbolinks-track': 'reload'
+  = stylesheet_link_tag 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'
+  = stylesheet_link_tag 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css'
 
-    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
-    = javascript_include_tag 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js'
+  = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+  = javascript_include_tag 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js'
 
-    = stylesheet_link_tag 'sb-admin-2.css'
-    = javascript_include_tag 'sb-admin-2.js'
+  = stylesheet_link_tag 'sb-admin-2.css'
+  = javascript_include_tag 'sb-admin-2.js'
+  = javascript_include_tag :defaults, "nested_form"
 
   %body{style: 'margin-top: 50px'}
     = render file: "layouts/admin_navigation"

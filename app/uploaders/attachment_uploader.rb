@@ -14,16 +14,9 @@ class AttachmentUploader < CarrierWave::Uploader::Base
     "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
   end
 
-  def rename(new_name, product_id, attach_index)
-    sf = Product.find(product_id).attachments[attach_index]
-    new_path = File.join( File.dirname( sf.file ) , "#{new_name}#{File.extname( sf.file )}")
-    new_sf = CarrierWave::SanitizedFile.new sf.move_to(new_path)
-    sf.store!(new_sf)
-    return sf
-  end
-  # version :thumb do
-  #   process :resize_to_fit => [250, 250]
-  # end
+  #version :thumb do
+  #  process :resize_to_fill => [250, 250]
+  #end
 
   # Provide a default URL as a default if there hasn't been a file uploaded:
   # def default_url
@@ -43,7 +36,7 @@ class AttachmentUploader < CarrierWave::Uploader::Base
   # Add a white list of extensions which are allowed to be uploaded.
   # For images you might use something like this:
   def extension_whitelist
-    %w(jpg jpeg gif png mp4)
+    %w(jpg jpeg gif png avi mov mpg mpeg divx mp4 mpv)
   end
 
   # Override the filename of the uploaded files:
