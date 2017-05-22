@@ -22,6 +22,10 @@ gem 'coffee-rails', '~> 4.2'
 gem 'turbolinks', '~> 5'
 gem 'jquery-turbolinks'
 gem 'jbuilder', '~> 2.5'
+gem 'nested_form'
+
+# Reset Database Id's
+gem 'activerecord-reset-pk-sequence'
 
 gem 'haml-rails'
 # gem 'pandoc-ruby' # markdown

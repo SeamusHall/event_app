@@ -42,7 +42,10 @@
   - @events.each do |event|
     .col-md-3.col-sm-6.hero-feature
       .thumbnail
-        = image_tag event.attachment, alt: 'eclipse'
+        - if (event.attachment.content_type.include? 'image')
+          = image_tag event.attachment
+        - else
+          = videojs_rails sources: { mp4: event.attachment.url }, width: '265', height: '230'
         .caption
           %h3= event.name
           %p= event.description
@@ -57,7 +60,10 @@
   - @products.each do |product|
     .col-md-3.col-sm-6.hero-feature
       .thumbnail
-        //= image_tag product.attachments.first.url
+        - if (product.attachments.first.content_type.include? 'image')
+          = image_tag product.attachments.first.url
+        - else
+          = videojs_rails sources: { mp4: product.attachments.first.url }, class: 'video'
         .caption
           %h3= product.name
           %p= product.description

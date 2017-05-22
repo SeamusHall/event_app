@@ -16,7 +16,8 @@ class Order < ApplicationRecord
   before_validation :perform_total_calculation
   before_validation :update_finalized_on
 
-  #validate :valid_dates
+  validate :better_agree
+  validate :valid_dates
   validate :quantity_less_than_max_order
 
   validates :status, inclusion: { in: STATUSES.keys }, presence: true
@@ -40,15 +41,26 @@ class Order < ApplicationRecord
     self.start_date.strftime('%m/%d/%Y') + ' - ' + self.end_date.strftime('%m/%d/%Y')
   end
 
+  # Deletes the amount left in event_item so we know
+  # how many we have left to sell
+  def decrement_max_order
+    self.event_item.max_event -= self.event_item.max_order
+    self.event_item.save
+  end
+
   private
   def valid_dates
     if start_date and end_date
-      errors.add(:start_date, 'must occur before end date') if start_date > end_date
+      #errors.add(:start_date, 'must occur before end date') if start_date > end_date
       errors.add(:end_date, 'must occur after check-in date') if start_date == end_date
-      errors.add(:start_date, 'must occur inside event dates') if start_date < self.event_item.event.starts_on or start_date > self.event_item.event.ends_on
+      #errors.add(:start_date, 'must occur inside event dates') if start_date < self.event_item.event.starts_on or start_date > self.event_item.event.ends_on
       errors.add(:end_date, 'must occur inside event dates') if end_date < self.event_item.event.starts_on or end_date > self.event_item.event.ends_on
-      #errors.add(:base, 'minimum date freqency not met') if (end_date - start_date) + 1.day / 1.day < self.event_item.min_freq
+      errors.add(:base, 'minimum date freqency not met') if (end_date - start_date + 1.day) / 1.day != self.event_item.min_freq
     end
+  end
+
+  def better_agree
+    errors.add(:terms, 'Must agree to terms and services') if !terms
   end
 
   def only_one_pending_order

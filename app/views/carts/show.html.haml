@@ -17,13 +17,13 @@
             %tr
               %td.col-sm-8.col-md-6
                 .media
-                  = image_tag item.product.attachments.first.thumb, class: 'thumbnail pull-left media-object'
+                  = image_tag item.product.attachments.first, class: 'thumbnail pull-left media-object', width: '200'
                   %h4.media-heading
                     = link_to item.product.name, product_path(item.product.id)
                   %span Status:
                   %span.text-success
                     %strong= item.product.status
-              %td= item.quantity
+              %td= text_field_tag 'items[]', item.quantity, placeholder: "#{item.quantity}"
               %td= number_to_currency item.product.price
               %td= number_to_currency item.total_price
               %td= link_to "Remove from cart", remove_cart_path(item.product.id), method: :post, class: 'btn btn-danger'
@@ -43,68 +43,72 @@
             %td= link_to 'Continue Shopping',  root_path, class: 'btn btn-primary'
             %td
               - if current_user
-                = link_to '#', "data-toggle" => "modal", "data-target" => "#order-modal-1" do
+                = link_to '#', "data-toggle" => "modal", "data-target" => "#order-modal" do
                   .btn.btn-lg.btn-success Order!
               - else
                 = link_to new_registration_path(User.new) do
                   .btn.btn-lg.btn-primary Sign Up!
+
 - if current_user
-  .modal.fade{tabindex: '-1', role: 'dialog', id: "order-modal-1"}
-    = form_for @order_product, remote: true, data: { rel: "#modal-header-1", target: "#errors-1" } do |f|
+  .modal.fade{role: 'dialog', id: 'order-modal'}
+    = form_for @order_product, remote: true, data: { rel: "#modal-header", target: "#errors"} do |f|
       .modal-dialog.modal-md{role: 'document'}
         .modal-content
-          .modal-header{id: "modal-header-1"}
+          .modal-header{id: "modal-header"}
             %button.close{type: 'button', "data-dismiss" => "modal", "aria-label" => "Close"}
               %span{"aria-hidden" => "true"}
                 &times;
             %h2 Order Summary
           .modal-body
-          %div{id: "errors-1"}
-          %h2= "Total cost #{number_to_currency @cart.total_price} "
-          = f.hidden_field :total, value: @cart.total_price
-          %h3.center Item Infomation
-          %br
-          - @cart.items.each do |item|
-            .row
-              .col-sm-4
-              .col-sm-4
-                %p
-                  %strong
-                    Quantity:
-                    = item.quantity
-              .col-sm-4
-            .row
-              .col-sm-4
-              .col-sm-4
-                %p
-                  %strong
-                    Product Name:
-                    = item.product.name
-              .col-sm-4
-            .row
-              .col-sm-4
-              .col-sm-4
-                %p
-                  %strong
-                    =image_tag item.product.attachments.first.thumb
-              .col-sm-4
-            .row
-              .col-sm-4
-              .col-sm-4
-                %p
-                  %strong
-                    Total price:
-                    = number_to_currency item.total_price
-              .col-sm-4
-          %strong Demographic Infomation
-          %br
-          .row
-            .col-sm-6
-              .form-group
-                = f.text_field :first_name, placeholder: 'first name', class: 'form-control', required: true
-            .col-sm-6
-              .form-group
-                = f.text_field :last_name, placeholder: 'last name', class: 'form-control', required: true
+            %div{id: "errors"}
+            %h2= "Total cost #{number_to_currency @cart.total_price} "
+            = f.hidden_field :total, value: @cart.total_price
+            %h3.center Item Infomation
             %br
-          %i NOTE: this does not submit your order, nor does it ensure availability of item
-          %p= f.submit 'Place Order', class: 'btn btn-success btn-block'
+            -# for display purposes only
+            - @cart.items.each do |item|
+              .row
+                .col-sm-4
+                .col-sm-4
+                  %p
+                    %strong
+                      Quantity:
+                      = item.quantity
+                .col-sm-4
+              .row
+                .col-sm-4
+                .col-sm-4
+                  %p
+                    %strong
+                      Product Name:
+                      = item.product.name
+                .col-sm-4
+              .row
+                .col-sm-4
+                .col-sm-4
+                  %p
+                    %strong
+                      =image_tag item.product.attachments.first, width: '200'
+                .col-sm-4
+              .row
+                .col-sm-4
+                .col-sm-4
+                  %p
+                    %strong
+                      Total price:
+                      = number_to_currency item.total_price
+                .col-sm-4
+            %strong Demographic Infomation
+            %br
+            .row
+              .col-sm-6
+                .form-group
+                  = f.text_field :first_name, placeholder: 'first name', class: 'form-control', required: true
+              .col-sm-6
+                .form-group
+                  = f.text_field :last_name, placeholder: 'last name', class: 'form-control', required: true
+              %br
+            %i NOTE: current we do not ship items, your items will be placed in your room or you must pick them up
+            .modal-footer
+              = f.submit 'Place Order', class: 'btn btn-success'
+              %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} Close
