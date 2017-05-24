@@ -1,34 +1,51 @@
 = form_for ["admin" , @user] do |f|
   = errors_for @user, true
   .row
+    .col-sm-12
+      .form-group
+        = f.label :email
+        = f.text_field :email, placeholder: 'email', class: 'form-control', autofocus: true
+  .row
     .col-sm-6
       .form-group
+        = f.label :first_name
         = f.text_field :first_name, placeholder: 'first name', class: 'form-control'
     .col-sm-6
       .form-group
+        = f.label :last_name
         = f.text_field :last_name, placeholder: 'last name', class: 'form-control'
   .row
     .col-sm-12
       .form-group
+        = f.label :address
         = f.text_field :address, placeholder: 'street address', class: 'form-control'
   .row
     .col-sm-4
       .form-group
+        = f.label :city
         = f.text_field :city, placeholder: 'city', class: 'form-control'
     .col-sm-4
       .form-group
+        = f.label :state
         = f.text_field :state, placeholder: 'state', class: 'form-control'
     .col-sm-4
       .form-group
+        = f.label :postal_code
         = f.text_field :postal_code, placeholder: 'postal code', class: 'form-control'
   .row
     .col-sm-12
       .form-group
+        = f.label :phone
         = f.text_field :phone, placeholder: 'xxx-xxx-xxxx', class: 'form-control'
   .row
     .col-sm-12
       .form-group
+        = f.label :country
         = f.country_select :country, { priority_countries: ["US", "GB", "FR", "DE"] }, { class: 'form-control' }
+  .row
+    .col-sm-12
+      .form-group
+        = f.collection_select :role_ids, Role.all, :id, :name, {prompt: true}, {multiple: true, class: 'form-control selectpicker'}
       .actions.right
         = f.submit 'Submit', class: 'btn btn-success'
         = link_to 'Back', :back, class: 'btn btn-danger'

@@ -42,7 +42,7 @@ class Ability
     cannot [:update, :destroy, :purchase, :validate], OrderProduct, status: (OrderProduct::STATUSES.keys - [OrderProduct::PENDING_STATUS])
 
     if user.has_role? :reg
-      can :manage, User
+      can :manage, User, id: user.id
     end
 
     if user.has_role? :admin
