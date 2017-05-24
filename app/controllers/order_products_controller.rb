@@ -86,8 +86,8 @@ class OrderProductsController < ApplicationController
 
     # add billing address to request
     request.transactionRequest.billTo = CustomerAddressType.new
-    request.transactionRequest.billTo.firstName = @order_product.first_name
-    request.transactionRequest.billTo.lastName = @order_product.last_name
+    request.transactionRequest.billTo.firstName = @order_product.user.first_name
+    request.transactionRequest.billTo.lastName = @order_product.user.last_name
     request.transactionRequest.billTo.zip = params[:zip].to_s
 
     # add customer info for receipt
