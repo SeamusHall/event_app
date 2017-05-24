@@ -28,18 +28,6 @@
           .form-group
             = f.label :end_date
             = f.select :end_date, options_for_select((order.event_item.event.starts_on.to_date..order.event_item.event.ends_on.to_date).map{ |d| [d.strftime('%a, %b %d, %Y'), d.strftime('%Y-%m-%d')] }, selected: order.end_date.strftime('%Y-%m-%d')), {prompt: 'end date'}, {class: 'form-control selectpicker', required: true}
-      %hr
-      %strong Demographic Infomation
-      %br
-      .row
-        .col-sm-6
-          .form-group
-            = f.text_field :first_name, placeholder: 'first name', class: 'form-control', required: true
-        .col-sm-6
-          .form-group
-            = f.text_field :last_name, placeholder: 'last name', class: 'form-control', required: true
-        %br
-      %i NOTE: this does not submit your order, nor does it ensure availability of item
       .actions.right
         = f.submit 'Update Order', class: 'btn btn-success'
         = link_to 'Cancel', :back, class: 'btn btn-danger'
