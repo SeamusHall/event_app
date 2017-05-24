@@ -86,8 +86,8 @@ class OrderProductsController < ApplicationController
 
     # add billing address to request
     request.transactionRequest.billTo = CustomerAddressType.new
-    request.transactionRequest.billTo.firstName = @order_product.first_name
-    request.transactionRequest.billTo.lastName = @order_product.last_name
+    request.transactionRequest.billTo.firstName = @order_product.user.first_name
+    request.transactionRequest.billTo.lastName = @order_product.user.last_name
     request.transactionRequest.billTo.zip = params[:zip].to_s
 
     # add customer info for receipt
@@ -127,8 +127,7 @@ class OrderProductsController < ApplicationController
 
   private
   def order_product_params
-    permitted_params = [:user_id, :first_name, :last_name, :total, :payment_details,
-                         order_product_item_attributes: [:id,:product_id,:quantity]]
+    permitted_params = [:user_id, :total, :payment_details]
     permitted_params << :status if current_user.has_role?(:admin)
     params.require(:order_product).permit(permitted_params)
   end

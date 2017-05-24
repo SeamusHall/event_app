@@ -47,7 +47,7 @@ module Admin
 
     def event_params
       params.require(:event).permit(:name, :description, :page_body, :available_at, :unavailable_at, :starts_on, :ends_on, :attachment,
-        event_items_attributes: [:id, :event_id, :description, :price, :tax, :max_event, :max_order, :flat_rate, :min_freq])
+        event_items_attributes: [:id, :event_id, :description, :price, :tax, :max_event, :max_order, :flat_rate])
     end
 
     def load_nested_attributes

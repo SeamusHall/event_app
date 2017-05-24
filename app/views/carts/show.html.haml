@@ -40,11 +40,14 @@
             %td  
             %td  
             %td  
-            %td= link_to 'Continue Shopping',  root_path, class: 'btn btn-primary'
+            %td= link_to 'Continue Shopping',  root_path, class: 'btn btn-primary btn-large'
             %td
-              - if current_user
-                = link_to '#', "data-toggle" => "modal", "data-target" => "#order-modal" do
-                  .btn.btn-lg.btn-success Order!
+              - unless current_user.nil?
+                - if current_user.check_nullity?
+                  = link_to 'Update Account', auto_update_role_cart_url, method: :post, class: 'btn btn-lg btn-info'
+                - else
+                  = link_to '#', "data-toggle" => "modal", "data-target" => "#order-modal" do
+                    .btn.btn-lg.btn-success Order!
               - else
                 = link_to new_registration_path(User.new) do
                   .btn.btn-lg.btn-primary Sign Up!
@@ -98,15 +101,6 @@
                       Total price:
                       = number_to_currency item.total_price
                 .col-sm-4
-            %strong Demographic Infomation
-            %br
-            .row
-              .col-sm-6
-                .form-group
-                  = f.text_field :first_name, placeholder: 'first name', class: 'form-control', required: true
-              .col-sm-6
-                .form-group
-                  = f.text_field :last_name, placeholder: 'last name', class: 'form-control', required: true
               %br
             %i NOTE: current we do not ship items, your items will be placed in your room or you must pick them up
             .modal-footer

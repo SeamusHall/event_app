@@ -14,7 +14,7 @@ module Admin
         redirect_to admin_order_product_path(@order_product), notice: 'Order was successfully updated.'
       else
         render "edit"
-      end 
+      end
     end
 
     def destroy
@@ -35,8 +35,7 @@ module Admin
 
     private
     def order_product_params
-      permitted_params = [:user_id, :first_name, :last_name, :total, :payment_details,
-                           order_product_item_attributes: [:id,:product_id,:quantity]]
+      permitted_params = [:user_id, :total, :payment_details]
       permitted_params << :status if current_user.has_role?(:admin)
       params.require(:order_product).permit(permitted_params)
     end

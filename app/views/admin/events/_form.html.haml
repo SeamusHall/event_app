@@ -52,10 +52,10 @@
           .col-sm-6
             .form-group
               = event_item_form.text_field :description, placeholder: 'description', class: 'form-control'
-          .col-sm-3
+          -#.col-sm-3
             .form-group
               = event_item_form.text_field :min_freq, placeholder: 'min days', class: 'form-control'
-          .col-sm-3
+          .col-sm-6
             .form-group
               = event_item_form.check_box :flat_rate
               = event_item_form.label :flat_rate

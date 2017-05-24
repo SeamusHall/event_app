@@ -1,3 +1,4 @@
+%h1 Purchase
 .container
   .row
     .col-md-12.col-md-4
@@ -5,7 +6,6 @@
         .panel-heading.display-table
           .row.display-tr
             %h3.panel-title.display-td Payment Details
-            = render "layouts/seal", class: 'purchase'
             .display-td
               = image_tag "accepted_c22e0.png", alt: 'cards', class: 'img-responsive pull-right'
         .panel-body
@@ -28,10 +28,14 @@
               .col-md-12
                 = label_tag 'zip', 'Billing Zip'
                 = text_field_tag 'zip', '', placeholder: 'XXXXX', class: 'form-control', required: true, pattern: '[0-9]{5}'
+            %br
             .row
-              .col-md-12
-                = submit_tag 'Purchase!', class: 'btn btn-success'
-                = link_to 'Back', :back, class: 'btn btn-danger'
+              .col-md-4
+                = render "layouts/seal", class: 'purchase'
+              .col-md-4
+                = submit_tag 'Purchase!', class: 'btn btn-success btn-lg btn-block'
+              .col-md-4
+                = link_to 'Back', :back, class: 'btn btn-danger btn-lg btn-block'
             .row{:style => "display:none;"}
               .col-md-12
                 %p.payment-errors

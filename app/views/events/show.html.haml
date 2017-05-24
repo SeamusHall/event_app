@@ -42,7 +42,7 @@
                           %th Description
                           %th Price
                           %th Tax
-                          %th Maximum per Event
+                          %th Siutes Available
                           %th Maximum per Order
                           %th
                       %tbody
@@ -55,70 +55,66 @@
                               %td= ei.max_event
                               %td= ei.max_order
                               %td.right
-                                - if current_user
-                                  = link_to '#', "data-toggle" => "modal", "data-target" => "#order-modal-#{ei.id}" do
-                                    %btn.btn-primary.btn-lg Order!
+                                - unless current_user.nil?
+                                  - if current_user.check_nullity?
+                                    = link_to 'Update Account', auto_update_role_cart_url, method: :post, class: 'btn btn-lg btn-info'
+                                  - else
+                                    = link_to '#', "data-toggle" => "modal", "data-target" => "#order-modal-#{ei.id}" do
+                                      .btn.btn-lg.btn-success Order!
                                 - else
                                   = link_to new_registration_path(User.new) do
-                                    %btn.btn-primary.btn-lg Sign Up!
+                                    .btn.btn-lg.btn-primary Sign Up!
 
-              - if current_user
-                - @event.event_items.each do |ei|
-                  .modal.fade{tabindex: '-1', role: 'dialog', id: "order-modal-#{ei.id}"}
-                    = form_for @order, remote: true, authenticity_token: true, data: { rel: "#modal-header-#{ei.id}", target: "#errors-#{ei.id}" } do |f|
-                      .modal-dialog.modal-md{role: 'document'}
-                        .modal-content
-                          .modal-header{id: "modal-header-#{ei.id}"}
-                            %button.close{type: 'button', "data-dismiss" => "modal", "aria-label" => "Close"}
-                              %span{"aria-hidden" => "true"}
-                                &times;
-                            %h4 Order Summary
-                          .modal-body
-                            %div{id: "errors-#{ei.id}"}
-                            %h4= @event.name
-                            %p
-                              Item:
-                              = ei.description
-                            %hr
-                            = f.hidden_field :event_item_id, value: ei.id
-                            %strong Item Infomation
-                            %br
-                            .row
-                              .col-sm-4
-                                .form-group
-                                  = f.label :quantity
-                                  = f.select :quantity, options_for_select((1..ei.max_order).to_a, selected: '1'), {prompt: 'quantity'}, {class: 'form-control selectpicker', required: true}
-                              .col-sm-4
-                                .form-group
-                                  = f.label 'check-in date'
-                                  = f.select :start_date, options_for_select((@event.starts_on.to_date..@event.ends_on.to_date).map{ |d| [d.strftime('%a, %b %d, %Y'), d.strftime('%Y-%m-%d')] }), {prompt: 'check-in date'}, {class: 'form-control selectpicker', required: true}
-                              .col-sm-4
-                                .form-group
-                                  = f.label 'check-out date'
-                                  = f.select :end_date, options_for_select((@event.starts_on.to_date..@event.ends_on.to_date).map{ |d| [d.strftime('%a, %b %d, %Y'), d.strftime('%Y-%m-%d')] }), {prompt: 'end date'}, {class: 'form-control selectpicker', required: true}
-                            %hr
-                            %strong Demographic Infomation
-                            %br
-                            .row
-                              .col-sm-6
-                                .form-group
-                                  = f.text_field :first_name, placeholder: 'first name', class: 'form-control', required: true
-                              .col-sm-6
-                                .form-group
-                                  = f.text_field :last_name, placeholder: 'last name', class: 'form-control', required: true
-                            .row
-                              .col-sm-4
-                                = link_to 'Terms of service', layouts_terms_path, target: :_blank
-                              .col-sm-4
-                              .col-sm-4
-                                = f.label  'Agree to terms'
-                                = f.check_box :terms
-                              %br
-                            %i NOTE: this does not submit your order, nor does it ensure availability of item
-                          .modal-footer
-                            %button.btn.btn-default{type: 'button', "data-dismiss" => "modal"}
-                              Close
-                            = f.submit 'Create Order', class: 'btn btn-success'
+        - if current_user
+          - @event.event_items.each do |ei|
+            .modal.fade{tabindex: '-1', role: 'dialog', id: "order-modal-#{ei.id}"}
+              = form_for @order, remote: true, authenticity_token: true, data: { rel: "#modal-header-#{ei.id}", target: "#errors-#{ei.id}" } do |f|
+                .modal-dialog.modal-md{role: 'document'}
+                  .modal-content
+                    .modal-header{id: "modal-header-#{ei.id}"}
+                      %button.close{type: 'button', "data-dismiss" => "modal", "aria-label" => "Close"}
+                        %span{"aria-hidden" => "true"}
+                          &times;
+                      %h1 Order Summary
+                    .modal-body
+                      %div{id: "errors-#{ei.id}"}
+                      %h4= @event.name
+                      %p
+                        Item:
+                        = ei.description
+                      %hr
+                      = f.hidden_field :event_item_id, value: ei.id
+                      %strong Item Infomation
+                      %br
+                      .row
+                        .col-sm-12
+                          .form-group
+                            = f.label :quantity
+                            = f.select :quantity, options_for_select((1..ei.max_order).to_a, selected: '1'), {prompt: 'quantity'}, {class: 'form-control selectpicker', required: true}
+                            = f.hidden_field :start_date, value: @event.starts_on.to_date
+                            = f.hidden_field :end_date, value: @event.ends_on.to_date
+                        -#.col-sm-4
+                          .form-group
+                              = f.label 'check-in date'
+                              = f.select :start_date, options_for_select((@event.starts_on.to_date..@event.ends_on.to_date).map{ |d| [d.strftime('%a, %b %d, %Y'), d.strftime('%Y-%m-%d')] }), {prompt: 'check-in date'}, {class: 'form-control selectpicker', required: true}
+                          .col-sm-4
+                          .form-group
+                            = f.label 'check-out date'
+                            = f.select :end_date, options_for_select((@event.starts_on.to_date..@event.ends_on.to_date).map{ |d| [d.strftime('%a, %b %d, %Y'), d.strftime('%Y-%m-%d')] }), {prompt: 'end date'}, {class: 'form-control selectpicker', required: true}
+                      %hr
+                      .row
+                        .col-sm-4
+                          = link_to 'Terms of service', layouts_terms_path, target: :_blank
+                        .col-sm-4
+                        .col-sm-4
+                          = f.label  'Agree to terms'
+                          = f.check_box :terms
+                        %br
+                      %i NOTE: this does not submit your order, nor does it ensure availability of item
+                    .modal-footer
+                      %button.btn.btn-default{type: 'button', "data-dismiss" => "modal"}
+                        Close
+                      = f.submit 'Create Order', class: 'btn btn-success'
           #service-two.tab-pane.fade
             %section.container
           #service-three.tab-pane.fade

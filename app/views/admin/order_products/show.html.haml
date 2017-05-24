@@ -26,7 +26,7 @@
         = opi.quantity
     %p
       %strong Order Name:
-      = @order_product.first_name + ' ' + @order_product.last_name
+      = @order_product.user.first_name + ' ' + @order_product.user.last_name
   .col-sm-6
     - if @order_product.placed_at
       %p
@@ -46,7 +46,51 @@
 %h4
   %strong Order Total:
   = number_to_currency(@order_product.total)
-
 %br
-= link_to 'Orders', admin_order_products_path, class: 'btn btn-primary'
-= link_to 'Modify Order', edit_admin_order_product_path(@order_product), class: 'btn btn-info' if can? :edit, @order_product
+.row
+  .col-xs-12.col-md-3.col-lg-3.pull-left
+    .panel.panel-default.height
+      .panel-heading Billing Details
+      .panel-body
+        %strong= @order_product.user.first_name + ' ' + @order_product.user.last_name
+        %br
+        = @order_product.user.address
+        %br
+        = @order_product.user.city
+        %br
+        = @order_product.user.state
+        %br
+        %strong= @order_product.user.postal_code
+        %br
+        = @order_product.user.country
+.row
+  .col-lg-12
+    .panel.panel-default
+      .panel-heading
+        %h3.text-center
+          %strong Order summary
+      .panel-body
+        .table-responsive
+          %table.table.table-condensed
+            %thead
+              %tr
+                %td
+                  %strong Item Name
+                %td.text-center
+                  %strong Item Quantity
+                %td.text-right
+                  %strong Item Price
+            %tbody
+              - @order_product.order_product_items.each do |opi|
+                %tr
+                  %td= opi.product.name
+                  %td.text-center= opi.quantity
+                  %td.text-right= number_to_currency(opi.product.price)
+              %tr
+                %td.highrow
+                %td.highrow.text-center
+                  %strong Total
+                %td.highrow.text-right= number_to_currency(@order_product.total)
+%br
+= link_to 'Orders', admin_orders_path, class: 'btn btn-primary btn-lg'
+= link_to 'Modify Order', edit_admin_order_product_path(@order_product), class: 'btn btn-info btn-lg' if can? :edit, @order_product

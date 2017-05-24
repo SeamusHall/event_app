@@ -8,6 +8,10 @@ class OrdersController < ApplicationController
   def index
     # current user should only see the orders they placed
     @orders = Order.all.where(user_id: current_user.id).page params[:page]
+    @order_products = OrderProduct.all.where(user_id: current_user.id).page params[:page]
+
+    # Check whether the order status is in progress or validated
+    # either way when it's either status display product
     @orders.each do |order|
       if order.status == Order::PROGRESS_STATUS || order.status == Order::VALIDATED_STATUS
         @products = Product.all.where(check_status: Order::PROGRESS_STATUS)
@@ -84,8 +88,8 @@ class OrdersController < ApplicationController
 
     # add billing address to request
     request.transactionRequest.billTo = CustomerAddressType.new
-    request.transactionRequest.billTo.firstName = @order.first_name
-    request.transactionRequest.billTo.lastName = @order.last_name
+    request.transactionRequest.billTo.firstName = @order.user.first_name
+    request.transactionRequest.billTo.lastName = @order.user.last_name
     request.transactionRequest.billTo.zip = params[:zip].to_s
 
     # add customer info for receipt

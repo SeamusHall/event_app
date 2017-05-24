@@ -35,23 +35,25 @@
           %span.pull-right
             = text_icon :arrow_circle_right
           .clearfix
+
   .col-lg-3.col-md-6
-    .panel.panel-yellow
+    .panel.panel-red
       .panel-heading
         .row
           .col-xs-3
-            = text_icon :shopping_cart, class: 'fa-5x'
+            = text_icon :diamond, class: 'fa-5x'
           .col-xs-9.right
             .huge
-              = @orders.count
-            New Orders
-      = link_to admin_orders_path do
+              = @products.count
+            Products
+      = link_to admin_products_path do
         .panel-footer
           %span.pull-left
             View Details
           %span.pull-right
             = text_icon :arrow_circle_right
           .clearfix
+
   .col-lg-3.col-md-6
     .panel.panel-yellow
       .panel-heading
@@ -60,9 +62,9 @@
             = text_icon :shopping_cart, class: 'fa-5x'
           .col-xs-9.right
             .huge
-              = @order_products.count
-            New Product Orders
-      = link_to admin_order_products_path do
+              = @orders.count + @order_products.count
+            New Orders
+      = link_to admin_orders_path do
         .panel-footer
           %span.pull-left
             View Details

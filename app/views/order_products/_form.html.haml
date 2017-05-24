@@ -1,32 +1,24 @@
 = form_for @order_product do |f|
   = errors_for @order_product, true
-  .row
-    .col-sm-8
+  .container-fluid
+    .content-wrapper
       .row
-        - @order_product.order_product_items.each do |opi|
-          .col-sm-9
-            %p
-              Item:
-              = opi.product.name
-          - if current_user.has_role?(:admin)
-            .col-sm-3
-              %br
-              = f.select :status, options_for_select(OrderProduct::STATUSES.keys, selected: @order_product.status), {prompt: 'status'}, {class: 'form-control selectpicker', required: true}
-          .col-sm-3
-            .form-group
-              = f.label :quantity
-              = f.text_field :quantity, value: opi.quantity
-      %strong Demographic Infomation
-      %br
-      .row
-        .col-sm-6
-          .form-group
-            = f.text_field :first_name, placeholder: 'first name', class: 'form-control', required: true
-        .col-sm-6
-          .form-group
-            = f.text_field :last_name, placeholder: 'last name', class: 'form-control', required: true
-        %br
-      %i NOTE: this does not submit your order, nor does it ensure availability of item
-      .actions.right
-        = f.submit 'Update Order', class: 'btn btn-success'
-        = link_to 'Cancel', order_products_path, class: 'btn btn-danger'
+        .col-sm-8
+          .row
+            - @order_product.order_product_items.each do |opi|
+              .col-sm-9
+                %p
+                  Item:
+                  = opi.product.name
+              - if current_user.has_role?(:admin)
+                .col-sm-3
+                  %br
+                  = f.select :status, options_for_select(OrderProduct::STATUSES.keys, selected: @order_product.status), {prompt: 'status'}, {class: 'form-control selectpicker', required: true}
+              .col-sm-3
+                .form-group
+                  = f.label :quantity
+                  = f.text_field :quantity, value: opi.quantity
+          %br
+          .actions.right
+            = f.submit 'Update Order', class: 'btn btn-success'
+            = link_to 'Cancel', orders_path, class: 'btn btn-danger'
