@@ -1,10 +1,28 @@
 %h1 Orders
+- if !@products.nil?
+  .row.text-center
+    - @products.each do |prod|
+      .col-md-3.col-sm-6.hero-feature
+        .thumbnail
+          - if (prod.attachments.first.content_type.include? 'image')
+            = image_tag prod.attachments.first.url
+          - else
+            = videojs_rails sources: { mp4: prod.attachments.first.url }, class: 'video'
+          .caption
+            %h3= prod.name
+            %p= prod.description
+            %p= number_to_currency prod.price
+            %p
+              = link_to 'add to cart', add_cart_path(prod), method: :post, class: 'btn btn-success'
+              = link_to 'Show', prod, class: 'btn btn-default'
+%hr
 .pricing-table.pricing-three-column.row
+  %h3 Event Orders
   - @orders.each do |order|
     .plan.col-sm-4.col-lg-4
       - if order.status == Order::VALIDATED_STATUS
         .plan-name-gold
-          %h2= "#{order.first_name} #{order.last_name}"
+          %h2= "#{order.user.first_name} #{order.user.last_name}"
           %span= number_to_currency(order.total)
         %ul
           %li.plan-feature= "quantity: #{order.quantity}"
@@ -14,7 +32,7 @@
             = link_to 'edit', edit_order_path(order), class: 'btn btn-warning'
       - elsif order.status == Order::PROGRESS_STATUS
         .plan-name-silver
-          %h2= "#{order.first_name} #{order.last_name}"
+          %h2= "#{order.user.first_name} #{order.user.last_name}"
           %span= number_to_currency(order.total)
         %ul
           %li.plan-feature= "quantity: #{order.quantity}"
@@ -24,7 +42,7 @@
             = link_to 'edit', edit_order_path(order), class: 'btn btn-warning'
       - else
         .plan-name-maroon
-          %h2= "#{order.first_name} #{order.last_name}"
+          %h2= "#{order.user.first_name} #{order.user.last_name}"
           %span= number_to_currency(order.total)
         %ul
           %li.plan-feature= "quantity: #{order.quantity}"
@@ -34,17 +52,36 @@
             = link_to 'edit', edit_order_path(order), class: 'btn btn-warning'
 = paginate @orders
 
-- if !@products.nil?
-  %hr
-  .row.text-center
-    - @products.each do |prod|
-      .col-md-3.col-sm-6.hero-feature
-        .thumbnail
-          //= image_tag product.attachments.first.url
-          .caption
-            %h3= prod.name
-            %p= prod.description
-            %p= number_to_currency prod.price
-            %p
-              = link_to 'add to cart', add_cart_path(prod), method: :post, class: 'btn btn-success'
-              = link_to 'Show', prod, class: 'btn btn-default'
+%hr
+.pricing-table.pricing-three-column.row
+  %h3 Orders
+  - @order_products.each do |order|
+    .plan.col-sm-4.col-lg-4
+      - if order.status == OrderProduct::VALIDATED_STATUS
+        .plan-name-gold
+          %h2= "#{order.user.first_name} #{order.user.last_name}"
+          %span= number_to_currency(order.total)
+        %ul
+          %li.plan-feature= current_user.has_role?(:admin) ? order.status : order.extended_status
+          %li.plan-feature
+            = link_to 'Show', order, class: 'btn btn-success'
+            = link_to 'edit', edit_order_product_path(order), class: 'btn btn-warning'
+      - elsif order.status == OrderProduct::PROGRESS_STATUS
+        .plan-name-silver
+          %h2= "#{order.user.first_name} #{order.user.last_name}"
+          %span= number_to_currency(order.total)
+        %ul
+          %li.plan-feature= current_user.has_role?(:admin) ? order.status : order.extended_status
+          %li.plan-feature
+            = link_to 'Show', order, class: 'btn btn-success'
+            = link_to 'edit', edit_order_product_path(order), class: 'btn btn-warning'
+      - else
+        .plan-name-maroon
+          %h2= "#{order.user.first_name} #{order.user.last_name}"
+          %span= number_to_currency(order.total)
+        %ul
+          %li.plan-feature= current_user.has_role?(:admin) ? order.status : order.extended_status
+          %li.plan-feature
+            = link_to 'Show', order, class: 'btn btn-success'
+            = link_to 'edit', edit_order_product_path(order), class: 'btn btn-warning'
+= paginate @order_products

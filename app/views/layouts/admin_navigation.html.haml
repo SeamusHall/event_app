@@ -38,6 +38,6 @@
                   %li= link_to 'Orders', orders_path
                   %li= link_to 'Site', root_path
                   %li.divider{role: "separator"}
-                  %li= link_to "Account", edit_user_registration_path
+                  %li= link_to "Account", user_path(current_user.id)
           - else
             %li= link_to 'Login', new_session_path(User.new)

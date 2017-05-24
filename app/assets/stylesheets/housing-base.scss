@@ -6,15 +6,17 @@ CSS File for Non admin interface
 @import "table";
 @import "footer";
 
+h1,
+h3,
+h5 {
+  color: $blue;
+}
+
 h1 {
   text-align: center;
   font: normal 48px/normal "Warnes", Helvetica, sans-serif;
-  color: $blue !important;
 }
-h3 {
-  color: $blue;
-  font: normal 28px/normal "Warnes", Helvetica, sans-serif;
-}
+
 body {
   background-color: #DAD6CB !important;
 }

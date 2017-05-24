@@ -16,17 +16,6 @@
             .form-group
               = f.label :quantity
               = f.text_field :quantity, value: opi.quantity
-      %strong Demographic Infomation
-      %br
-      .row
-        .col-sm-6
-          .form-group
-            = f.text_field :first_name, placeholder: 'first name', class: 'form-control', required: true
-        .col-sm-6
-          .form-group
-            = f.text_field :last_name, placeholder: 'last name', class: 'form-control', required: true
-        %br
-      %i NOTE: this does not submit your order, nor does it ensure availability of item
       .actions.right
         = f.submit 'Update Order', class: 'btn btn-success'
-        = link_to 'Cancel', admin_order_products_path, class: 'btn btn-danger'
+        = link_to 'Cancel', admin_orders_path, class: 'btn btn-danger'

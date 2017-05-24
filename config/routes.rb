@@ -10,19 +10,22 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :order_products, except: [:destroy] do
+  resources :order_products, except: [:destroy, :index] do
     member do
       get :purchase
       post :make_purchase
     end
   end
   get "layouts/terms"
-  resources :events, only: [:index,:show]
+  resources :events, only: [:index,:show] do
+    post :auto_update_role
+  end
   resources :products, only: [:index,:show]
   resource :cart, only: [:show] do
     post "add", path: "add/:id"
     post "remove", path: "remove/:id"
     post "clear", path: "clear"
+    post :auto_update_role
   end
 
   devise_for :users, controllers: {
@@ -51,7 +54,7 @@ Rails.application.routes.draw do
       end
     end
     resources :events
-    resources :order_products do
+    resources :order_products, except: [:index] do
       member do
         get :validate
       end
