@@ -74,7 +74,7 @@ class Order < ApplicationRecord
   def perform_total_calculation
     if self.quantity and self.start_date and self.end_date and self.event_item and self.status == PENDING_STATUS
       qty = self.quantity
-      freq = self.event_item.flat_rate ? 1.0 : (self.end_date - self.start_date + 1.day)/1.day
+      freq = self.event_item.flat_rate ? 1.0 : (self.end_date - self.start_date)/1.day
       self.total = (self.event_item.price * qty * freq) * (1.0 + self.event_item.tax)
     end
   end
