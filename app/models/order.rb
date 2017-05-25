@@ -17,11 +17,11 @@ class Order < ApplicationRecord
   before_validation :update_finalized_on
 
   validate :better_agree
-  validate :valid_dates
+  #validate :valid_dates
   validate :quantity_less_than_max_order
 
   validates :status, inclusion: { in: STATUSES.keys }, presence: true
-  validates :quantity, :total, :start_date, :end_date, :first_name, :last_name, presence: true
+  validates :quantity, :total, :start_date, :end_date, presence: true
   validates :quantity, numericality: { only_integer: true, greater_than: 0 }
   validates :total, numericality: { greater_than: 0.0 }
 
@@ -51,11 +51,11 @@ class Order < ApplicationRecord
   private
   def valid_dates
     if start_date and end_date
-      #errors.add(:start_date, 'must occur before end date') if start_date > end_date
+      errors.add(:start_date, 'must occur before end date') if start_date > end_date
       errors.add(:end_date, 'must occur after check-in date') if start_date == end_date
-      #errors.add(:start_date, 'must occur inside event dates') if start_date < self.event_item.event.starts_on or start_date > self.event_item.event.ends_on
+      errors.add(:start_date, 'must occur inside event dates') if start_date < self.event_item.event.starts_on or start_date > self.event_item.event.ends_on
       errors.add(:end_date, 'must occur inside event dates') if end_date < self.event_item.event.starts_on or end_date > self.event_item.event.ends_on
-      errors.add(:base, 'minimum date freqency not met') if (end_date - start_date + 1.day) / 1.day != self.event_item.min_freq
+      errors.add(:base, 'the amount of nights to stay must be meet') if (end_date - start_date + 1.day) / 1.day != self.event_item.min_freq
     end
   end
 
@@ -74,7 +74,7 @@ class Order < ApplicationRecord
   def perform_total_calculation
     if self.quantity and self.start_date and self.end_date and self.event_item and self.status == PENDING_STATUS
       qty = self.quantity
-      freq = self.event_item.flat_rate ? 1.0 : (self.end_date - self.start_date + 1.day)/1.day
+      freq = self.event_item.flat_rate ? 1.0 : (self.end_date - self.start_date)/1.day
       self.total = (self.event_item.price * qty * freq) * (1.0 + self.event_item.tax)
     end
   end

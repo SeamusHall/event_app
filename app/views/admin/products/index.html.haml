@@ -5,6 +5,7 @@
       %tr
         %th Name
         %th Price
+        %th Total Left
         %th Image
         %th Description
         %th
@@ -15,6 +16,7 @@
         %tr
           %td= product.name
           %td= number_to_currency product.price
+          %td= product.quantity
           %td
             %ul
             - product.attachments.each do |at|

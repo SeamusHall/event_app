@@ -22,7 +22,7 @@ module Admin
     end
 
     def user_params
-      params.require(:user).permit(:email, :password, :password_confirmation, :remember_me, role_ids: [])
+      params.require(:user).permit(:email, :password, :password_confirmation, :remember_me, :first_name, :last_name, :phone, :address, :city, :state, :country, :postal_code, role_ids: [])
     end
   end
 end

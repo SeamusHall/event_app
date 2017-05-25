@@ -14,7 +14,7 @@ class OrderProduct < ActiveRecord::Base
   ARCHIVED_STATUS = 'archived'
 
   validates :status, inclusion: { in: STATUSES.keys }, presence: true
-  validates :total, :first_name, :last_name, presence: true
+  validates :total, presence: true
   validates :total, numericality: { greater_than: 0.0 }
 
   before_create :only_one_pending_order

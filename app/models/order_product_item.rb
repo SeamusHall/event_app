@@ -8,7 +8,7 @@ class OrderProductItem < ActiveRecord::Base
 
   private
   def do_checks
-    errors.add(:max_to_sell, 'Item can not be more than allowed sold') if product.max_to_sell < quantity
+    errors.add(:max_to_sell, 'Item quantity can not be more than quantity allowed to sell') if product.max_to_sell < quantity
     errors.add(:quantity, 'We are out of stock on product') if product.quantity == 0
     errors.add(:quantity, 'You currently want more than what we have') if product.quantity < quantity && product.quantity != 0
   end

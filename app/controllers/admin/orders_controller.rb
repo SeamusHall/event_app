@@ -6,7 +6,7 @@ module Admin
 
     def index
       @orders = Order.all.page params[:page]
-      # Order.not_validated
+      @order_products = OrderProduct.all.page params[:page]
     end
 
     def update

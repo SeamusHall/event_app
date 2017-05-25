@@ -14,7 +14,15 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable,
          :confirmable, :lockable, :timeoutable
 
+  validates_presence_of :first_name, :last_name, :phone, :address, :city, :state, :country, :postal_code, on: [:update]
+
   scope :active, ->() { where(locked_at: nil) }
+
+  # used to make sure user needs to
+  # their information. Find in carts/show events/show
+  def check_nullity?
+    first_name.nil? || last_name.nil? || phone.nil? || address.nil? || city.nil? || state.nil? || country.nil? || postal_code.nil?
+  end
 
   def has_role?(role_sym)
     roles.any? { |r| r.name.underscore.to_sym == role_sym }
