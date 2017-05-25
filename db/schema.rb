@@ -102,6 +102,7 @@ ActiveRecord::Schema.define(version: 20170523144743) do
     t.datetime "updated_at",                              null: false
     t.datetime "deleted_at"
     t.boolean  "terms"
+    t.boolean  "risk"
     t.index ["deleted_at"], name: "index_orders_on_deleted_at"
     t.index ["event_item_id"], name: "index_orders_on_event_item_id"
     t.index ["status"], name: "index_orders_on_status"

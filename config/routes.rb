@@ -17,6 +17,7 @@ Rails.application.routes.draw do
     end
   end
   get "layouts/terms"
+  get "layouts/risk"
   resources :events, only: [:index,:show] do
     post :auto_update_role
   end
