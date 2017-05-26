@@ -65,7 +65,7 @@ class OrdersController < ApplicationController
     request.transactionRequest.amount = @order.total
     request.transactionRequest.transactionType = TransactionTypeEnum::AuthCaptureTransaction
     request.transactionRequest.payment = PaymentType.new
-    request.transactionRequest.payment.creditCard = CreditCardType.new(params[:cc_num], params[:exp_date], params[:ccv], params[:first_name], params[:last_name], params[:address], params[:city], params[:state], params[:zip])
+    request.transactionRequest.payment.creditCard = CreditCardType.new(params[:cc_num], params[:exp_date], params[:ccv])
 
     # add order and line item information
     request.transactionRequest.order = OrderType.new(@order.id.to_s, @order.event_item.event.name)
@@ -90,9 +90,9 @@ class OrdersController < ApplicationController
     request.transactionRequest.billTo = CustomerAddressType.new
     request.transactionRequest.billTo.firstName = @order.user.first_name
     request.transactionRequest.billTo.lastName = @order.user.last_name
-    request.transactionRequest.billTo.address = @order_product.user.address
-    request.transactionRequest.billTo.city = @order_product.user.city
-    request.transactionRequest.billTo.state = @order_product.user.state
+    #request.transactionRequest.billTo.address = @order_product.user.address
+    #request.transactionRequest.billTo.city = @order_product.user.city
+    #request.transactionRequest.billTo.state = @order_product.user.state
     request.transactionRequest.billTo.zip = params[:zip].to_s
 
     # add customer info for receipt
