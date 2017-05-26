@@ -26,6 +26,24 @@
                   = text_field_tag 'ccv', '', placeholder: 'XXX', class: 'form-control', required: true, pattern: '[0-9]{3}'
             .row
               .col-md-12
+                .form-group
+                  = label_tag 'Address', 'Address'
+                  = text_field_tag 'exp_date', '', placeholder: '', class: 'form-control', required: true, pattern: '[0-9]{4}'
+            .row
+              .col-md-3.col-md-3
+                .form-group
+                  = label_tag 'city', 'City'
+                  = text_field_tag 'exp_date', '', placeholder: '', class: 'form-control', required: true, pattern: '[0-9]{4}'
+              .col-md-3.col-md-3.pull-left
+                .form-group
+                  = label_tag 'State', 'State / Province / Region'
+                  = text_field_tag 'State', '', placeholder: '', class: 'form-control', required: true, pattern: '[0-9]{3}'
+              .col-md-4.col-md-4.pull-left
+                .form-group
+                  = label_tag 'Country', 'Country'
+                  = text_field_tag 'Country', '', placeholder: '', class: 'form-control', required: true, pattern: '[0-9]{3}'
+            .row
+              .col-md-12
                 = label_tag 'zip', 'Billing Zip'
                 = text_field_tag 'zip', '', placeholder: 'XXXXX', class: 'form-control', required: true, pattern: '[0-9]{5}'
             %br
