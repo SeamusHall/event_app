@@ -25,20 +25,25 @@
                   = label_tag 'ccv', 'CCV'
                   = text_field_tag 'ccv', '', placeholder: 'XXX', class: 'form-control', required: true, pattern: '[0-9]{3}'
             .row
-              .col-md-12
+              .col-md-3.col-md-3
                 .form-group
-                  = label_tag 'Address', 'Address'
-                  = text_field_tag 'address', '', placeholder: ''
+                  = label_tag 'first_name', 'First Name'
+                  = text_field_tag 'first_name', '', placeholder: '',class: 'form-control', required: true
             .row
               .col-md-3.col-md-3
                 .form-group
-                  = label_tag 'city', 'City'
-                  = text_field_tag 'city', '', placeholder: ''
+                  = label_tag 'last_name', 'Last Name'
+                  = text_field_tag 'last_name', '', placeholder: '',class: 'form-control', required: true
+            .row
+              .col-md-12
                 .form-group
-                  = label_tag 'State', 'State / Province / Region'
-                  = text_field_tag 'State', '', placeholder: ''
-              .col-md-4.col-md-4.pull-left
+                  = label_tag 'address', 'Street Address'
+                  = text_field_tag 'address', '', placeholder: '',class: 'form-control', required: true
 
+              .col-md-1
+                .form-group
+                  = label_tag 'state', 'State'
+                  = text_field_tag 'State', '', placeholder: '',class: 'form-control', required: true
             .row
               .col-md-12
                 = label_tag 'zip', 'Billing Zip'
