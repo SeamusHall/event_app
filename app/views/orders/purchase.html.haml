@@ -28,24 +28,21 @@
               .col-md-12
                 .form-group
                   = label_tag 'Address', 'Address'
-                  = text_field_tag 'exp_date', '', placeholder: '', class: 'form-control', required: true, pattern: '[0-9]{4}'
+                  = text_field_tag 'address', '', placeholder: ''
             .row
               .col-md-3.col-md-3
                 .form-group
                   = label_tag 'city', 'City'
-                  = text_field_tag 'exp_date', '', placeholder: '', class: 'form-control', required: true, pattern: '[0-9]{4}'
-              .col-md-3.col-md-3.pull-left
+                  = text_field_tag 'city', '', placeholder: ''
                 .form-group
                   = label_tag 'State', 'State / Province / Region'
-                  = text_field_tag 'State', '', placeholder: '', class: 'form-control', required: true, pattern: '[0-9]{3}'
+                  = text_field_tag 'State', '', placeholder: ''
               .col-md-4.col-md-4.pull-left
-                .form-group
-                  = label_tag 'Country', 'Country'
-                  = text_field_tag 'Country', '', placeholder: '', class: 'form-control', required: true, pattern: '[0-9]{3}'
+
             .row
               .col-md-12
                 = label_tag 'zip', 'Billing Zip'
-                = text_field_tag 'zip', '', placeholder: 'XXXXX', class: 'form-control', required: true, pattern: '[0-9]{5}'
+                = text_field_tag 'zip', '', placeholder: 'xxxxx', class: 'form-control', required: true, pattern: '[0-9]{5}'
             %br
             .row
               .col-md-4
