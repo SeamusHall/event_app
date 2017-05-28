@@ -47,7 +47,7 @@
         %th
     %tbody
       - @order_products.each do |op|
-        %tr
+        %tr{class: ('success' if op.status == OrderProduct::VALIDATED_STATUS)}
           %td= op.id
           %td= current_user.has_role?(:admin) ? op.status : op.extended_status
           %td= op.created_at.strftime('%m-%e-%y %H:%M')

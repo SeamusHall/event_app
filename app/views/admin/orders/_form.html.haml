@@ -1,33 +1,43 @@
-= form_for ["admin",@order] do |f|
-  = errors_for @order, true
-  .row
-    .col-sm-8
+= form_for order do |f|
+  = errors_for order, true
+  = f.select :status, options_for_select(Order::STATUSES.keys, selected: order.status), {prompt: 'status'}, {class: 'form-control selectpicker', required: true}
+  .container-fluid
+    .content-wrapper
       .row
-        .col-sm-9
-          %h4= order.event_item.event.name
-          %p
+        %h3= order.event_item.event.name
+
+      .row
+        .col-sm-2
+        .col-sm-8
+          %h4
             Item:
             = order.event_item.description
-        - if current_user.has_role?(:admin)
-          .col-sm-3
-            %br
-            = f.select :status, options_for_select(Order::STATUSES.keys, selected: order.status), {prompt: 'status'}, {class: 'form-control selectpicker', required: true}
+        .col-sm-2
       %hr
-      %strong Item Infomation
-      %br
       .row
         .col-sm-4
+        .col-sm-4
+          %strong Item Infomation
+        .col-sm-4
+      %br
+      .row
+        .col-sm-1
+        .col-sm-10
+          .form-group
+            = f.label :comments
+            = f.text_area :comments, placeholder: 'Additional Comments', class: 'form-control'
+        .col-sm-1
+      %br
+      .row
+        .col-sm-1
+        .col-sm-10
           .form-group
             = f.label :quantity
-            = f.select :quantity, options_for_select((1..order.event_item.max_order).to_a, selected: order.quantity), {prompt: 'quantity'}, {class: 'form-control selectpicker', required: true}
-        .col-sm-4
-          .form-group
-            = f.label :start_date
-            = f.select :start_date, options_for_select((order.event_item.event.starts_on.to_date..order.event_item.event.ends_on.to_date).map{ |d| [d.strftime('%a, %b %d, %Y'), d.strftime('%Y-%m-%d')] }, selected: order.start_date.strftime('%Y-%m-%d')), {prompt: 'check-in date'}, {class: 'form-control selectpicker', required: true}
-        .col-sm-4
-          .form-group
-            = f.label :end_date
-            = f.select :end_date, options_for_select((order.event_item.event.starts_on.to_date..order.event_item.event.ends_on.to_date).map{ |d| [d.strftime('%a, %b %d, %Y'), d.strftime('%Y-%m-%d')] }, selected: order.end_date.strftime('%Y-%m-%d')), {prompt: 'end date'}, {class: 'form-control selectpicker', required: true}
+            = f.select :quantity, options_for_select((1..order.event_item.max_order).to_a, selected: '1'), {prompt: 'quantity'}, {class: 'form-control selectpicker', required: true}
+        .col-sm-1
+      %hr
+      %br
       .actions.right
-        = f.submit 'Update Order', class: 'btn btn-success'
-        = link_to 'Cancel', :back, class: 'btn btn-danger'
+        = f.submit 'Update Order', class: 'btn btn-success btn-lg'
+        = link_to 'Cancel', :back, class: 'btn btn-danger btn-lg'
+      %br

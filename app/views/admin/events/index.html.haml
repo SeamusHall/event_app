@@ -7,8 +7,6 @@
         %th Name
         %th Available at
         %th Unavailable at
-        %th Starts on
-        %th Ends on
         %th
     %tbody
       - @events.each do |event|
@@ -16,8 +14,6 @@
           %td= event.name
           %td= event.available_at.strftime('%d/%m/%Y')
           %td= event.unavailable_at
-          %td= event.starts_on
-          %td= event.ends_on
           %td
             = link_to 'Show', ["admin",event], class: 'btn btn-success btn-block'
             = link_to 'Edit', edit_admin_event_path(event), class: 'btn btn-warning btn-block'

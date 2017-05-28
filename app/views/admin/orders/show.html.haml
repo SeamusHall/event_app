@@ -26,7 +26,7 @@
     %p
       %strong Order Quantity:
       = @order.quantity
-    %p
+    -#%p
       %strong Order Dates for Event:
       = @order.dates
     %p
@@ -67,7 +67,11 @@
         %strong= @order.user.postal_code
         %br
         = @order.user.country
-
+.row
+  .col-md-5
+    %h3 Additional Comments:
+    %p= @order.comments unless @order.comments.nil?
+%br
 .row
   .col-lg-12
     .panel.panel-default
@@ -85,19 +89,21 @@
                   %strong Item Tax
                 %td.text-center
                   %strong Item Quantity
-                %td.text-center
-                  %strong Event Date
+                -#%td.text-center
+                  %strong Order Date
                 %td.text-center
                   %strong Order Name
-                %td.text-right
+                %td
+                %td.text-center
                   %strong Price
             %tbody
               %tr
                 %td= @order.event_item.event.name
                 %td.text-center= @order.event_item.tax > 0.0 ? number_to_percentage(@order.event_item.tax * 100, precision: 0) : '--'
                 %td.text-center= @order.quantity
-                %td.text-center= @order.dates
+                -#%td.text-center= @order.dates
                 %td.text-center= @order.user.first_name + ' ' + @order.user.last_name
+                %td.text-center
                 %td.text-right= number_to_currency(@order.event_item.price)
               %tr
                 %td.highrow

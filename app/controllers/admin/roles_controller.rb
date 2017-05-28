@@ -23,13 +23,6 @@ module Admin
       end
     end
 
-    def destroy
-      @role.destroy
-      respond_to do |format|
-        format.html { redirect_to admin_roles_path, notice: 'Role was successfully destroyed.' }
-      end
-    end
-
     private
 
     def set_role

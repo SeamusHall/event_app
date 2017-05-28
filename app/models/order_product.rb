@@ -2,7 +2,9 @@ class OrderProduct < ActiveRecord::Base
   acts_as_paranoid
   paginates_per 25
   belongs_to :user
-  has_many :order_product_items
+  has_many :order_product_items, dependent: :destroy
+  accepts_nested_attributes_for :order_product_items, allow_destroy: true
+  before_validation :calculate
 
   STATUSES = { 'pending' => 'Order Pending (pre-submit)',
                'progress' => 'Order In Progress (payment submitted)',
@@ -30,7 +32,17 @@ class OrderProduct < ActiveRecord::Base
   end
 
   private
+
   def only_one_pending_order
     errors.add(:base, 'only one pending order allowed, please wait until previous order is processed') if (self.user.orders.pending.to_a - [self]).any?
   end
+
+  def calculate
+    total_temp = 0
+    self.order_product_items.each do |opi|
+      total_temp += (opi.product.price * opi.quantity ) * (1.0 + opi.product.tax)
+    end
+    self.total = total_temp
+  end
+
 end

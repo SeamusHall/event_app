@@ -5,8 +5,9 @@ class Product < ApplicationRecord
   serialize :attachments, Array # Mysql Doesn't like arrays, this allows arrays to be stored in sql
   mount_uploaders :attachments, AttachmentUploader
 
-  validates_presence_of :name, :price, :description, :attachments, :status, :page_body, :max_to_sell, :quantity
+  validates_presence_of :name, :price, :tax, :description, :attachments, :status, :page_body, :max_to_sell, :quantity
   validates :price, numericality: { greater_than: 0 }
+  validates :tax, numericality: { greater_than: -1 }
 
   belongs_to :order_product
 

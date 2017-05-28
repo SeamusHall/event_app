@@ -42,19 +42,18 @@
 .row.text-center
   .col-lg-12
     %h3 Latest Products
-
 .row.text-center
-  - @products.each do |product|
+  - @products.each do |prod|
     .col-md-3.col-sm-6.hero-feature
       .thumbnail
-        - if (product.attachments.first.content_type.include? 'image')
-          = image_tag product.attachments.first.url
+        - if (prod.attachments.first.content_type.include? 'image')
+          = image_tag prod.attachments.first.url
         - else
-          = videojs_rails sources: { mp4: product.attachments.first.url }, class: 'video'
+          = videojs_rails sources: { mp4: prod.attachments.first.url }, class: 'video'
         .caption
-          %h3= product.name
-          %p= product.description
-          %p= number_to_currency product.price
+          %h3= prod.name
+          %p= prod.description
+          %p= number_to_currency prod.price
           %p
-            = link_to 'add to cart', add_cart_path(product), method: :post, class: 'btn btn-success'
-            = link_to 'Show', product, class: 'btn btn-default'
+            = link_to 'add to cart', add_cart_path(prod), method: :post, class: 'btn btn-success'
+            = link_to 'Show', prod, class: 'btn btn-default'

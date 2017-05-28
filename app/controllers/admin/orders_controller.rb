@@ -17,13 +17,6 @@ module Admin
       end
     end
 
-    def destroy
-      @order.destroy
-      respond_to do |format|
-        format.html { redirect_to admin_orders_path, notice: 'Order was successfully destroyed.' }
-      end
-    end
-
     def validate
       @order.status = Order::VALIDATED_STATUS
       if @order.save

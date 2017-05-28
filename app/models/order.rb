@@ -18,10 +18,10 @@ class Order < ApplicationRecord
 
   validate :better_agree
   #validate :valid_dates
-  validate :quantity_less_than_max_order
+  #validate :quantity_less_than_max_order
 
   validates :status, inclusion: { in: STATUSES.keys }, presence: true
-  validates :quantity, :total, :start_date, :end_date, presence: true
+  validates :quantity, :total, presence: true
   validates :quantity, numericality: { only_integer: true, greater_than: 0 }
   validates :total, numericality: { greater_than: 0.0 }
 
@@ -72,10 +72,10 @@ class Order < ApplicationRecord
   end
 
   def perform_total_calculation
-    if self.quantity and self.start_date and self.end_date and self.event_item and self.status == PENDING_STATUS
+    if self.quantity and self.event_item and self.status == PENDING_STATUS
       qty = self.quantity
-      freq = self.event_item.flat_rate ? 1.0 : (self.end_date - self.start_date)/1.day
-      self.total = (self.event_item.price * qty * freq) * (1.0 + self.event_item.tax)
+      #freq = self.event_item.flat_rate ? 1.0 : (self.end_date - self.start_date)/1.day
+      self.total = (self.event_item.price * qty ) * (1.0 + self.event_item.tax)
     end
   end
 

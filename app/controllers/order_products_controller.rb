@@ -16,36 +16,10 @@ class OrderProductsController < ApplicationController
     @order_product.user = current_user
     @order_product.status = Order::PENDING_STATUS
 
-    if @order_product.save # for order_product verification
-      @cart.items.each do |item|
-        product_item = OrderProductItem.new
-        product_item.order_product_id = @order_product.id
-        product_item.product_id = item.product.id
-        product_item.quantity = item.quantity
-        if product_item.save # For order_product_items verification
-          # Fixes DoubleRenderError
-          if OrderProductItem.all.where(order_product_id: @order_product.id).count == @cart.items.length
-            respond_to do |format|
-              format.html { redirect_to @order_product, notice: 'Order was successfully created. Note that although created until you make a purchase it does not garentee that your item will be available.'}
-              format.js { redirect_to @order_product, notice: 'Order was successfully created. Note that although created until you make a purchase it does not garentee that your item will be available.' }
-            end
-          end
-        else
-          # TODO Fix DoubleRenderError
-          # TODO Fix errors message
-          respond_to do |format|
-            format.json { render json: product_item.errors, status: :unprocessable_entity}
-          end
-
-          # IF There are any errors find all instances of it
-          # Remove them from the Database
-          # Reset Table Id's
-          # This is needed to reset table Id's and make sure the db doesn't get bloated
-          OrderProductItem.all.where(order_product_id: @order_product.id).delete_all
-          OrderProductItem.reset_pk_sequence
-          OrderProduct.all.where(id: @order_product.id).delete_all # pointless to do it like this
-          OrderProduct.reset_pk_sequence
-        end
+    if @order_product.save
+      respond_to do |format|
+        format.html { redirect_to @order_product, notice: 'Order was successfully created. Note that although created until you make a purchase it does not garentee that your item will be available.'}
+        format.js { redirect_to @order_product, notice: 'Order was successfully created. Note that although created until you make a purchase it does not garentee that your item will be available.' }
       end
     else
       respond_to do |format|
@@ -64,13 +38,6 @@ class OrderProductsController < ApplicationController
     respond_with @order_product, location: -> { @order_product }
   end
 
-  def destroy
-    @order_product.destroy
-    respond_to do |format|
-      format.html { redirect_to order_products_url, notice: 'Order was successfully destroyed.' }
-    end
-  end
-
   def make_purchase
     # create transation and request with Authorize
     transaction = Transaction.new(AUTHORIZE_NET_CONFIG['api_login_id'], AUTHORIZE_NET_CONFIG['api_transaction_key'], :gateway => :production)
@@ -86,12 +53,13 @@ class OrderProductsController < ApplicationController
 
     # add billing address to request
     request.transactionRequest.billTo = CustomerAddressType.new
-    request.transactionRequest.billTo.firstName = @order_product.user.first_name
-    request.transactionRequest.billTo.lastName = @order_product.user.last_name
-    #request.transactionRequest.billTo.address = @order_product.user.address
-    #request.transactionRequest.billTo.city = @order_product.user.city
-    #request.transactionRequest.billTo.state = @order_product.user.state
+    request.transactionRequest.billTo.firstName = current_user.first_name
+    request.transactionRequest.billTo.lastName = current_user.last_name
     request.transactionRequest.billTo.zip = params[:zip].to_s
+    request.transactionRequest.billTo.address = current_user.address
+    request.transactionRequest.billTo.city = current_user.city
+    request.transactionRequest.billTo.state = current_user.state
+    request.transactionRequest.billTo.country = current_user.country
 
     # add customer info for receipt
     request.transactionRequest.customer = CustomerDataType.new
@@ -109,6 +77,7 @@ class OrderProductsController < ApplicationController
       @order_product.payment_details = response.to_yaml
       @order_product.auth_code = response.transactionResponse.authCode
       @order_product.transaction_id = response.transactionResponse.transId
+      decrement_product(@order_product)
       if @order_product.save
         decrement_product(@order_product) # decrease amount of product have left if saved
         respond_to do |format|
@@ -130,7 +99,8 @@ class OrderProductsController < ApplicationController
 
   private
   def order_product_params
-    permitted_params = [:user_id, :total, :payment_details]
+    permitted_params = [:user_id, :total, :payment_details,
+                        order_product_items_attributes: [:id,:product_id,:quantity]]
     permitted_params << :status if current_user.has_role?(:admin)
     params.require(:order_product).permit(permitted_params)
   end

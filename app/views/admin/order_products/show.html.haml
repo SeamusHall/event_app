@@ -78,6 +78,8 @@
                   %strong Item Name
                 %td.text-center
                   %strong Item Quantity
+                %td.text-center
+                  %strong Tax
                 %td.text-right
                   %strong Item Price
             %tbody
@@ -85,8 +87,10 @@
                 %tr
                   %td= opi.product.name
                   %td.text-center= opi.quantity
+                  %td.text-center= number_to_percentage(opi.product.tax * 100, precision: 0)
                   %td.text-right= number_to_currency(opi.product.price)
               %tr
+                %td.highrow
                 %td.highrow
                 %td.highrow.text-center
                   %strong Total

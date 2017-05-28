@@ -1,5 +1,54 @@
 %h1 Order Details
 
+- if @order.status == Order::PROGRESS_STATUS
+  .row
+    .col-sm-6
+      %p
+        %strong Order ID:
+        = @order.id
+      %p
+        %strong Order Date:
+        = @order.created_at
+      %p
+        %strong Order Status:
+        = @order.extended_status
+      %p
+        %strong Event:
+        = @order.event_item.event.name
+      %p
+        %strong Event Item:
+        = @order.event_item.description
+      %p
+        %strong Item Price:
+        = number_to_currency(@order.event_item.price)
+      %p
+        %strong Item Tax:
+        = @order.event_item.tax > 0.0 ? number_to_currency(@order.event_item.tax * 100, precision: 0) : '--'
+      %p
+        %strong Order Quantity:
+        = @order.quantity
+      -#%p
+        %strong Order Dates for Event:
+        = @order.dates
+      %p
+        %strong Order Name:
+        = @order.user.first_name + ' ' + @order.user.last_name
+    .col-sm-6
+      - if @order.placed_at
+        %p
+          %strong Auth Code:
+          = @order.auth_code
+        %p
+          %strong Transaction ID:
+          = @order.transaction_id
+        %p
+          %strong Placed At:
+          = @order.placed_at.strftime('%m/%d/%Y %l:%M%p')
+      - if @order.finalized_on
+        %p
+          %strong Finalized On:
+          = @order.finalized_on.strftime('%m/%d/%Y %l:%M%p')
+
 .row
   .col-xs-12.col-md-3.col-lg-3.pull-left
     .panel.panel-default.height
@@ -34,10 +83,11 @@
                   %strong Item Tax
                 %td.text-center
                   %strong Item Quantity
-                %td.text-center
-                  %strong Event Date
+                -#%td.text-center
+                  %strong Order Date
                 %td.text-center
                   %strong Order Name
+                %td.text-center
                 %td.text-right
                   %strong Price
             %tbody
@@ -45,8 +95,9 @@
                 %td= @order.event_item.event.name
                 %td.text-center= @order.event_item.tax > 0.0 ? number_to_percentage(@order.event_item.tax * 100, precision: 0) : '--'
                 %td.text-center= @order.quantity
-                %td.text-center= @order.dates
+                -#%td.text-center= @order.dates
                 %td.text-center= @order.user.first_name + ' ' + @order.user.last_name
+                %td.text-center
                 %td.text-right= number_to_currency(@order.event_item.price)
               -# %tr
                 %td.highrow

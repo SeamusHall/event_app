@@ -5,6 +5,7 @@
       %tr
         %th Name
         %th Price
+        %th Tax
         %th Total Left
         %th Image
         %th Description
@@ -16,14 +17,20 @@
         %tr
           %td= product.name
           %td= number_to_currency product.price
+          - unless product.tax.nil?
+            %td= number_to_percentage(product.tax * 100, precision: 0)
           %td= product.quantity
           %td
-            %ul
-            - product.attachments.each do |at|
-              - if (at.content_type.include? 'image')
-                %li= image_tag at.url, width: "400"
-              - else
-                %li= videojs_rails sources: { mp4: at.url }, width: "400"
+            - if (product.attachments.first.content_type.include? 'image')
+              = image_tag product.attachments.first.url, height: "150"
+            - else
+              = videojs_rails sources: { mp4: product.attachments.first.url }, class: 'video'
+            -#%ul
+              - product.attachments.each do |at|
+                - if (at.content_type.include? 'image')
+                  %li= image_tag at.url, width: "400"
+                - else
+                  %li= videojs_rails sources: { mp4: at.url }, width: "400"
           %td= product.description
           %td
             = link_to 'Show', admin_product_path(product), class: 'btn btn-success btn-block'
