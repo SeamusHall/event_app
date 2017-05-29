@@ -26,7 +26,7 @@
         = opi.quantity
     %p
       %strong Order Name:
-      = @order_product.user.first_name + ' ' + @order_product.user.last_name
+      = @order_product.order_name
   .col-sm-6
     - if @order_product.placed_at
       %p
@@ -52,7 +52,7 @@
     .panel.panel-default.height
       .panel-heading Billing Details
       .panel-body
-        %strong= @order_product.user.first_name + ' ' + @order_product.user.last_name
+        %strong= @order_product.order_name
         %br
         = @order_product.user.address
         %br

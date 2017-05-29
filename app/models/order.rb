@@ -1,6 +1,6 @@
 class Order < ApplicationRecord
   acts_as_paranoid
-  paginates_per 25
+  paginates_per 9
   belongs_to :user
   belongs_to :event_item
 

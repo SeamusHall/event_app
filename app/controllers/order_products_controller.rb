@@ -38,6 +38,13 @@ class OrderProductsController < ApplicationController
     respond_with @order_product, location: -> { @order_product }
   end
 
+  def purchase
+    # Just in case!!!
+    if @order_product.check_stock
+      redirect_to :back, alert: 'Something Has Gone Wrong :( one of your items must be out of stock'
+    end
+  end
+
   def make_purchase
     # create transation and request with Authorize
     transaction = Transaction.new(AUTHORIZE_NET_CONFIG['api_login_id'], AUTHORIZE_NET_CONFIG['api_transaction_key'], :gateway => :production)
@@ -50,6 +57,26 @@ class OrderProductsController < ApplicationController
     request.transactionRequest.payment = PaymentType.new
     request.transactionRequest.payment.creditCard = CreditCardType.new(params[:cc_num], params[:exp_date], params[:ccv])
 
+    # add order and line item information
+    request.transactionRequest.order = OrderType.new(@order_product.id.to_s, "#{@order_product.order_name}-eclipse-products")
+    line_items = []
+    @order_product.order_product_items.each do |opi|
+      line_items << LineItemType.new(
+                      opi.product.id.to_s(16), # itemId
+                      opi.product.name,        # name
+                      opi.product.description, # description
+                      opi.quantity,            # quantity
+                      opi.product.price,       # unitPrice
+                      (opi.product.tax > 0.0 ? "true" : "false") # taxable?
+      )
+    end
+    request.transactionRequest.lineItems = LineItems.new (line_items)
+
+    # tax
+    if @order_product.total_tax > 0.0
+      tax_amount = @order_product.total_tax
+      request.transactionRequest.tax = ExtendedAmountType.new(tax_amount.round(2), "State Tax", "")
+    end
 
     # add billing address to request
     request.transactionRequest.billTo = CustomerAddressType.new
@@ -60,13 +87,14 @@ class OrderProductsController < ApplicationController
     request.transactionRequest.billTo.city = current_user.city
     request.transactionRequest.billTo.state = current_user.state
     request.transactionRequest.billTo.country = current_user.country
+    request.transactionRequest.billTo.phoneNumber = current_user.phone
 
     # add customer info for receipt
     request.transactionRequest.customer = CustomerDataType.new
     request.transactionRequest.customer.email = current_user.email
     request.transactionRequest.customer.id = current_user.id.to_s(16) # hexadecimal user.id
 
-    # perform transation with request
+    # perform transaction with request
     response = transaction.create_transaction(request)
 
     # parse response
@@ -77,9 +105,8 @@ class OrderProductsController < ApplicationController
       @order_product.payment_details = response.to_yaml
       @order_product.auth_code = response.transactionResponse.authCode
       @order_product.transaction_id = response.transactionResponse.transId
-      decrement_product(@order_product)
       if @order_product.save
-        decrement_product(@order_product) # decrease amount of product have left if saved
+        @order_product.decrement_product # decrease amount of product have left if saved
         respond_to do |format|
           format.html { redirect_to @order_product, notice: 'Order was successfully placed! Thank you for your order!' }
         end
@@ -91,7 +118,8 @@ class OrderProductsController < ApplicationController
     else
       # failure
       respond_to do |format|
-        format.html { redirect_to purchase_order_product_path(@order_product), alert: "#{response.messages.messages[0].text} Error Code: #{response.transactionResponse.errors.errors[0].errorCode} (#{response.transactionResponse.errors.errors[0].errorText})" }
+        format.html { redirect_to purchase_order_product_path(@order_product), alert: "#{response.messages.messages[0].text}" }
+        #format.html { redirect_to purchase_order_product_path(@order_product), alert: "#{response.messages.messages[0].text} Error Code: #{response.transactionResponse.errors.errors[0].errorCode} (#{response.transactionResponse.errors.errors[0].errorText})" }
       end
     end
 
@@ -107,16 +135,6 @@ class OrderProductsController < ApplicationController
 
   def set_order_product
     @order_product = OrderProduct.find(params[:id])
-  end
-
-  # Finds the product id of each order_product_item
-  # Updates the amount left on product in database
-  def decrement_product(order_product)
-    order_product.order_product_items.each do |opi|
-      product = Product.find(opi.product_id)
-      product.quantity -= opi.quantity
-      product.save
-    end
   end
 
   def build_order_product_items

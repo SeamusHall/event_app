@@ -39,11 +39,10 @@ class OrdersController < ApplicationController
     respond_with @order, location: -> { @order }
   end
 
-  # new actions
   def purchase
     # Just in case!!!!
     if @order.event_item.max_event == 0
-      redirect_to :back, notice: 'Event is sold out!!!'
+      redirect_to :back, alert: 'Event is sold out!!!'
     end
   end
 
@@ -73,8 +72,7 @@ class OrdersController < ApplicationController
     # tax
     if @order.event_item.tax > 0.0
       qty = @order.quantity
-      #freq = @order.event_item.flat_rate ? 1.0 : (@order.end_date - @order.start_date + 1.day)/1.day
-      tax_amount = (@order.event_item.price * qty ) * (@order.event_item.tax)
+      tax_amount = (@order.event_item.price * qty) * (@order.event_item.tax)
       request.transactionRequest.tax = ExtendedAmountType.new(tax_amount.round(2), "State Tax", "")
     end
 
@@ -87,6 +85,7 @@ class OrdersController < ApplicationController
     request.transactionRequest.billTo.city = current_user.city
     request.transactionRequest.billTo.state = current_user.state
     request.transactionRequest.billTo.country = current_user.country
+    request.transactionRequest.billTo.phoneNumber = current_user.phone
 
     # add customer info for receipt
     request.transactionRequest.customer = CustomerDataType.new
@@ -104,7 +103,6 @@ class OrdersController < ApplicationController
       @order.payment_details = response.to_yaml
       @order.auth_code = response.transactionResponse.authCode
       @order.transaction_id = response.transactionResponse.transId
-      @order.decrement_max_order # decreases the amount left on maximum per event
       if @order.save
         respond_to do |format|
           format.html { redirect_to @order, notice: 'Order was successfully placed! Thank you for your order!' }
@@ -117,7 +115,8 @@ class OrdersController < ApplicationController
     else
       # failure
       respond_to do |format|
-        format.html { redirect_to purchase_order_path(@order), alert: "#{response.messages.messages[0].text} Error Code: #{response.transactionResponse.errors.errors[0].errorCode} (#{response.transactionResponse.errors.errors[0].errorText})" }
+        format.html { redirect_to purchase_order_path(@order), alert: "#{response.messages.messages[0].text}" }
+        #format.html { redirect_to purchase_order_path(@order), alert: "#{response.messages.messages[0].text} Error Code: #{response.transactionResponse.errors.errors[0].errorCode} (#{response.transactionResponse.errors.errors[0].errorText})" }
       end
     end
 

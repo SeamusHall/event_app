@@ -27,13 +27,29 @@
           = opi.quantity
       %p
         %strong Order Name:
-        = @order_product.user.first_name + ' ' + @order_product.user.last_name
+        = @order_product.order_name
+    .col-sm-6
+      - if @order_product.placed_at
+        %p
+          %strong Auth Code:
+          = @order_product.auth_code
+        %p
+          %strong Transaction ID:
+          = @order_product.transaction_id
+        %p
+          %strong Placed At:
+          = @order_product.placed_at.strftime('%m/%d/%Y %l:%M%p')
+      - if @order_product.finalized_on
+        %p
+          %strong Finalized On:
+          = @order_product.finalized_on.strftime('%m/%d/%Y %l:%M%p')
+
 .row
   .col-xs-12.col-md-3.col-lg-3.pull-left
     .panel.panel-default.height
       .panel-heading Billing Details
       .panel-body
-        %strong= @order_product.user.first_name + ' ' + @order_product.user.last_name
+        %strong= @order_product.order_name
         %br
         = @order_product.user.address
         %br
@@ -124,4 +140,4 @@
 %br
 = link_to 'Orders', orders_path, class: 'btn btn-primary btn-lg'
 = link_to 'Modify Order', edit_order_product_path(@order_product), class: 'btn btn-info btn-lg' if can? :edit, @order_product
-= link_to 'Proceed to Checkout', purchase_order_product_path(@order_product), class: 'btn btn-success btn-lg' if @order_product.status == Order::PENDING_STATUS
+= link_to 'Proceed to Checkout', purchase_order_product_path(@order_product), class: 'btn btn-success btn-lg' unless (@order_product.status == Order::PROGRESS_STATUS || @order_product.status == Order::VALIDATED_STATUS ) || @order_product.check_stock
