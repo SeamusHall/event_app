@@ -3,7 +3,6 @@ class OrderProductsController < ApplicationController
   load_and_authorize_resource
   before_action :authenticate_user!
   before_action :cart_initializer
-  before_action :build_order_product_items, only: [:create]
   before_action :set_order_product, only: [:show, :edit]
   respond_to :js, :json
 
@@ -137,9 +136,4 @@ class OrderProductsController < ApplicationController
     @order_product = OrderProduct.find(params[:id])
   end
 
-  def build_order_product_items
-    @cart.items.each do |item|
-      @order_product.order_product_items.build
-    end
-  end
 end
