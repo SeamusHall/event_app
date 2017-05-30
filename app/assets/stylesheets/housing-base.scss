@@ -53,7 +53,11 @@ nav {
 .white {
   color: $white;
 }
-
+.container-fluid {
+  .content-wrapper {
+    padding: 20px;
+  }
+}
 .navbar-brand {
   height: 85px !important;
   color: $white !important;
@@ -248,7 +252,6 @@ a {
   @media screen and (max-width: 800px) { width: 100%; }
 }
 #login-box .logo .logo-caption {
-	font-family: 'Poiret One', cursive;
 	color: $white;
 	text-align: center;
 	margin-bottom: 0px;

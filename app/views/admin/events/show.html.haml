@@ -35,13 +35,12 @@
                           %th
                       %tbody
                         - @event.event_items.each do |ei|
-                          - if ei.max_event != 0 # makes event_item disappear if it equals zero
-                            %tr
-                              %td= ei.description
-                              %td= number_to_currency(ei.price)
-                              %td= ei.tax > 0.0 ? number_to_percentage(ei.tax * 100, precision: 0) : '--'
-                              %td= ei.max_event
-                              %td= ei.max_order
-                              %td.right
-                                = link_to 'Order!', "#", class: 'btn btn-primary btn-lg'
+                          %tr
+                            %td= ei.description
+                            %td= number_to_currency(ei.price)
+                            %td= ei.tax > 0.0 ? number_to_percentage(ei.tax * 100, precision: 0) : '--'
+                            %td= ei.max_event
+                            %td= ei.max_order
+                            %td.right
+                              = link_to 'Order!', "#", class: 'btn btn-primary btn-lg'
 = link_to 'back', admin_events_path, class: 'btn btn-danger btn-lg'
