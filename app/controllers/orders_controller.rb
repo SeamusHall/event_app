@@ -90,6 +90,7 @@ class OrdersController < ApplicationController
       @order.payment_details = response.to_yaml
       @order.auth_code = response.transactionResponse.authCode
       @order.transaction_id = response.transactionResponse.transId
+      @order.decrement_max_order
       if @order.save
         respond_to do |format|
           format.html { redirect_to @order, notice: 'Order was successfully placed! Thank you for your order!' }
