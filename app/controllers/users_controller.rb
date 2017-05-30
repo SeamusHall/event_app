@@ -5,7 +5,7 @@ class UsersController < ApplicationController
     if @user.update(user_params)
       respond_with @user, location: -> { user_path(@user) }, notice: "User was successfully updated"
     else
-      render "edit"
+      render "show"
     end
   end
 

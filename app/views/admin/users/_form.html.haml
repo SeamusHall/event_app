@@ -45,7 +45,8 @@
   .row
     .col-sm-12
       .form-group
+        = f.label 'Roles'
         = f.collection_select :role_ids, Role.all, :id, :name, {prompt: true}, {multiple: true, class: 'form-control selectpicker'}
       .actions.right
-        = f.submit 'Submit', class: 'btn btn-success'
-        = link_to 'Back', :back, class: 'btn btn-danger'
+        = f.submit 'Submit', class: 'btn btn-success btn-lg'
+        = link_to 'Back', :back, class: 'btn btn-danger btn-lg'

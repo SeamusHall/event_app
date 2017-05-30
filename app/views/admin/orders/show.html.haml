@@ -1,118 +1,77 @@
 %h2 Order Details
-%hr
+
 .row
-  .col-sm-6
-    %p
-      %strong Order ID:
-      = @order.id
-    %p
-      %strong Order Date:
-      = @order.created_at
-    %p
-      %strong Order Status:
-      = @order.extended_status
-    %p
-      %strong Event:
-      = @order.event_item.event.name
-    %p
-      %strong Event Item:
-      = @order.event_item.description
-    %p
-      %strong Item Price:
-      = number_to_currency(@order.event_item.price)
-    %p
-      %strong Item Tax:
-      = @order.event_item.tax > 0.0 ? number_to_currency(@order.event_item.tax * 100, precision: 0) : '--'
-    %p
-      %strong Order Quantity:
-      = @order.quantity
-    -#%p
-      %strong Order Dates for Event:
-      = @order.dates
-    %p
-      %strong Order Name:
-      = @order.user.first_name + ' ' + @order.user.last_name
-  .col-sm-6
-    - if @order.placed_at
-      %p
-        %strong Auth Code:
-        = @order.auth_code
-      %p
-        %strong Transaction ID:
-        = @order.transaction_id
-      %p
-        %strong Placed At:
-        = @order.placed_at.strftime('%m/%d/%Y %l:%M%p')
-    - if @order.finalized_on
-      %p
-        %strong Finalized On:
-        = @order.finalized_on.strftime('%m/%d/%Y %l:%M%p')
-%hr
-%h4
-  %strong Order Total:
-  = number_to_currency(@order.total)
-.row
-  .col-xs-12.col-md-3.col-lg-3.pull-left
-    .panel.panel-default.height
-      .panel-heading Billing Details
-      .panel-body
-        %strong= @order.user.first_name + ' ' + @order.user.last_name
-        %br
-        = @order.user.address
-        %br
-        = @order.user.city
-        %br
-        = @order.user.state
-        %br
-        %strong= @order.user.postal_code
-        %br
-        = @order.user.country
-.row
-  .col-md-5
+  .col-md-4
     %h3 Additional Comments:
     %p= @order.comments unless @order.comments.nil?
-%br
-.row
-  .col-lg-12
-    .panel.panel-default
-      .panel-heading
-        %h3.text-center
-          %strong Order summary
-      .panel-body
-        .table-responsive
-          %table.table.table-condensed
-            %thead
-              %tr
-                %td
-                  %strong Item Name
-                %td.text-center
-                  %strong Item Tax
-                %td.text-center
-                  %strong Item Quantity
-                -#%td.text-center
-                  %strong Order Date
-                %td.text-center
-                  %strong Order Name
-                %td
-                %td.text-center
-                  %strong Price
-            %tbody
-              %tr
-                %td= @order.event_item.event.name
-                %td.text-center= @order.event_item.tax > 0.0 ? number_to_percentage(@order.event_item.tax * 100, precision: 0) : '--'
-                %td.text-center= @order.quantity
-                -#%td.text-center= @order.dates
-                %td.text-center= @order.user.first_name + ' ' + @order.user.last_name
-                %td.text-center
-                %td.text-right= number_to_currency(@order.event_item.price)
-              %tr
-                %td.highrow
-                %td.highrow
-                %td.highrow
-                %td.highrow
-                %td.highrow.text-center
-                  %strong Total
-                %td.highrow.text-right= number_to_currency(@order.total)
+%hr
+.receipt
+  .row
+    .col-sm-6
+      %address
+        %p
+          %strong Name:
+          = @order.user.full_name
+        %p
+          %strong Phone #:
+          = @order.user.phone
+        %p
+          %strong Address:
+          = @order.user.address
+        %p
+          %strong City:
+          = @order.user.city
+        %p
+          %strong State:
+          = @order.user.state
+        %p
+          %strong Postal Code:
+          = @order.user.postal_code
+        %p
+          %strong Country:
+          = @order.user.country
+      %p
+        %strong Order Status:
+        = @order.extended_status
+    .col-xs-6.col-sm-6.col-md-6.text-right
+      - if @order.finalized_on
+        %p
+          %em= "Verified On: #{@order.finalized_on.strftime('%m/%d/%Y %l:%M%p')}"
+      - if @order.placed_at
+        %p
+          %em= "Auth Code: #{@order.auth_code}"
+        %p
+          %em= "Transaction ID: #{@order.transaction_id}"
+        %p
+          %em= "Placed At: #{@order.placed_at.strftime('%m/%d/%Y %l:%M%p')}"
+        %p
+          %em= "Order ID: #{@order.id}"
+
+      = image_tag @order.event_item.event.attachment
+  %br
+  .row
+    %table.table.table-hover
+      %thead
+        %tr
+          %th Item Name
+          %th Quantity
+          %th Tax
+          %th.text-center Total
+      %tbody
+        %tr
+          %td= @order.event_item.event.name
+          %td.text-center= @order.quantity
+          %td.text-center= @order.event_item.tax > 0.0 ? number_to_percentage(@order.event_item.tax * 100, precision: 0) : '--'
+          %td.text-right= number_to_currency(@order.event_item.price)
+        %tr
+          %td  
+          %td  
+          %td.text-right
+            %h4
+              %strong Total: 
+          %td.text-center.text-danger
+            %h4
+              %strong= @order.total
 %br
 = link_to 'Orders', admin_orders_path, class: 'btn btn-primary btn-lg'
 = link_to 'Modify Order', edit_admin_order_path(@order), class: 'btn btn-info btn-lg' if can? :edit, @order

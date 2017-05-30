@@ -41,6 +41,9 @@ class Order < ApplicationRecord
     self.start_date.strftime('%m/%d/%Y') + ' - ' + self.end_date.strftime('%m/%d/%Y')
   end
 
+  def check_status
+    self.status == Order::PROGRESS_STATUS || self.status == Order::VALIDATED_STATUS
+  end
   # Deletes the amount left in event_item so we know
   # how many we have left to sell
   def decrement_max_order

@@ -29,7 +29,7 @@
           %li.plan-feature= current_user.has_role?(:admin) ? order.status : order.extended_status
           %li.plan-feature
             = link_to 'Show', order, class: 'btn btn-success'
-            = link_to 'edit', edit_order_path(order), class: 'btn btn-warning'
+            = link_to 'edit', edit_order_path(order), class: 'btn btn-warning' unless order.check_status
       - elsif order.status == Order::PROGRESS_STATUS
         .plan-name-silver
           %h2= "#{order.user.first_name} #{order.user.last_name}"
@@ -39,14 +39,14 @@
           %li.plan-feature= current_user.has_role?(:admin) ? order.status : order.extended_status
           %li.plan-feature
             = link_to 'Show', order, class: 'btn btn-success'
-            = link_to 'edit', edit_order_path(order), class: 'btn btn-warning'
+            = link_to 'edit', edit_order_path(order), class: 'btn btn-warning' unless order.check_status
       - else
         .plan-name-maroon
           %h2= "#{order.user.first_name} #{order.user.last_name}"
           %span= number_to_currency(order.total)
         %ul
           %li.plan-feature= "quantity: #{order.quantity}"
-          %li.plan-feature= current_user.has_role?(:admin) ? order.status : order.extended_status
+          %li.plan-feature= current_user.has_role?(:admin) ? order.status : order.extended_status unless order.check_status
           %li.plan-feature
             = link_to 'Show', order, class: 'btn btn-success'
             = link_to 'edit', edit_order_path(order), class: 'btn btn-warning'
@@ -65,7 +65,7 @@
           %li.plan-feature= current_user.has_role?(:admin) ? order.status : order.extended_status
           %li.plan-feature
             = link_to 'Show', order, class: 'btn btn-success'
-            = link_to 'edit', edit_order_product_path(order), class: 'btn btn-warning'
+            = link_to 'edit', edit_order_product_path(order), class: 'btn btn-warning' unless order.check_status
       - elsif order.status == OrderProduct::PROGRESS_STATUS
         .plan-name-silver
           %h2= "#{order.user.first_name} #{order.user.last_name}"
@@ -74,13 +74,13 @@
           %li.plan-feature= current_user.has_role?(:admin) ? order.status : order.extended_status
           %li.plan-feature
             = link_to 'Show', order, class: 'btn btn-success'
-            = link_to 'edit', edit_order_product_path(order), class: 'btn btn-warning'
+            = link_to 'edit', edit_order_product_path(order), class: 'btn btn-warning' unless order.check_status
       - else
         .plan-name-maroon
           %h2= "#{order.user.first_name} #{order.user.last_name}"
           %span= number_to_currency(order.total)
         %ul
-          %li.plan-feature= current_user.has_role?(:admin) ? order.status : order.extended_status
+          %li.plan-feature= current_user.has_role?(:admin) ? order.status : order.extended_status unless order.check_status
           %li.plan-feature
             = link_to 'Show', order, class: 'btn btn-success'
             = link_to 'edit', edit_order_product_path(order), class: 'btn btn-warning'

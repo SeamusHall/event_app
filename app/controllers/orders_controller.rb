@@ -2,22 +2,9 @@ include AuthorizeNet::API
 class OrdersController < ApplicationController
   load_and_authorize_resource
   before_action :authenticate_user!
-  before_filter :cart_initializer
+  before_action :cart_initializer
+  before_action :set_orders_and_products, only: [:index,:show]
   respond_to :js, :json
-
-  def index
-    # current user should only see the orders they placed
-    @orders = Order.all.where(user_id: current_user.id).page params[:page]
-    @order_products = OrderProduct.all.where(user_id: current_user.id).page params[:page]
-
-    # Check whether the order status is in progress or validated
-    # either way when it's either status display product
-    @orders.each do |order|
-      if order.status == Order::PROGRESS_STATUS || order.status == Order::VALIDATED_STATUS
-        @products = Product.all.where(check_status: Order::PROGRESS_STATUS)
-      end
-    end
-  end
 
   def create
     @order.user = current_user
@@ -127,5 +114,20 @@ class OrdersController < ApplicationController
     permitted_params = [:event_item_id, :quantity, :start_date, :end_date, :first_name, :last_name, :terms, :comments]
     permitted_params << :status if current_user.has_role?(:admin)
     params.require(:order).permit(permitted_params)
+  end
+
+  def set_orders_and_products
+    # current user should only see the orders they placed
+    @orders = Order.all.where(user_id: current_user.id).page params[:page]
+    @order_products = OrderProduct.all.where(user_id: current_user.id).page params[:page]
+
+    # Check whether the order status is in progress or validated
+    # either way when it's either status display product
+    @orders = Order.all.where(user_id: current_user.id).page params[:page]
+    @orders.each do |order|
+      if order.status == Order::PROGRESS_STATUS || order.status == Order::VALIDATED_STATUS
+        @products = Product.all.where(check_status: Order::PROGRESS_STATUS)
+      end
+    end
   end
 end

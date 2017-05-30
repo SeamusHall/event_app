@@ -2,9 +2,12 @@ class OrderProduct < ActiveRecord::Base
   acts_as_paranoid
   paginates_per 9
   belongs_to :user
+
   has_many :order_product_items, dependent: :destroy
   accepts_nested_attributes_for :order_product_items, allow_destroy: true
+
   before_validation :calculate
+  before_validation :update_finalized_on
 
   STATUSES = { 'pending' => 'Order Pending (pre-submit)',
                'progress' => 'Order In Progress (payment submitted)',
@@ -63,6 +66,10 @@ class OrderProduct < ActiveRecord::Base
     return self.total - total_temp
   end
 
+  def check_status
+    self.status == OrderProduct::PROGRESS_STATUS || self.status == OrderProduct::VALIDATED_STATUS
+  end
+
   private
 
   def calculate
@@ -73,4 +80,11 @@ class OrderProduct < ActiveRecord::Base
     self.total = total_temp
   end
 
+  def update_finalized_on
+    if self.status == VALIDATED_STATUS
+      self.finalized_on = Time.now unless self.finalized_on.present?
+    else
+      self.finalized_on = nil
+    end
+  end
 end

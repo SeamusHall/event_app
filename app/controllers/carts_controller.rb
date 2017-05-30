@@ -1,6 +1,6 @@
 class CartsController < ApplicationController
-  before_filter :cart_initializer
-  skip_before_filter :verify_authenticity_token
+  before_action :cart_initializer
+  skip_before_action :verify_authenticity_token
 
   def add
     @cart.add_item_to_cart(params[:id])
@@ -37,7 +37,7 @@ class CartsController < ApplicationController
       @user.role_ids = [2]
       @user.save
     end
-    redirect_to edit_user_path(@user)
+    redirect_to user_path(@user)
   end
 
   private
