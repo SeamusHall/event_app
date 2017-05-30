@@ -17,13 +17,16 @@
             %tr
               %td.col-sm-8.col-md-6
                 .media
-                  = image_tag item.product.attachments.first, class: 'thumbnail pull-left media-object', width: '200'
+                  - if (item.product.attachments.first.content_type.include? 'image')
+                    = image_tag item.product.attachments.first.url, height: "150"
+                  - else
+                    = videojs_rails sources: { mp4: item.product.attachments.first.url }, class: 'video'
                   %h4.media-heading
                     = link_to item.product.name, product_path(item.product.id)
                   %span Status:
                   %span.text-success
                     %strong= item.product.status
-              %td= text_field_tag 'items[]', item.quantity, placeholder: "#{item.quantity}"
+              %td= item.quantity
               %td= number_to_currency item.product.price
               %td= number_to_currency item.total_price
               %td= link_to "Remove from cart", remove_cart_path(item.product.id), method: :post, class: 'btn btn-danger'
@@ -54,54 +57,27 @@
 
 - if current_user
   .modal.fade{role: 'dialog', id: 'order-modal'}
-    = form_for @order_product, remote: true, data: { rel: "#modal-header", target: "#errors"} do |f|
+    = nested_form_for @order_product, remote: true, data: { rel: "#modal-header", target: "#errors"} do |f|
       .modal-dialog.modal-md{role: 'document'}
         .modal-content
           .modal-header{id: "modal-header"}
             %button.close{type: 'button', "data-dismiss" => "modal", "aria-label" => "Close"}
               %span{"aria-hidden" => "true"}
                 &times;
-            %h2 Order Summary
+            %h1 Order Summary
           .modal-body
             %div{id: "errors"}
-            %h2= "Total cost #{number_to_currency @cart.total_price} "
-            = f.hidden_field :total, value: @cart.total_price
+            %h2= "Your current total cost #{number_to_currency @cart.total_price} "
             %h3.center Item Infomation
             %br
-            -# for display purposes only
-            - @cart.items.each do |item|
-              .row
-                .col-sm-4
-                .col-sm-4
-                  %p
-                    %strong
-                      Quantity:
-                      = item.quantity
-                .col-sm-4
-              .row
-                .col-sm-4
-                .col-sm-4
-                  %p
-                    %strong
-                      Product Name:
-                      = item.product.name
-                .col-sm-4
-              .row
-                .col-sm-4
-                .col-sm-4
-                  %p
-                    %strong
-                      =image_tag item.product.attachments.first, width: '200'
-                .col-sm-4
-              .row
-                .col-sm-4
-                .col-sm-4
-                  %p
-                    %strong
-                      Total price:
-                      = number_to_currency item.total_price
-                .col-sm-4
+            = f.fields_for :order_product_items do |opi|
               %br
+              .row
+                .col-md-8
+                  = opi.hidden_field :product_id
+                  = opi.label "change quantity (goes in order)"
+                .col-md-4
+                  = opi.select :quantity, options_for_select((1..10).to_a, selected: "1"), {prompt: 'quantity'},{class: 'form-control selectpicker'}
             %i NOTE: current we do not ship items, your items will be placed in your room or you must pick them up
             .modal-footer
               = f.submit 'Place Order', class: 'btn btn-success'

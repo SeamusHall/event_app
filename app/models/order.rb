@@ -1,6 +1,6 @@
 class Order < ApplicationRecord
   acts_as_paranoid
-  paginates_per 25
+  paginates_per 9
   belongs_to :user
   belongs_to :event_item
 
@@ -18,10 +18,10 @@ class Order < ApplicationRecord
 
   validate :better_agree
   #validate :valid_dates
-  validate :quantity_less_than_max_order
+  #validate :quantity_less_than_max_order
 
   validates :status, inclusion: { in: STATUSES.keys }, presence: true
-  validates :quantity, :total, :start_date, :end_date, presence: true
+  validates :quantity, :total, presence: true
   validates :quantity, numericality: { only_integer: true, greater_than: 0 }
   validates :total, numericality: { greater_than: 0.0 }
 
@@ -41,6 +41,9 @@ class Order < ApplicationRecord
     self.start_date.strftime('%m/%d/%Y') + ' - ' + self.end_date.strftime('%m/%d/%Y')
   end
 
+  def check_status
+    self.status == Order::PROGRESS_STATUS || self.status == Order::VALIDATED_STATUS
+  end
   # Deletes the amount left in event_item so we know
   # how many we have left to sell
   def decrement_max_order
@@ -72,10 +75,10 @@ class Order < ApplicationRecord
   end
 
   def perform_total_calculation
-    if self.quantity and self.start_date and self.end_date and self.event_item and self.status == PENDING_STATUS
+    if self.quantity and self.event_item and self.status == PENDING_STATUS
       qty = self.quantity
-      freq = self.event_item.flat_rate ? 1.0 : (self.end_date - self.start_date)/1.day
-      self.total = (self.event_item.price * qty * freq) * (1.0 + self.event_item.tax)
+      #freq = self.event_item.flat_rate ? 1.0 : (self.end_date - self.start_date)/1.day
+      self.total = (self.event_item.price * qty ) * (1.0 + self.event_item.tax)
     end
   end
 

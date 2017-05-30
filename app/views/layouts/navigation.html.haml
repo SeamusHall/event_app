@@ -34,10 +34,11 @@
 
               %li= link_to 'Admin Interface', admin_path if current_user && current_user.has_role?(:admin)
               %li= link_to 'Orders', orders_path
+              %li= link_to 'Events', events_path
               %li= link_to 'Products', products_path
-              %li= link_to 'Product Order', order_products_path
-              %li.divider{role: "separator"}
-              %li= link_to "Account", user_path(current_user.id)
+              - if current_user.roles.any?
+                %li.divider{role: "separator"}
+                %li= link_to "Account", user_path(current_user.id)
         - else
           %li= link_to 'Login', new_session_path(User.new)
   %nav.navbar.navbar-default.navbar-lower{role: "navigation"}

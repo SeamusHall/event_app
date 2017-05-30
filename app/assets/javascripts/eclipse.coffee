@@ -69,7 +69,6 @@ $(document).on "turbolinks:load", ->
     $('.bxslider').bxSlider
       video: true
       useCSS: false
-    return
 
   # https://www.driftingruby.com/episodes/refile-uploads-with-progress-bar
   $(document).on "upload:start", "form", (e) ->

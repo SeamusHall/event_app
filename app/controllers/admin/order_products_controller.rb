@@ -17,18 +17,11 @@ module Admin
       end
     end
 
-    def destroy
-      @order_product.destroy
-      respond_to do |format|
-        format.html { redirect_to admin_order_products_path, notice: 'Order was successfully destroyed.' }
-      end
-    end
-
     def validate
       @order_product.status = OrderProduct::VALIDATED_STATUS
       if @order_product.save
         respond_to do |format|
-          format.html { redirect_to admin_order_products_path, notice: 'Order was successfully validated.' }
+          format.html { redirect_to admin_orders_path, notice: 'Order was successfully validated.' }
         end
       end
     end
@@ -44,10 +37,5 @@ module Admin
       @order_product = OrderProduct.find(params[:id])
     end
 
-    def build_order_product_items
-      @cart.items.each do |item|
-        @order_product.order_product_items.build
-      end
-    end
   end
 end

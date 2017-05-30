@@ -8,7 +8,17 @@
         = f.text_field :name, class: 'form-control'
       .form-group
         = f.label :price
-        = f.text_field :price, class: 'form-control'
+        .input-group
+          .input-group-addon
+            $
+          = f.text_field :price, class: 'form-control'
+      .form-group
+        = f.label :tax
+        .input-group
+          .input-group-addon
+            = "%"
+          = f.text_field :tax, placeholder: 'Ex. 0.06 = 6%, input 0 for no tax', class: 'form-control'
+
       .form-group
         = f.label :description
         = f.text_area :description, class: 'form-control'
@@ -31,7 +41,7 @@
     .col-sm-3
       .form-group
         = f.label 'Order Status'
-        = f.select :check_status, options_for_select(Order::STATUSES.keys), {prompt: 'order status'}, {class: 'form-control selectpicker'}
+        = f.select :check_status, options_for_select(Order::STATUSES.keys, selected: Order::PROGRESS_STATUS), {prompt: 'order status'}, {class: 'form-control selectpicker'}
       %i Used to hide product until an event is purchased
       %i hint: progress
     .col-sm-3

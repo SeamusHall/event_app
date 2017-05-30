@@ -18,7 +18,7 @@ module Admin
     def create
       @event = Event.new(event_params)
       if @event.save
-        redirect_to admin_events_path, notice: 'Event was successfully created.'
+        redirect_to admin_event_path(@event), notice: 'Event was successfully created.'
       else
         render "new"
       end
@@ -26,16 +26,9 @@ module Admin
 
     def update
       if @event.update(event_params)
-        redirect_to admin_events_path, notice: 'Event was successfully updated.'
+        redirect_to admin_event_path(@event), notice: 'Event was successfully updated.'
       else
         render "edit"
-      end
-    end
-
-    def destroy
-      @event.destroy
-      respond_to do |format|
-        format.html { redirect_to admin_events_path, notice: 'Event was successfully destroyed.' }
       end
     end
 
@@ -46,7 +39,7 @@ module Admin
     end
 
     def event_params
-      params.require(:event).permit(:name, :description, :page_body, :available_at, :unavailable_at, :starts_on, :ends_on, :attachment,
+      params.require(:event).permit(:name, :description, :page_body, :available_at, :unavailable_at, :attachment,
         event_items_attributes: [:id, :event_id, :description, :price, :tax, :max_event, :max_order, :flat_rate])
     end
 

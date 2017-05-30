@@ -7,8 +7,8 @@
         .col-md-10
           %h4= @event.description
           %br
-            Event Dates:
-            = @event.dates
+            -#Event Dates:
+              = @event.dates
           = @event.page_body.html_safe
           -#.product-rating
             %i.fa.fa-star.gold
@@ -84,15 +84,18 @@
                         = ei.description
                       %hr
                       = f.hidden_field :event_item_id, value: ei.id
-                      %strong Item Infomation
+                      %br
+                      .row
+                        .col-sm-12
+                          .form-group
+                            = f.label :comments
+                            = f.text_area :comments, placeholder: 'Additional Comments', class: 'form-control'
                       %br
                       .row
                         .col-sm-12
                           .form-group
                             = f.label :quantity
                             = f.select :quantity, options_for_select((1..ei.max_order).to_a, selected: '1'), {prompt: 'quantity'}, {class: 'form-control selectpicker', required: true}
-                            = f.hidden_field :start_date, value: @event.starts_on.to_date
-                            = f.hidden_field :end_date, value: @event.ends_on.to_date
                         -#.col-sm-4
                           .form-group
                               = f.label 'check-in date'
@@ -118,4 +121,3 @@
           #service-two.tab-pane.fade
             %section.container
           #service-three.tab-pane.fade
-        %hr

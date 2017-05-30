@@ -18,6 +18,6 @@ class EventsController < ApplicationController
       @user.role_ids = [2]
       @user.save
     end
-    redirect_to edit_user_path(@user)
+    redirect_to user_path(@user)
   end
 end

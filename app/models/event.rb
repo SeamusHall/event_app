@@ -4,7 +4,7 @@ class Event < ApplicationRecord
   has_many :event_items, dependent: :destroy
   mount_uploader :attachment, AttachmentUploader
 
-  validates_presence_of :name, :description, :page_body, :available_at, :unavailable_at, :starts_on, :ends_on, :attachment
+  validates_presence_of :name, :description, :page_body, :available_at, :unavailable_at, :attachment
 
   accepts_nested_attributes_for :event_items, reject_if: proc { |attributes| attributes['description'].blank? }, allow_destroy: true
 

@@ -1,6 +1,6 @@
 class CartsController < ApplicationController
-  before_filter :cart_initializer
-  skip_before_filter :verify_authenticity_token
+  before_action :cart_initializer
+  skip_before_action :verify_authenticity_token
 
   def add
     @cart.add_item_to_cart(params[:id])
@@ -25,6 +25,7 @@ class CartsController < ApplicationController
 
   def show
     @order_product = OrderProduct.new
+    load_cart_to_order_product_items
   end
 
   # automatically update users role to regular user
@@ -36,6 +37,14 @@ class CartsController < ApplicationController
       @user.role_ids = [2]
       @user.save
     end
-    redirect_to edit_user_path(@user)
+    redirect_to user_path(@user)
+  end
+
+  private
+
+  def load_cart_to_order_product_items
+    @cart.items.each do |item|
+      @order_product.order_product_items.build(product: item.product, quantity: item.quantity)
+    end
   end
 end

@@ -1,21 +1,30 @@
-= form_for ["admin", @order_product] do |f|
+= nested_form_for ["admin", @order_product] do |f|
   = errors_for @order_product, true
-  .row
-    .col-sm-8
+  = f.select :status, options_for_select(OrderProduct::STATUSES.keys, selected: @order_product.status), {prompt: 'status'}, {class: 'form-control selectpicker', required: true}
+  - @order_product.order_product_items.each do |opi|
+    .row
+      .col-sm-4
+      .col-sm-4
+        %h3
+          Product:
+          = opi.product.name
+          - if (opi.product.attachments.first.content_type.include? 'image')
+            = image_tag opi.product.attachments.first.url, height: "200"
+          - else
+            = videojs_rails sources: { mp4: opi.product.attachments.first.url }, class: 'video'
+      .col-sm-4
+
+  .form-group
+    = f.fields_for :order_product_items do |opi|
+      %br
       .row
-        - @order_product.order_product_items.each do |opi|
-          .col-sm-9
-            %p
-              Item:
-              = opi.product.name
-          - if current_user.has_role?(:admin)
-            .col-sm-3
-              %br
-              = f.select :status, options_for_select(OrderProduct::STATUSES.keys, selected: @order_product.status), {prompt: 'status'}, {class: 'form-control selectpicker', required: true}
-          .col-sm-3
-            .form-group
-              = f.label :quantity
-              = f.text_field :quantity, value: opi.quantity
-      .actions.right
-        = f.submit 'Update Order', class: 'btn btn-success'
-        = link_to 'Cancel', admin_orders_path, class: 'btn btn-danger'
+        .col-sm-2
+        .col-sm-1= opi.label 'Quantity:'
+        .col-sm-4= opi.select :quantity, options_for_select((1..10).to_a, selected: "1"), {prompt: 'quantity'},{class: 'form-control selectpicker'}
+        .col-sm-4= opi.link_to_remove "Remove Item", class: 'btn btn-danger btn-lg btn-block', data: { confirm: "Are you sure?" }
+        .col-sm-1
+  %br
+  .actions.right
+    = f.submit 'Update Order', class: 'btn btn-success btn-lg'
+    = link_to 'Cancel', admin_orders_path, class: 'btn btn-danger btn-lg'
+  %br

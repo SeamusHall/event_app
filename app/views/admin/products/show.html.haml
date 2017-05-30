@@ -38,7 +38,7 @@
         .col-md-1
         .col-md-10
           - if (@product.attachments.first.content_type.include? 'image')
-            = image_tag @product.attachments.first.url, class: 'product'
+            = image_tag @product.attachments.first.url, height: "600", width: "900"
           - else
             = videojs_rails sources: { mp4: @product.attachments.first.url }, class: 'video'
           %hr

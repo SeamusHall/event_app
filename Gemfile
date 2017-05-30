@@ -25,9 +25,6 @@ gem 'jbuilder', '~> 2.5'
 gem 'nested_form'
 gem 'country_select'
 
-# Reset Database Id's
-gem 'activerecord-reset-pk-sequence'
-
 gem 'haml-rails'
 # gem 'pandoc-ruby' # markdown
 gem 'kaminari'

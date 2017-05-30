@@ -4,9 +4,8 @@ class RegistrationsController < Devise::RegistrationsController
   private
 
   def check_captcha
-    if verify_recaptcha
-      self.resource = resource_class.new sign_up_params
-      respond_with_navigational(resource) { render :new }
+    unless verify_recaptcha
+      redirect_to :back
     end
   end
 
