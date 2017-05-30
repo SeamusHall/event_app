@@ -6,10 +6,6 @@ class OrderProductsController < ApplicationController
   before_action :set_order_product, only: [:show, :edit]
   respond_to :js, :json
 
-  def index
-    @order_products = OrderProduct.all.where(user_id: current_user.id).page params[:page] # current user should only see the orders they placed
-  end
-
   def create
     @order_product = OrderProduct.create(order_product_params)
     @order_product.user = current_user
