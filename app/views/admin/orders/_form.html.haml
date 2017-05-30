@@ -1,5 +1,5 @@
-= form_for order do |f|
-  = errors_for order, true
+= form_for ["admin",@order] do |f|
+  = errors_for @order, true
   = f.select :status, options_for_select(Order::STATUSES.keys, selected: order.status), {prompt: 'status'}, {class: 'form-control selectpicker', required: true}
   .container-fluid
     .content-wrapper
