@@ -8,6 +8,7 @@ class Product < ApplicationRecord
   validates_presence_of :name, :price, :tax, :description, :attachments, :status, :page_body, :max_to_sell, :quantity
   validates :price, numericality: { greater_than: 0 }
   validates :tax, numericality: { greater_than: -1 }
+  validates :quantity, numericality: { greater_than: -1 }
 
   belongs_to :order_product
 
