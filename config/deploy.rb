@@ -34,6 +34,8 @@ set :assets_roles, [:web, :app] # Defaults to [:web]
 set :rails_assets_groups, :assets # RAILS_GROUPS env value for the assets:precompile task. Default to nil.
 set :keep_assets, 2 # set this to the number of versions to keep
 
+set :linked_dirs, %w(public/uploads public/assets log)
+
 namespace :puma do
   desc 'Create Directories for Puma Pids and Socket'
   task :make_dirs do
