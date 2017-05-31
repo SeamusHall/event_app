@@ -25,12 +25,6 @@
                       .card.hovercard
                         .cardheader
                           = image_tag current_user.gravatar_url
-                        .info
-                          .title
-                          .h3
-                          .desc #{current_user.email}
-
-                        .bottom
 
               %li= link_to 'Admin Interface', admin_path if current_user && current_user.has_role?(:admin)
               %li= link_to 'Orders', orders_path

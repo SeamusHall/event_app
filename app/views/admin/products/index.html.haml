@@ -21,10 +21,11 @@
             %td= number_to_percentage(product.tax * 100, precision: 0)
           %td= product.quantity
           %td
-            - if (product.attachments.first.content_type.include? 'image')
-              = image_tag product.attachments.first.url, height: "150"
-            - else
-              = videojs_rails sources: { mp4: product.attachments.first.url }, class: 'video'
+            - unless product.attachments.empty?
+              - if (product.attachments.first.content_type.include? 'image')
+                = image_tag product.attachments.first.url, height: "150"
+              - else
+                = videojs_rails sources: { mp4: product.attachments.first.url }, class: 'video'
             -#%ul
               - product.attachments.each do |at|
                 - if (at.content_type.include? 'image')
