@@ -50,28 +50,29 @@
       = image_tag @order.event_item.event.attachment
   %br
   .row
-    %table.table.table-hover
-      %thead
-        %tr
-          %th Item Name
-          %th Quantity
-          %th Tax
-          %th.text-center Total
-      %tbody
-        %tr
-          %td= @order.event_item.event.name
-          %td.text-center= @order.quantity
-          %td.text-center= @order.event_item.tax > 0.0 ? number_to_percentage(@order.event_item.tax * 100, precision: 0) : '--'
-          %td.text-right= number_to_currency(@order.event_item.price)
-        %tr
-          %td  
-          %td  
-          %td.text-right
-            %h4
-              %strong Total: 
-          %td.text-center.text-danger
-            %h4
-              %strong= @order.total
+    %div{style: "overflow-x:auto;"}
+      %table.table.table-hover
+        %thead
+          %tr
+            %th Item Name
+            %th Quantity
+            %th Tax
+            %th.text-center Total
+        %tbody
+          %tr
+            %td= @order.event_item.event.name
+            %td.text-center= @order.quantity
+            %td.text-center= @order.event_item.tax > 0.0 ? number_to_percentage(@order.event_item.tax * 100, precision: 0) : '--'
+            %td.text-right= number_to_currency(@order.event_item.price)
+          %tr
+            %td  
+            %td  
+            %td.text-right
+              %h4
+                %strong Total: 
+            %td.text-center.text-danger
+              %h4
+                %strong= @order.total
 %br
 = link_to 'Orders', admin_orders_path, class: 'btn btn-primary btn-lg'
 = link_to 'Modify Order', edit_admin_order_path(@order), class: 'btn btn-info btn-lg' if can? :edit, @order

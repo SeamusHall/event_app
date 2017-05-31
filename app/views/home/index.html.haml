@@ -30,10 +30,11 @@
   - @events.each do |event|
     .col-md-3.col-sm-6.hero-feature
       .thumbnail
-        - if (event.attachment.content_type.include? 'image')
-          = image_tag event.attachment
-        - else
-          = videojs_rails sources: { mp4: event.attachment.url }, width: '265', height: '230'
+        - unless event.attachment.nil?
+          - if (event.attachment.content_type.include? 'image')
+            = image_tag event.attachment
+          - else
+            = videojs_rails sources: { mp4: event.attachment.url }, width: '265', height: '230'
         .caption
           %h3= event.name
           %p= event.description
@@ -47,10 +48,11 @@
   - @products.each do |prod|
     .col-md-3.col-sm-6.hero-feature
       .thumbnail
-        - if (prod.attachments.first.content_type.include? 'image')
-          = image_tag prod.attachments.first.url
-        - else
-          = videojs_rails sources: { mp4: prod.attachments.first.url }, class: 'video'
+        - unless prod.attachments.empty?
+          - if (prod.attachments.first.content_type.include? 'image')
+            = image_tag prod.attachments.first.url
+          - else
+            = videojs_rails sources: { mp4: prod.attachments.first.url }, class: 'video'
         .caption
           %h3= prod.name
           %p= prod.description
