@@ -4,7 +4,7 @@ class OrdersController < ApplicationController
   before_action :authenticate_user!
   before_action :cart_initializer
   before_action :set_orders_and_products, only: [:index,:show]
-  respond_to :js, :json
+  respond_to :js, :json, :html
 
   def create
     @order.user = current_user
@@ -16,7 +16,8 @@ class OrdersController < ApplicationController
       end
     else
       respond_to do |format|
-        format.json { render json: @order.errors, status: :unprocessable_entity}
+        format.json { render json: @order.errors, status: :unprocessable_entity }
+        format.html { redirect_to :back, flash[:error] = @order.errors }
       end
     end
   end

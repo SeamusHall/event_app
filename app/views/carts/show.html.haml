@@ -57,7 +57,7 @@
 
 - if current_user
   .modal.fade{role: 'dialog', id: 'order-modal'}
-    = nested_form_for @order_product, remote: true, data: { rel: "#modal-header", target: "#errors"} do |f|
+    = nested_form_for @order_product, remote: true, authenticity_token: true, data: { rel: "#modal-header", target: "#errors"} do |f|
       .modal-dialog.modal-md{role: 'document'}
         .modal-content
           .modal-header{id: "modal-header"}
