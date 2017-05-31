@@ -4,11 +4,7 @@ class OrderProductsController < ApplicationController
   before_action :authenticate_user!
   before_action :cart_initializer
   before_action :set_order_product, only: [:show, :edit]
-  respond_to :js, :json
-
-  def index
-    @order_products = OrderProduct.all.where(user_id: current_user.id).page params[:page] # current user should only see the orders they placed
-  end
+  respond_to :js, :json, :html
 
   def create
     @order_product = OrderProduct.create(order_product_params)
