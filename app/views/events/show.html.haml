@@ -51,7 +51,7 @@
                             %tr
                               %td= ei.description
                               %td= number_to_currency(ei.price)
-                              %td= ei.tax > 0.0 ? number_to_percentage(ei.tax * 100, precision: 0) : '--'
+                              %td= ei.tax > 0.0 ? number_to_percentage(ei.tax * 100, precision: 2) : '--'
                               %td= ei.max_event
                               %td= ei.max_order
                               %td.right
