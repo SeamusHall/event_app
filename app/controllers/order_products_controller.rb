@@ -55,7 +55,7 @@ class OrderProductsController < ApplicationController
     request.transactionRequest.payment.creditCard = CreditCardType.new(params[:cc_num], params[:exp_date], params[:ccv])
 
     # add order and line item information
-    request.transactionRequest.order = OrderType.new(@order_product.id.to_s, "#{@order_product.order_name}-eclipse-products")
+    request.transactionRequest.order = OrderType.new(@order_product.id.to_s, "#{@order_product.order_name}-eclipse-meals/parking")
     line_items = []
     @order_product.order_product_items.each do |opi|
       line_items << LineItemType.new(
