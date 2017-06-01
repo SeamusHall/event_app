@@ -32,10 +32,6 @@ class OrderProduct < ActiveRecord::Base
     STATUSES[status]
   end
 
-  def order_name
-    self.user.first_name + ' ' + self.user.last_name
-  end
-
   # Finds the product id of each order_product_item
   # Updates the amount left on product in database
   def decrement_product

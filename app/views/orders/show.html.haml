@@ -1,5 +1,6 @@
 %h1= @order.check_status  ? "Receipt" : "Order Details"
 - if !@products.nil?
+  %hr
   .row.text-center
     - @products.each do |prod|
       .col-md-3.col-sm-6.hero-feature
@@ -15,7 +16,7 @@
             %p
               = link_to 'add to cart', add_cart_path(prod), method: :post, class: 'btn btn-success'
               = link_to 'Show', prod, class: 'btn btn-default'
-
+  %hr
 - if @order.check_status
   .receipt
     .row
@@ -26,7 +27,7 @@
             = @order.user.full_name
           %p
             %strong Phone #:
-            = @order.user.phone
+            = number_to_phone @order.user.phone_to_int
           %p
             %strong Address:
             = @order.user.address
@@ -98,7 +99,7 @@
                   %strong Total: 
               %td.text-center.text-danger
                 %h4
-                  %strong= @order.total
+                  %strong= number_to_currency(@order.total)
         %h1 Thank you for your order.
 
 

@@ -14,11 +14,21 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable,
          :confirmable, :lockable, :timeoutable
 
-  validates_presence_of :first_name, :last_name, :phone, :address, :city, :state, :country, :postal_code, on: [:update]
+  validates_presence_of :first_name, :last_name, :address, :city, :state, :country, :postal_code, on: [:update]
+
+  # Email/phone/address verification
+  validates_format_of :email, with: /@/
+  validates :postal_code, zipcode: { country_code: :us }, on: [:update]
+  validates :phone, phone: { possible: true, allow_blank: true, types: [:voip, :mobile], country_specifier: -> phone { phone.country.try(:upcase) } }, on: [:update]
+
+  # TODO Address verification
+  # geocoded_by :valid_address, :latitude, :longitude
+  # To avoid unnecessary work (and quota usage)
+  # after_validation :geocode, if: ->(obj){ obj.address.present? and obj.address_changed? }
 
   scope :active, ->() { where(locked_at: nil) }
 
-  # used to make sure user needs to
+  # used to make sure user needs to fill out
   # their information. Find in carts/show events/show
   def check_nullity?
     first_name.nil? || last_name.nil? || phone.nil? || address.nil? || city.nil? || state.nil? || country.nil? || postal_code.nil?
@@ -42,5 +52,15 @@ class User < ApplicationRecord
 
   def full_name
     self.first_name + ' ' + self.last_name unless self.first_name.nil? || self.last_name.nil?
+  end
+
+  def phone_to_int
+    self.phone.to_i
+  end
+
+  private
+
+  def valid_address
+    [address, postal_code, city, state, country].join(',')
   end
 end

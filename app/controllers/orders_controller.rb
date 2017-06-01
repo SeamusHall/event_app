@@ -3,7 +3,8 @@ class OrdersController < ApplicationController
   load_and_authorize_resource
   before_action :authenticate_user!
   before_action :cart_initializer
-  before_action :set_orders_and_products, only: [:index,:show]
+  before_action :set_orders, only: [:index]
+  before_action :set_products_for_order, only: [:show]
   respond_to :js, :json, :html
 
   def create
@@ -119,7 +120,7 @@ class OrdersController < ApplicationController
     params.require(:order).permit(permitted_params)
   end
 
-  def set_orders_and_products
+  def set_orders
     # current user should only see the orders they placed
     @orders = Order.all.where(user_id: current_user.id).page params[:page]
     @order_products = OrderProduct.all.where(user_id: current_user.id).page params[:page]
@@ -128,9 +129,16 @@ class OrdersController < ApplicationController
     # either way when it's either status display product
     @orders = Order.all.where(user_id: current_user.id).page params[:page]
     @orders.each do |order|
-      if order.status == Order::PROGRESS_STATUS || order.status == Order::VALIDATED_STATUS
+      if order.check_status
         @products = Product.all.where(check_status: Order::PROGRESS_STATUS)
       end
+    end
+  end
+
+  def set_products_for_order
+    order = Order.find(params[:id])
+    if order.check_status
+      @products = Product.all.where(check_status: Order::PROGRESS_STATUS)
     end
   end
 end

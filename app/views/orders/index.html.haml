@@ -1,5 +1,6 @@
 %h1 Orders
 - if !@products.nil?
+  %hr
   .row.text-center
     - @products.each do |prod|
       .col-md-3.col-sm-6.hero-feature
@@ -17,12 +18,12 @@
               = link_to 'Show', prod, class: 'btn btn-default'
 %hr
 .pricing-table.pricing-three-column.row
-  %h3 Event Orders
+  %h3 Suite Orders
   - @orders.each do |order|
     .plan.col-sm-4.col-lg-4
       - if order.status == Order::VALIDATED_STATUS
         .plan-name-gold
-          %h2= "#{order.user.first_name} #{order.user.last_name}"
+          %h2= "#{order.user.full_name}"
           %span= number_to_currency(order.total)
         %ul
           %li.plan-feature= "quantity: #{order.quantity}"
@@ -32,7 +33,7 @@
             = link_to 'edit', edit_order_path(order), class: 'btn btn-warning' unless order.check_status
       - elsif order.status == Order::PROGRESS_STATUS
         .plan-name-silver
-          %h2= "#{order.user.first_name} #{order.user.last_name}"
+          %h2= "#{order.user.full_name}"
           %span= number_to_currency(order.total)
         %ul
           %li.plan-feature= "quantity: #{order.quantity}"
@@ -42,7 +43,7 @@
             = link_to 'edit', edit_order_path(order), class: 'btn btn-warning' unless order.check_status
       - else
         .plan-name-maroon
-          %h2= "#{order.user.first_name} #{order.user.last_name}"
+          %h2= "#{order.user.full_name}"
           %span= number_to_currency(order.total)
         %ul
           %li.plan-feature= "quantity: #{order.quantity}"
@@ -54,12 +55,12 @@
 
 %hr
 .pricing-table.pricing-three-column.row
-  %h3 Orders
+  %h3 Product Orders
   - @order_products.each do |order|
     .plan.col-sm-4.col-lg-4
       - if order.status == OrderProduct::VALIDATED_STATUS
         .plan-name-gold
-          %h2= "#{order.user.first_name} #{order.user.last_name}"
+          %h2= "#{order.user.full_name}"
           %span= number_to_currency(order.total)
         %ul
           %li.plan-feature= current_user.has_role?(:admin) ? order.status : order.extended_status
@@ -68,7 +69,7 @@
             = link_to 'edit', edit_order_product_path(order), class: 'btn btn-warning' unless order.check_status
       - elsif order.status == OrderProduct::PROGRESS_STATUS
         .plan-name-silver
-          %h2= "#{order.user.first_name} #{order.user.last_name}"
+          %h2= "#{order.user.full_name}"
           %span= number_to_currency(order.total)
         %ul
           %li.plan-feature= current_user.has_role?(:admin) ? order.status : order.extended_status
@@ -77,7 +78,7 @@
             = link_to 'edit', edit_order_product_path(order), class: 'btn btn-warning' unless order.check_status
       - else
         .plan-name-maroon
-          %h2= "#{order.user.first_name} #{order.user.last_name}"
+          %h2= "#{order.user.full_name}"
           %span= number_to_currency(order.total)
         %ul
           %li.plan-feature= current_user.has_role?(:admin) ? order.status : order.extended_status unless order.check_status

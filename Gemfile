@@ -23,7 +23,12 @@ gem 'turbolinks', '~> 5'
 gem 'jquery-turbolinks'
 gem 'jbuilder', '~> 2.5'
 gem 'nested_form'
+
+# User Account Creation & Verification
 gem 'country_select'
+gem 'validates_zipcode'
+gem 'phonelib'
+gem 'geocoder'
 
 gem 'haml-rails'
 # gem 'pandoc-ruby' # markdown
