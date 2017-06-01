@@ -129,7 +129,7 @@ class OrdersController < ApplicationController
     # either way when it's either status display product
     @orders = Order.all.where(user_id: current_user.id).page params[:page]
     @orders.each do |order|
-      if order.check_status && var
+      if order.check_status
         @products = Product.all.where(check_status: Order::PROGRESS_STATUS)
       end
     end
