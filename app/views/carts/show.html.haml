@@ -77,7 +77,7 @@
                   = opi.hidden_field :product_id
                   = opi.label "change quantity (goes in order)"
                 .col-md-4
-                  = opi.select :quantity, options_for_select((1..10).to_a, selected: "1"), {prompt: 'quantity'},{class: 'form-control selectpicker'}
+                  = opi.select :quantity, options_for_select((1..8).to_a, selected: "1"), {prompt: 'quantity'},{class: 'form-control selectpicker'}
             %i NOTE: current we do not ship items, your items will be placed in your room or you must pick them up
             .modal-footer
               = f.submit 'Place Order', class: 'btn btn-success'
