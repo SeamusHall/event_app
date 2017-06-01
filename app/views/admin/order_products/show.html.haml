@@ -6,7 +6,7 @@
       %address
         %p
           %strong Order Name:
-          = @order_product.order_name
+          = @order_product.user.full_name
         %p
           %strong Phone #:
           = number_to_phone @order_product.user.phone_to_int

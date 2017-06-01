@@ -1,5 +1,6 @@
 %h1= @order.check_status  ? "Receipt" : "Order Details"
 - if !@products.nil?
+  %hr
   .row.text-center
     - @products.each do |prod|
       .col-md-3.col-sm-6.hero-feature
@@ -15,7 +16,7 @@
             %p
               = link_to 'add to cart', add_cart_path(prod), method: :post, class: 'btn btn-success'
               = link_to 'Show', prod, class: 'btn btn-default'
-
+  %hr
 - if @order.check_status
   .receipt
     .row
