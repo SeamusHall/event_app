@@ -1,4 +1,5 @@
 %h1= @product.name
+
 .container-fluid
   .content-wrapper
     .item-container
@@ -27,6 +28,8 @@
             = link_to "Remove from cart",remove_cart_path, method: :post, class: 'btn btn-danger'
           .btn-group
             = link_to "clear cart", clear_cart_path, method: :post, class: 'btn btn-warning'
+          .btn-group
+            = link_to 'back to orders', orders_path, class: 'btn btn-info'
         .col-md-1
     .container-fluid
       .col-md-12.product-info

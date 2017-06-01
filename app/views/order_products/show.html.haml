@@ -11,7 +11,7 @@
               = @order_product.order_name
             %p
               %strong Phone #:
-              = @order_product.user.phone
+              = number_to_phone @order_product.user.phone_to_int
             %p
               %strong Address:
               = @order_product.user.address
@@ -73,7 +73,7 @@
                   %strong Total: 
               %td.text-center.text-danger
                 %h4
-                  %strong= @order_product.total
+                  %strong= number_to_currency @order_product.total
         %h1 Thank you for your order.
 - else
   .row

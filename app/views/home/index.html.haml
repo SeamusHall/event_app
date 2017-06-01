@@ -2,8 +2,8 @@
 
   %p Welcome to the University Housing Event page! You may now Sign Up for an account.
   %p= link_to 'Sign Up!', new_registration_path(User.new), class: 'btn btn-lg btn-primary'
-  %li= link_to  'Click here for Schneider Eclipse Housing details', 'http://housing.siu.edu/eclipse'
-  %li= link_to  'Click here for Schneider Eclipse Housing Purchasing Instructions', 'https://events.housing.siu.edu/layouts/instructions'
+  = link_to  'Schneider Eclipse Housing details', 'http://housing.siu.edu/eclipse', class: 'btn btn-info btn-lg'
+  = link_to  'Purchasing Instructions', 'https://events.housing.siu.edu/layouts/instructions', class: 'btn btn-warning btn-lg'
 
 - if current_user
   %hr
