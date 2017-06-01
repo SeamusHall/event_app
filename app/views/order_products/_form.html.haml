@@ -21,7 +21,7 @@
           .row
             .col-sm-2
             .col-sm-1= opi.label 'Quantity:'
-            .col-sm-4= opi.select :quantity, options_for_select((1..10).to_a, selected: "1"), {prompt: 'quantity'},{class: 'form-control selectpicker'}
+            .col-sm-4= opi.select :quantity, options_for_select((1..8).to_a, selected: "1"), {prompt: 'quantity'},{class: 'form-control selectpicker'}
             .col-sm-4= opi.link_to_remove "Remove Item", class: 'btn btn-danger btn-lg btn-block', data: { confirm: "Are you sure?" }
             .col-sm-1
       %br
