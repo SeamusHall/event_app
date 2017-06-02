@@ -15,19 +15,20 @@
         %th
     %tbody
       - @orders.each do |order|
-        %tr{class: ('success' if order.status == Order::VALIDATED_STATUS)}
-          %td= order.id
-          %td= current_user.has_role?(:admin) ? order.status : order.extended_status
-          %td= order.created_at.strftime('%m-%e-%y %H:%M')
-          %td= order.quantity
-          %td= number_to_currency(order.total)
-          %td= order.user.first_name
-          %td= order.user.last_name
-          %td
-            = link_to 'show', admin_order_path(order), class: 'btn btn-success btn-block'
-            = link_to 'edit', edit_admin_order_path(order), class: 'btn btn-warning btn-block'
-            - if can?(:validate, order) and order.status == OrderProduct::PROGRESS_STATUS
-              = link_to 'Validate', validate_admin_order_path(order), class: 'btn btn-info btn-block'
+        - unless order.user.nil?
+          %tr{class: ('success' if order.status == Order::VALIDATED_STATUS)}
+            %td= order.id
+            %td= current_user.has_role?(:admin) ? order.status : order.extended_status
+            %td= order.created_at.strftime('%m-%e-%y %H:%M')
+            %td= order.quantity
+            %td= number_to_currency(order.total)
+            %td= order.user.first_name
+            %td= order.user.last_name
+            %td
+              = link_to 'show', admin_order_path(order), class: 'btn btn-success btn-block'
+              = link_to 'edit', edit_admin_order_path(order), class: 'btn btn-warning btn-block'
+              - if can?(:validate, order) and order.status == OrderProduct::PROGRESS_STATUS
+                = link_to 'Validate', validate_admin_order_path(order), class: 'btn btn-info btn-block'
 = paginate @orders
 
 %br
@@ -47,16 +48,17 @@
         %th
     %tbody
       - @order_products.each do |op|
-        %tr{class: ('success' if op.status == OrderProduct::VALIDATED_STATUS)}
-          %td= op.id
-          %td= current_user.has_role?(:admin) ? op.status : op.extended_status
-          %td= op.created_at.strftime('%m-%e-%y %H:%M')
-          %td= number_to_currency(op.total)
-          %td= op.user.first_name
-          %td= op.user.last_name
-          %td
-            = link_to 'show', admin_order_product_path(op), class: 'btn btn-success btn-block'
-            = link_to 'edit', edit_admin_order_product_path(op), class: 'btn btn-warning btn-block'
-            - if can?(:validate, op) and op.status == OrderProduct::PROGRESS_STATUS
-              = link_to 'Validate', validate_admin_order_product_path(op), class: 'btn btn-info btn-block'
+        - unless op.user.nil?
+          %tr{class: ('success' if op.status == OrderProduct::VALIDATED_STATUS)}
+            %td= op.id
+            %td= current_user.has_role?(:admin) ? op.status : op.extended_status
+            %td= op.created_at.strftime('%m-%e-%y %H:%M')
+            %td= number_to_currency(op.total)
+            %td= op.user.first_name
+            %td= op.user.last_name
+            %td
+              = link_to 'show', admin_order_product_path(op), class: 'btn btn-success btn-block'
+              = link_to 'edit', edit_admin_order_product_path(op), class: 'btn btn-warning btn-block'
+              - if can?(:validate, op) and op.status == OrderProduct::PROGRESS_STATUS
+                = link_to 'Validate', validate_admin_order_product_path(op), class: 'btn btn-info btn-block'
 = paginate @order_products

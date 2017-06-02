@@ -125,11 +125,18 @@ class OrdersController < ApplicationController
     @orders = Order.all.where(user_id: current_user.id).page params[:page]
     @order_products = OrderProduct.all.where(user_id: current_user.id).page params[:page]
 
+    # Designed specifically for the eclipse
+    var = true
+    @order_products.each do |op|
+      if op.check_status || op.order_product_items.all.where(product_id: 1).sum(:quantity) >= 8 # way too specific (in the future this would be bad)
+        var = false
+      end
+    end
+
     # Check whether the order status is in progress or validated
     # either way when it's either status display product
-    @orders = Order.all.where(user_id: current_user.id).page params[:page]
     @orders.each do |order|
-      if order.check_status
+      if order.check_status && var
         @products = Product.all.where(check_status: Order::PROGRESS_STATUS)
       end
     end
@@ -137,7 +144,17 @@ class OrdersController < ApplicationController
 
   def set_products_for_order
     order = Order.find(params[:id])
-    if order.check_status
+    @order_products = OrderProduct.all.where(user_id: current_user.id)
+
+    # Designed specifically for the eclipse
+    var = true
+    @order_products.each do |op|
+      if op.check_status || op.order_product_items.all.where(product_id: 1).sum(:quantity) >= 8 # way too specific (in the future this would be bad)
+        var = false
+      end
+    end
+
+    if order.check_status && var
       @products = Product.all.where(check_status: Order::PROGRESS_STATUS)
     end
   end

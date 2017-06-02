@@ -1,5 +1,5 @@
 %h1= @order.check_status  ? "Receipt" : "Order Details"
-- if !@products.nil?
+- unless @products.nil?
   %hr
   .row.text-center
     - @products.each do |prod|
@@ -61,7 +61,7 @@
           %p
             %em= "Order ID: #{@order.id}"
 
-        = image_tag @order.event_item.event.attachment
+        = image_tag @order.event_item.event.attachment, width: "300"
     %br
     .row
       %div{style: "overflow-x:auto;"}
