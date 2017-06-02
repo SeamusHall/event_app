@@ -128,7 +128,7 @@ class OrdersController < ApplicationController
     # Designed specifically for the eclipse
     var = true
     @order_products.each do |op|
-      if op.order_product_items.all.where(product_id: 1).sum(:quantity) >= 8 # way too specific (in the future this would be bad)
+      if op.check_status || op.order_product_items.all.where(product_id: 1).sum(:quantity) >= 8 # way too specific (in the future this would be bad)
         var = false
       end
     end
@@ -149,7 +149,7 @@ class OrdersController < ApplicationController
     # Designed specifically for the eclipse
     var = true
     @order_products.each do |op|
-      if op.order_product_items.all.where(product_id: 1).sum(:quantity) >= 8 # way too specific (in the future this would be bad)
+      if op.check_status || op.order_product_items.all.where(product_id: 1).sum(:quantity) >= 8 # way too specific (in the future this would be bad)
         var = false
       end
     end
