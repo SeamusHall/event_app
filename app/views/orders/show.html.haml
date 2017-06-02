@@ -61,7 +61,7 @@
           %p
             %em= "Order ID: #{@order.id}"
 
-        = image_tag @order.event_item.event.attachment
+        = image_tag @order.event_item.event.attachment, width: "300"
     %br
     .row
       %div{style: "overflow-x:auto;"}
