@@ -136,8 +136,6 @@ class OrdersController < ApplicationController
 
   def set_products_for_order
     order = Order.find(params[:id])
-    @order_products = OrderProduct.all.where(user_id: current_user.id)
-
     if order.check_status
       @products = Product.all.where(check_status: Order::PROGRESS_STATUS)
     end
