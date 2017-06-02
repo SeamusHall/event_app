@@ -17,13 +17,25 @@ class ApplicationController < ActionController::Base
     redirect_to root_path
   end
 
-  rescue_from ActiveRecord::RecordNotFound do |execption|
-    flash[:error] = "Error 404: File Not Found"
-    redirect_to root_path
-  end
+  #rescue_from ActiveRecord::RecordNotFound do |execption|
+  #  flash[:error] = "Error 404: File Not Found"
+  #  redirect_to root_path
+  #end
 
   def cart_initializer
     @cart = Cart.build_from_hash(session)
+  end
+
+  # automatically update users role to regular user
+  # so that user can edit there information in order to
+  # make payments
+  def auto_update_role
+    @user = current_user
+    unless @user.roles.any?
+      @user.role_ids = [2]
+      @user.save
+    end
+    redirect_to user_path(@user)
   end
 
   protected

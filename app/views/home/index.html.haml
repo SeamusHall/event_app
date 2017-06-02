@@ -1,11 +1,15 @@
 %header.jumbotron.hero-spacer
 
   %p Welcome to the University Housing Event page! You may now Sign Up for an account.
-  %p= link_to 'Sign Up!', new_registration_path(User.new), class: 'btn btn-lg btn-primary'
-  = link_to  'Eclipse Housing Details', 'http://housing.siu.edu/eclipse', class: 'btn btn-info btn-lg'
+  - unless current_user.nil?
+    - if current_user.check_nullity?
+      = link_to 'Update Account', auto_update_role_cart_url, method: :post, class: 'btn btn-lg btn-info'
+  - else
+    = link_to 'Sign Up!', new_registration_path(User.new), class: 'btn btn-lg btn-primary'
+  = link_to  'Schneider Eclipse Housing details', 'http://housing.siu.edu/eclipse', class: 'btn btn-info btn-lg'
   = link_to  'Purchasing Instructions', 'https://events.housing.siu.edu/layouts/instructions', class: 'btn btn-warning btn-lg'
   = link_to  'Terms and Conditions', 'http://events.housing.siu.edu/layouts/termsn', class: 'btn btn-info btn-lg'
-  = link_to  'Assumption of Risk', 'http://events.housing.siu.edu/layouts/risk', class: 'btn btn-info btn-lg'
+  = link_to  'Assumption of Risk', 'http://events.housing.siu.edu/layouts/risk', class: 'btn btn-warning btn-lg'
 - if current_user
   %hr
   .row

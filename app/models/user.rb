@@ -14,12 +14,12 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable,
          :confirmable, :lockable, :timeoutable
 
-  validates_presence_of :first_name, :last_name, :address, :city, :state, :country, :postal_code, on: [:update]
+  #validates_presence_of :first_name, :last_name, :address, :city, :state, :country, :postal_code, on: [:update]
 
   # Email/phone/address verification
-  validates_format_of :email, with: /@/
-  validates :postal_code, zipcode: { country_code: :us }, on: [:update]
-  validates :phone, phone: { possible: true, allow_blank: true, types: [:voip, :mobile], country_specifier: -> phone { phone.country.try(:upcase) } }, on: [:update]
+  #validates_format_of :email, with: /@/
+  #validates :postal_code, zipcode: { country_code: :us }, on: [:update]
+  #validates :phone, phone: { possible: true, allow_blank: true, types: [:voip, :mobile], country_specifier: -> phone { phone.country.try(:upcase) } }, on: [:update]
 
   # TODO Address verification
   # geocoded_by :valid_address, :latitude, :longitude

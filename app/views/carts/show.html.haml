@@ -70,14 +70,15 @@
             %h2= "Your current total cost #{number_to_currency @cart.total_price} "
             %h3.center Item Infomation
             %br
-            = f.fields_for :order_product_items do |opi|
-              %br
-              .row
-                .col-md-8
-                  = opi.hidden_field :product_id
-                  = opi.label "change quantity (goes in order)"
-                .col-md-4
-                  = opi.select :quantity, options_for_select((1..8).to_a, selected: "0"), {prompt: 'quantity'},{class: 'form-control selectpicker'}
+            - @cart.items.each do |item|
+              = f.fields_for :order_product_items, OrderProductItem.new do |opi|
+                %br
+                .row
+                  .col-md-8
+                    = opi.hidden_field :product_id, value: item.product_id
+                    = opi.label "#{item.product.name} quantity: "
+                  .col-md-4
+                    = opi.select :quantity, options_for_select((1..item.product.max_to_sell).to_a, selected: "1"), {prompt: 'quantity'},{class: 'form-control selectpicker'}
             %i NOTE: Please verify your totals for each item, A maximum of 8 Meal plans and 2 parking passes may be ordered for each suite purchased. Your items will be placed in your room or you must pick them up
             .modal-footer
               = f.submit 'Place Order', class: 'btn btn-success'

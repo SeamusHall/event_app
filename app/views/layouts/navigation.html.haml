@@ -30,9 +30,12 @@
               %li= link_to 'Orders', orders_path
               %li= link_to 'Events', events_path
               %li= link_to 'Products', products_path
-              - if current_user.roles.any?
-                %li.divider{role: "separator"}
-                %li= link_to "Account", user_path(current_user.id)
+              %li.divider{role: "separator"}
+              - unless current_user.nil?
+                - if current_user.check_nullity?
+                  %li= link_to 'Update Account', auto_update_role_cart_url, method: :post
+                - else
+                  %li= link_to "Account", user_path(current_user.id)
         - else
           %li= link_to 'Login', new_session_path(User.new)
   %nav.navbar.navbar-default.navbar-lower{role: "navigation"}
@@ -48,7 +51,7 @@
             .row
               .col-sm-6
                 %h4
-                  Contact Housing 618.453.2301
+                  Contact 618.453.2301
                   %br
                   != "#{mail_to 'support@housing.siu.edu', 'support@housing.siu.edu', encode: :hex}"
               .col-sm-6
