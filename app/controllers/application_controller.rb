@@ -17,10 +17,10 @@ class ApplicationController < ActionController::Base
     redirect_to root_path
   end
 
-  #rescue_from ActiveRecord::RecordNotFound do |execption|
-  #  flash[:error] = "Error 404: File Not Found"
-  #  redirect_to root_path
-  #end
+  rescue_from ActiveRecord::RecordNotFound do |execption|
+    flash[:error] = "Error 404: File Not Found"
+    redirect_to root_path
+  end
 
   def cart_initializer
     @cart = Cart.build_from_hash(session)
