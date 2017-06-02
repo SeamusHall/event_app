@@ -25,26 +25,5 @@ class CartsController < ApplicationController
 
   def show
     @order_product = OrderProduct.new
-    load_cart_to_order_product_items
-  end
-
-  # automatically update users role to regular user
-  # so that user can edit there information in order to
-  # make payments
-  def auto_update_role
-    @user = current_user
-    unless @user.roles.any?
-      @user.role_ids = [2]
-      @user.save
-    end
-    redirect_to user_path(@user)
-  end
-
-  private
-
-  def load_cart_to_order_product_items
-    @cart.items.each do |item|
-      @order_product.order_product_items.build(product: item.product, quantity: item.quantity)
-    end
   end
 end

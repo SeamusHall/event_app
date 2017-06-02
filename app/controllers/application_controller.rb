@@ -26,6 +26,18 @@ class ApplicationController < ActionController::Base
     @cart = Cart.build_from_hash(session)
   end
 
+  # automatically update users role to regular user
+  # so that user can edit there information in order to
+  # make payments
+  def auto_update_role
+    @user = current_user
+    unless @user.roles.any?
+      @user.role_ids = [2]
+      @user.save
+    end
+    redirect_to user_path(@user)
+  end
+
   protected
   def configure_permitted_parameters
     added_attrs = [:email, :password, :password_confirmation, :remember_me, :first_name, :last_name, :phone, :address, :city, :state, :country, :postal_code]
