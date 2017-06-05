@@ -41,7 +41,7 @@
     .col-sm-12
       .form-group
         = f.label :page_body
-        = f.cktext_area :page_body, placeholder: 'page body', class: 'form-control', size: 'x15'
+        = f.cktext_area :page_body, cols: 40, ckeditor: { toolbar: 'Easy' }
       %hr
       = f.fields_for :event_items do |event_item_form|
         %p Event Item

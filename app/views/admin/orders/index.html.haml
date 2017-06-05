@@ -16,7 +16,7 @@
     %tbody
       - @orders.each do |order|
         - unless order.user.nil?
-          %tr{class: ('success' if order.status == Order::VALIDATED_STATUS)}
+          %tr{class: (order.status == Order::VALIDATED_STATUS ? 'success' : (order.status == Order::PROGRESS_STATUS) ? 'warning' : 'danger')}
             %td= order.id
             %td= current_user.has_role?(:admin) ? order.status : order.extended_status
             %td= order.created_at.strftime('%m-%e-%y %H:%M')
@@ -49,7 +49,7 @@
     %tbody
       - @order_products.each do |op|
         - unless op.user.nil?
-          %tr{class: ('success' if op.status == OrderProduct::VALIDATED_STATUS)}
+          %tr{class: (op.status == OrderProduct::VALIDATED_STATUS ? 'success' : (op.status == OrderProduct::PROGRESS_STATUS) ? 'warning' : 'danger')}
             %td= op.id
             %td= current_user.has_role?(:admin) ? op.status : op.extended_status
             %td= op.created_at.strftime('%m-%e-%y %H:%M')

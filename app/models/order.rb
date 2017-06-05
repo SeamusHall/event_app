@@ -44,10 +44,11 @@ class Order < ApplicationRecord
   def check_status
     self.status == Order::PROGRESS_STATUS || self.status == Order::VALIDATED_STATUS
   end
+
   # Deletes the amount left in event_item so we know
-  # how many we have left to sell
+  # how many we have left to sell (Based on quantity customer wants per order)
   def decrement_max_order
-    self.event_item.max_event -= self.event_item.max_order
+    self.event_item.max_event -= self.quantity
     self.event_item.save
   end
 

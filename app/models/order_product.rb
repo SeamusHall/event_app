@@ -18,6 +18,7 @@ class OrderProduct < ActiveRecord::Base
   VALIDATED_STATUS = 'validated'
   ARCHIVED_STATUS = 'archived'
 
+  validate :check_if_order_hase_one_item, on: [:update]
   validates :status, inclusion: { in: STATUSES.keys }, presence: true
   validates :total, presence: true
   validates :total, numericality: { greater_than: 0.0 }
@@ -54,6 +55,8 @@ class OrderProduct < ActiveRecord::Base
     ret
   end
 
+  # Calculates the total amount of tax
+  # to send over to Authorize
   def total_tax
     total_temp = 0
     self.order_product_items.each do |opi|
@@ -68,6 +71,7 @@ class OrderProduct < ActiveRecord::Base
 
   private
 
+  # Calculates Total for order
   def calculate
     total_temp = 0
     self.order_product_items.each do |opi|
@@ -76,11 +80,17 @@ class OrderProduct < ActiveRecord::Base
     self.total = total_temp
   end
 
+  # Update date order was finalized_on
   def update_finalized_on
     if self.status == VALIDATED_STATUS
       self.finalized_on = Time.now unless self.finalized_on.present?
     else
       self.finalized_on = nil
     end
+  end
+
+  # checks to make sure there is at least one item in the order
+  def check_if_order_hase_one_item
+    errors.add(:base, "Your order must have at least one item") if self.order_product_items.only_deleted.count > 1
   end
 end

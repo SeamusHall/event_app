@@ -1,8 +1,8 @@
 = form_for ["admin", @product], multipart: true do |f|
   = errors_for @product, true
   .row
-    .col-sm-2
-    .col-sm-9
+    .col-sm-1
+    .col-sm-10
       .form-group
         = f.label :name
         = f.text_field :name, class: 'form-control'
@@ -24,7 +24,7 @@
         = f.text_area :description, class: 'form-control'
       .form-group
         = f.label :page_body
-        = f.cktext_area :page_body, class: 'form-control'
+        = f.cktext_area :page_body, cols: 40, ckeditor: { toolbar: 'Easy' }
       .form-group
         = f.label 'Amount in stock'
         = f.text_field :quantity, class: 'form-control'
@@ -37,7 +37,7 @@
         = f.file_field :attachments, multiple: true, class: 'form-control', id: 'progress-bar', data: { disable_with: 'Uploading' }
     .col-sm-1
   .row
-    .col-sm-2
+    .col-sm-1
     .col-sm-3
       .form-group
         = f.label 'Order Status'
@@ -48,16 +48,12 @@
       .form-group
         = f.label 'Product Status'
         = f.select :status, options_for_select(Product::STATUSES.keys), {prompt: 'product status'}, {class: 'form-control selectpicker', required: true}
-    .col-sm-3
+    .col-sm-1
       .form-group
         = f.label 'publish'
         = f.check_box :published
-    .col-sm-1
-
-  .row
-    .col-sm-2
-    .col-sm-9
+    .col-sm-3
       .form-group
-        = f.submit 'Save', class: 'btn btn-success btn-lg', id: 'progress-bar', data: { disable_with: 'Uploading' }
-        = link_to 'Back', admin_products_path, class: 'btn btn-danger btn-lg', data: { disable_with: 'Please wait' }
+        = f.submit 'Save', class: 'btn btn-success btn-lg btn-block', id: 'progress-bar', data: { disable_with: 'Uploading' }
+        = link_to 'Back', admin_products_path, class: 'btn btn-danger btn-lg btn-block', data: { disable_with: 'Please wait' }
     .col-sm-1

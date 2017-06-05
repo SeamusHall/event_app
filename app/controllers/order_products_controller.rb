@@ -3,7 +3,7 @@ class OrderProductsController < ApplicationController
   load_and_authorize_resource
   before_action :authenticate_user!
   before_action :cart_initializer
-  before_action :set_order_product, only: [:show, :edit]
+  before_action :set_order_product, only: [:show, :update]
   respond_to :js, :json, :html
 
   def create
@@ -125,7 +125,7 @@ class OrderProductsController < ApplicationController
   private
   def order_product_params
     permitted_params = [:user_id, :total, :payment_details,
-                        order_product_items_attributes: [:id,:product_id,:quantity]]
+                        order_product_items_attributes: [:id,:product_id,:quantity, :_destroy]]
     permitted_params << :status if current_user.has_role?(:admin)
     params.require(:order_product).permit(permitted_params)
   end
