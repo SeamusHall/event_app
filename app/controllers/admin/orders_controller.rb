@@ -26,6 +26,26 @@ module Admin
       end
     end
 
+    def show_orders_valid
+      @orders = Order.all.where(status: Order::VALIDATED_STATUS).page params[:page]
+      @order_products = OrderProduct.all.where(status: OrderProduct::VALIDATED_STATUS).page params[:page]
+    end
+
+    def show_orders_progress
+      @orders = Order.all.where(status: Order::PROGRESS_STATUS).page params[:page]
+      @order_products = OrderProduct.all.where(status: OrderProduct::PROGRESS_STATUS).page params[:page]
+    end
+
+    def show_orders_pending
+      @orders = Order.all.where(status: Order::PENDING_STATUS).page params[:page]
+      @order_products = OrderProduct.all.where(status: OrderProduct::PENDING_STATUS).page params[:page]
+    end
+
+    def show_orders_archived
+      @orders = Order.all.where(status: Order::ARCHIVED_STATUS).page params[:page]
+      @order_products = OrderProduct.all.where(status: OrderProduct::ARCHIVED_STATUS).page params[:page]
+    end
+
     private
 
     def set_order

@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   mount Sidekiq::Web => '/sidekiq'
   mount Ckeditor::Engine => '/ckeditor'
   resources :orders, except: [:destroy] do
+    post :archive_order
     member do
       get :purchase
       post :make_purchase
@@ -11,6 +12,7 @@ Rails.application.routes.draw do
   end
 
   resources :order_products, except: [:destroy, :index] do
+    post :archive_order
     member do
       get :purchase
       post :make_purchase
@@ -37,7 +39,7 @@ Rails.application.routes.draw do
   },
   path: '', path_names: {
     confirmation:  'verification',
-    unlock:        'unblock',
+    unlock:        'unlock',
     sign_in:       'login',
     sign_out:      'logout',
     sign_up:       'sign_up'
@@ -48,6 +50,10 @@ Rails.application.routes.draw do
   # routes for admin interface
   get "admin" => "admin#index"
   namespace :admin do
+    get "orders/show_orders_valid"    => "orders#show_orders_valid"
+    get "orders/show_orders_progress" => "orders#show_orders_progress"
+    get "orders/show_orders_pending"  => "orders#show_orders_pending"
+    get "orders/show_orders_archived" => "orders#show_orders_archived"
     resources :users
     resources :roles
     resources :orders do
