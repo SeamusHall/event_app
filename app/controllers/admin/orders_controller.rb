@@ -46,6 +46,11 @@ module Admin
       @order_products = OrderProduct.all.where(status: OrderProduct::ARCHIVED_STATUS).page params[:page]
     end
 
+    def show_orders_declined
+      @orders = Order.all.where(status: Order::DECLINED_STATUS).page params[:page]
+      @order_products = OrderProduct.all.where(status: OrderProduct::DECLINED_STATUS).page params[:page]
+    end
+
     private
 
     def set_order

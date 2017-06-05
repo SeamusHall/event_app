@@ -78,19 +78,6 @@
               %td.text-center= @order.quantity
               %td.text-center= @order.event_item.tax > 0.0 ? number_to_percentage(@order.event_item.tax * 100, precision: 2) : '--'
               %td.text-right= number_to_currency(@order.event_item.price)
-            -#%tr
-              %td  
-              %td 
-              %td.text-right
-                %p
-                  %strong Subtotal: 
-                %p
-                  %strong Tax: 
-              %td.text-center
-                %p
-                  %strong $6.94
-                %p
-                  %strong $6.94
             %tr
               %td  
               %td  

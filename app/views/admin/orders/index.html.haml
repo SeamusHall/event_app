@@ -1,12 +1,16 @@
 .row
-  .col-lg-3
+  .col-lg-2
+    = link_to 'Show All Orders', admin_orders_path, class: 'btn btn-primary btn-block btn-lg'
+  .col-lg-2
     = link_to "Show Valid Status", admin_orders_show_orders_valid_path, class: 'btn btn-success btn-block btn-lg'
-  .col-lg-3
+  .col-lg-2
     = link_to "Show Progress Status", admin_orders_show_orders_progress_path, class: 'btn btn-warning btn-block btn-lg'
-  .col-lg-3
+  .col-lg-2
     = link_to "Show Pending Status",  admin_orders_show_orders_pending_path, class: 'btn btn-danger btn-block btn-lg'
-  .col-lg-3
+  .col-lg-2
     = link_to "Show Archived Status", admin_orders_show_orders_archived_path, class: 'btn btn-info btn-block btn-lg'
+  .col-lg-2
+    = link_to "Show Declined Status", admin_orders_show_orders_declined_path, class: 'btn btn-info btn-warning btn-lg'
 
 %h2 Event Orders
 
@@ -26,7 +30,7 @@
     %tbody
       - @orders.each do |order|
         - unless order.user.nil?
-          %tr{class: (order.status == Order::VALIDATED_STATUS ? 'success' : (order.status == Order::PROGRESS_STATUS) ? 'warning' : 'danger')}
+          %tr{class: (order.status == Order::VALIDATED_STATUS ? 'success' : (order.status == Order::PROGRESS_STATUS || order.status == Order::DECLINED_STATUS) ? 'warning' : 'danger')}
             %td= order.id
             %td= current_user.has_role?(:admin) ? order.status : order.extended_status
             %td= order.created_at.strftime('%m-%e-%y %H:%M')
@@ -59,7 +63,7 @@
     %tbody
       - @order_products.each do |op|
         - unless op.user.nil?
-          %tr{class: (op.status == OrderProduct::VALIDATED_STATUS ? 'success' : (op.status == OrderProduct::PROGRESS_STATUS) ? 'warning' : 'danger')}
+          %tr{class: (op.status == OrderProduct::VALIDATED_STATUS ? 'success' : (op.status == OrderProduct::PROGRESS_STATUS || op.status == OrderProduct::DECLINED_STATUS) ? 'warning' : 'danger')}
             %td= op.id
             %td= current_user.has_role?(:admin) ? op.status : op.extended_status
             %td= op.created_at.strftime('%m-%e-%y %H:%M')

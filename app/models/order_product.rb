@@ -9,14 +9,16 @@ class OrderProduct < ActiveRecord::Base
   before_validation :calculate
   before_validation :update_finalized_on
 
-  STATUSES = { 'pending' => 'Order Pending (pre-submit)',
-               'progress' => 'Order In Progress (payment submitted)',
+  STATUSES = { 'pending'   => 'Order Pending (pre-submit)',
+               'progress'  => 'Order In Progress (payment submitted)',
                'validated' => 'Order Validated (payment processed)',
-               'archived' => 'Order Archived' }
+               'archived'  => 'Order Archived',
+               'declined'  => 'Card Declined' }
   PENDING_STATUS = 'pending'
   PROGRESS_STATUS = 'progress'
   VALIDATED_STATUS = 'validated'
   ARCHIVED_STATUS = 'archived'
+  DECLINED_STATUS = 'declined'
 
   validate :check_if_order_hase_one_item, on: [:update]
   validates :status, inclusion: { in: STATUSES.keys }, presence: true
@@ -66,7 +68,7 @@ class OrderProduct < ActiveRecord::Base
   end
 
   def check_status
-    self.status == OrderProduct::PROGRESS_STATUS || self.status == OrderProduct::VALIDATED_STATUS
+    self.status == OrderProduct::PROGRESS_STATUS || self.status == OrderProduct::VALIDATED_STATUS || self.status == OrderProduct::DECLINED_STATUS
   end
 
   private

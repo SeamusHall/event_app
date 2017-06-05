@@ -54,6 +54,7 @@ Rails.application.routes.draw do
     get "orders/show_orders_progress" => "orders#show_orders_progress"
     get "orders/show_orders_pending"  => "orders#show_orders_pending"
     get "orders/show_orders_archived" => "orders#show_orders_archived"
+    get "orders/show_orders_declined" => "orders#show_orders_declined"
     resources :users
     resources :roles
     resources :orders do

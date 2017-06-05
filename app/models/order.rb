@@ -4,14 +4,16 @@ class Order < ApplicationRecord
   belongs_to :user
   belongs_to :event_item
 
-  STATUSES = { 'pending' => 'Order Pending (pre-submit)',
-               'progress' => 'Order In Progress (payment submitted)',
+  STATUSES = { 'pending'   => 'Order Pending (pre-submit)',
+               'progress'  => 'Order In Progress (payment submitted)',
                'validated' => 'Order Validated (payment processed)',
-               'archived' => 'Order Archived' }
+               'archived'  => 'Order Archived',
+               'declined'  => 'Card Declined' }
   PENDING_STATUS = 'pending'
   PROGRESS_STATUS = 'progress'
   VALIDATED_STATUS = 'validated'
   ARCHIVED_STATUS = 'archived'
+  DECLINED_STATUS = 'declined'
 
   before_validation :perform_total_calculation
   before_validation :update_finalized_on
@@ -42,7 +44,7 @@ class Order < ApplicationRecord
   end
 
   def check_status
-    self.status == Order::PROGRESS_STATUS || self.status == Order::VALIDATED_STATUS
+    self.status == Order::PROGRESS_STATUS || self.status == Order::VALIDATED_STATUS || self.status == Order::DECLINED_STATUS
   end
 
   # Deletes the amount left in event_item so we know
