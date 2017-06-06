@@ -72,7 +72,7 @@
             %td= op.user.last_name
             %td
               = link_to 'show', admin_order_product_path(op), class: 'btn btn-success btn-block'
-              = link_to 'edit', edit_admin_order_product_path(op), class: 'btn btn-warning btn-block' unless op.status == Order::CANCELED_STATUS
+              = link_to 'edit', edit_admin_order_product_path(op), class: 'btn btn-warning btn-block' unless op.status == OrderProduct::CANCELED_STATUS
               - if can?(:validate, op) and op.status == OrderProduct::PROGRESS_STATUS
                 = link_to 'Validate', validate_admin_order_product_path(op), class: 'btn btn-info btn-block'
 = paginate @order_products
