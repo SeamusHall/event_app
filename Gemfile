@@ -31,7 +31,7 @@ gem 'phonelib'
 gem 'geocoder'
 
 gem 'haml-rails'
-# gem 'pandoc-ruby' # markdown
+gem 'redcarpet' # markdown
 gem 'kaminari'
 gem 'gravtastic'
 gem 'ckeditor'

@@ -72,7 +72,8 @@
         #myTabContent.tab-content
           #service-one.tab-pane.fade.in.active
             %section.container.product-info
-              = @product.page_body.html_safe
+              %br
+              = markdown @product.page_body
           #service-two.tab-pane.fade
             %section.container
           #service-three.tab-pane.fade

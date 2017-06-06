@@ -7,9 +7,9 @@
   - else
     = link_to 'Sign Up!', new_registration_path(User.new), class: 'btn btn-lg btn-primary'
   = link_to  'Schneider Eclipse Housing details', 'http://housing.siu.edu/eclipse', class: 'btn btn-info btn-lg', target: :_blank
-  = link_to  'Purchasing Instructions', 'https://events.housing.siu.edu/layouts/instructions', class: 'btn btn-warning btn-lg', target: :_blank
-  = link_to  'Terms and Conditions', 'http://events.housing.siu.edu/layouts/terms', class: 'btn btn-info btn-lg', target: :_blank
-  = link_to  'Assumption of Risk', 'http://events.housing.siu.edu/layouts/risk', class: 'btn btn-warning btn-lg', target: :_blank
+  = link_to  'Purchasing Instructions', layouts_instructions_path , class: 'btn btn-warning btn-lg', target: :_blank
+  = link_to  'Terms and Conditions', layouts_terms_path , class: 'btn btn-info btn-lg', target: :_blank
+  = link_to  'Assumption of Risk', layouts_risk_path, class: 'btn btn-warning btn-lg', target: :_blank
 - if current_user
   %hr
   .row

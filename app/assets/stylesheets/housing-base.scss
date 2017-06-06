@@ -133,6 +133,23 @@ a {
   @media screen and (max-width: 1000px) { width: 100%; }
 }
 
+.pagination {
+  font-family: Arial;
+  font-size: 19px;
+  background: none;
+}
+
+.pagination a:first-child {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.pagination a:last-child {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+
 /*********************************************
 		          users show page
 *********************************************/
@@ -438,6 +455,15 @@ a {
   -webkit-border-radius: 5px 5px 0 0;
   border-radius: 5px 5px 0 0;
  }
+
+.plan-name-lightblue {
+  padding: 20px;
+  color: $maroon;
+  background-color: #CBF6FF;
+  -moz-border-radius: 5px 5px 0 0;
+  -webkit-border-radius: 5px 5px 0 0;
+  border-radius: 5px 5px 0 0;
+}
 
 .pricing-table-bronze  {
   padding: 20px;

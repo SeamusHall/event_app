@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170531164512) do
+ActiveRecord::Schema.define(version: 20170605213607) do
 
   create_table "ckeditor_assets", force: :cascade do |t|
     t.string   "data_file_name",               null: false
@@ -31,10 +31,8 @@ ActiveRecord::Schema.define(version: 20170531164512) do
     t.decimal  "tax",          precision: 6, scale: 5
     t.integer  "max_event"
     t.integer  "max_order"
-    t.integer  "min_freq"
-    t.boolean  "flat_rate",                            default: false
-    t.datetime "created_at",                                           null: false
-    t.datetime "updated_at",                                           null: false
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
     t.datetime "deleted_at"
     t.string   "check_status"
     t.index ["deleted_at"], name: "index_event_items_on_deleted_at"
@@ -89,8 +87,6 @@ ActiveRecord::Schema.define(version: 20170531164512) do
     t.integer  "event_item_id"
     t.integer  "quantity"
     t.decimal  "total",           precision: 9, scale: 2
-    t.datetime "start_date"
-    t.datetime "end_date"
     t.string   "status"
     t.text     "comment"
     t.text     "payment_details"

@@ -4,23 +4,25 @@ Rails.application.routes.draw do
   mount Sidekiq::Web => '/sidekiq'
   mount Ckeditor::Engine => '/ckeditor'
   resources :orders, except: [:destroy] do
-    post :archive_order
     member do
       get :purchase
       post :make_purchase
+      post :cancel
     end
   end
 
   resources :order_products, except: [:destroy, :index] do
-    post :archive_order
     member do
       get :purchase
       post :make_purchase
+      post :cancel
     end
   end
+
   get "layouts/terms"
   get "layouts/risk"
   get "layouts/instructions"
+
   resources :events, only: [:index,:show] do
     post :auto_update_role
   end
@@ -53,7 +55,7 @@ Rails.application.routes.draw do
     get "orders/show_orders_valid"    => "orders#show_orders_valid"
     get "orders/show_orders_progress" => "orders#show_orders_progress"
     get "orders/show_orders_pending"  => "orders#show_orders_pending"
-    get "orders/show_orders_archived" => "orders#show_orders_archived"
+    get "orders/show_orders_canceled" => "orders#show_orders_canceled"
     get "orders/show_orders_declined" => "orders#show_orders_declined"
     resources :users
     resources :roles

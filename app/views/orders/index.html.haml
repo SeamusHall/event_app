@@ -51,6 +51,16 @@
           %li.plan-feature
             = link_to 'Show', order, class: 'btn btn-success'
             = link_to 'edit', edit_order_path(order), class: 'btn btn-warning' unless order.check_status
+      - elsif order.status == Order::CANCELED_STATUS
+        .plan-name-lightblue
+          %h2= "#{order.event_item.event.name}"
+          %span= number_to_currency(order.total)
+        %ul
+          %li.plan-feature= "quantity: #{order.quantity}"
+          %li.plan-feature= order.status
+          %li.plan-feature
+            = link_to 'Show', order, class: 'btn btn-success'
+            = link_to 'edit', edit_order_path(order), class: 'btn btn-warning' unless order.check_status
       - else
         .plan-name-maroon
           %h2= "#{order.event_item.event.name}"
@@ -88,6 +98,15 @@
             = link_to 'edit', edit_order_product_path(order), class: 'btn btn-warning' unless order.check_status
       - elsif order.status == Order::DECLINED_STATUS
         .plan-name-red
+          %h2= "eclipse-meals/parking"
+          %span= number_to_currency(order.total)
+        %ul
+          %li.plan-feature= order.status
+          %li.plan-feature
+            = link_to 'Show', order, class: 'btn btn-success'
+            = link_to 'edit', edit_order_product_path(order), class: 'btn btn-warning' unless order.check_status
+      - elsif order.status == Order::CANCELED_STATUS
+        .plan-name-lightblue
           %h2= "eclipse-meals/parking"
           %span= number_to_currency(order.total)
         %ul

@@ -74,7 +74,7 @@
               %td.text-center.text-danger
                 %h4
                   %strong= number_to_currency @order_product.total
-        %h1 Thank you for your order.
+        %h1= @order_product.status == Order::CANCELED_STATUS ? "Order has been canceled." : "Thank you for your order."
 - else
   .row
     .col-xs-12.col-md-3.col-lg-3.pull-left
@@ -93,19 +93,6 @@
           %br
           = @order_product.user.country
     -#
-      .col-xs-12.col-md-3.col-lg-3
-        .panel.panel-default.height
-          .panel-heading Payment Information
-          .panel-body
-            %strong Card Name:
-            Visa
-            %br/
-            %strong Card Number:
-            ***** 332
-            %br/
-            %strong Exp Date:
-            09/2020
-            %br/
       .col-xs-12.col-md-3.col-lg-3
         .panel.panel-default.height
           .panel-heading Order Preferences
@@ -173,3 +160,4 @@
 = link_to 'Orders', orders_path, class: 'btn btn-primary btn-lg'
 = link_to 'Modify Order', edit_order_product_path(@order_product), class: 'btn btn-info btn-lg' unless @order_product.check_status
 = link_to 'Proceed to Checkout', purchase_order_product_path(@order_product), class: 'btn btn-success btn-lg' unless @order_product.check_status || @order_product.check_stock
+= link_to 'Cancel Order', cancel_order_product_path(@order_product), method: :post, class: 'btn btn-danger btn-lg' unless @order_product.check_status

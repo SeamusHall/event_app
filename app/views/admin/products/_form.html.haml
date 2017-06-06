@@ -1,3 +1,7 @@
+#progress-bar.progress{:style => "display:none;"}
+  .progress-bar.progress-bar-striped.active{:role => "progressbar", :style => "width: 0%"}
+    %span#progress-bar-text.sr-only
+
 = form_for ["admin", @product], multipart: true do |f|
   = errors_for @product, true
   .row
@@ -22,9 +26,13 @@
       .form-group
         = f.label :description
         = f.text_area :description, class: 'form-control'
+      %i
+        markdown format (working on getting it to work with tables/br tags/hr tags):
+        = link_to 'markdown syntax', 'https://caleorourke.gitbooks.io/redcarpet-syntax/content/index.html', target: :_blank
+      %br
       .form-group
         = f.label :page_body
-        = f.cktext_area :page_body, cols: 40, ckeditor: { toolbar: 'Easy' }
+        = f.cktext_area :page_body, cols: 40, ckeditor: { toolbar: 'mini' }
       .form-group
         = f.label 'Amount in stock'
         = f.text_field :quantity, class: 'form-control'
@@ -34,7 +42,7 @@
       %i Supported formats: .jpg .jpeg .gif .png .mp4
       .form-group
         = f.label :attachments
-        = f.file_field :attachments, multiple: true, class: 'form-control', id: 'progress-bar', data: { disable_with: 'Uploading' }
+        = f.file_field :attachments, multiple: true, class: 'form-control'
     .col-sm-1
   .row
     .col-sm-1

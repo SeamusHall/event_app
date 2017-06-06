@@ -42,6 +42,15 @@ class OrderProductsController < ApplicationController
     end
   end
 
+  def cancel
+    @order_product.status = OrderProduct::CANCELED_STATUS
+    if @order_product.save
+      redirect_to :back, notice: 'Order has been successfully canceled.'
+    else
+      redirect_to :back, notice: 'Order was not canceled.'
+    end
+  end
+
   def make_purchase
     # create transation and request with Authorize
     transaction = Transaction.new(AUTHORIZE_NET_CONFIG['api_login_id'], AUTHORIZE_NET_CONFIG['api_transaction_key'], :gateway => :production)

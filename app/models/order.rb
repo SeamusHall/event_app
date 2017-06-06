@@ -7,27 +7,23 @@ class Order < ApplicationRecord
   STATUSES = { 'pending'   => 'Order Pending (pre-submit)',
                'progress'  => 'Order In Progress (payment submitted)',
                'validated' => 'Order Validated (payment processed)',
-               'archived'  => 'Order Archived',
+               'canceled'  => 'Order Canceled',
                'declined'  => 'Card Declined' }
   PENDING_STATUS = 'pending'
   PROGRESS_STATUS = 'progress'
   VALIDATED_STATUS = 'validated'
-  ARCHIVED_STATUS = 'archived'
+  CANCELED_STATUS = 'canceled'
   DECLINED_STATUS = 'declined'
 
   before_validation :perform_total_calculation
   before_validation :update_finalized_on
 
   validate :better_agree
-  #validate :valid_dates
-  #validate :quantity_less_than_max_order
 
   validates :status, inclusion: { in: STATUSES.keys }, presence: true
   validates :quantity, :total, presence: true
   validates :quantity, numericality: { only_integer: true, greater_than: 0 }
   validates :total, numericality: { greater_than: 0.0 }
-
-  before_create :only_one_pending_order
 
   scope :pending, ->() { where(status: PENDING_STATUS) }
   scope :progress, ->() { where(status: PROGRESS_STATUS) }
@@ -39,12 +35,8 @@ class Order < ApplicationRecord
     STATUSES[status]
   end
 
-  def dates
-    self.start_date.strftime('%m/%d/%Y') + ' - ' + self.end_date.strftime('%m/%d/%Y')
-  end
-
   def check_status
-    self.status == Order::PROGRESS_STATUS || self.status == Order::VALIDATED_STATUS || self.status == Order::DECLINED_STATUS
+    self.status == Order::PROGRESS_STATUS || self.status == Order::VALIDATED_STATUS || self.status == Order::CANCELED_STATUS
   end
 
   # Deletes the amount left in event_item so we know
@@ -55,22 +47,9 @@ class Order < ApplicationRecord
   end
 
   private
-  def valid_dates
-    if start_date and end_date
-      errors.add(:start_date, 'must occur before end date') if start_date > end_date
-      errors.add(:end_date, 'must occur after check-in date') if start_date == end_date
-      errors.add(:start_date, 'must occur inside event dates') if start_date < self.event_item.event.starts_on or start_date > self.event_item.event.ends_on
-      errors.add(:end_date, 'must occur inside event dates') if end_date < self.event_item.event.starts_on or end_date > self.event_item.event.ends_on
-      errors.add(:base, 'the amount of nights to stay must be meet') if (end_date - start_date + 1.day) / 1.day != self.event_item.min_freq
-    end
-  end
 
   def better_agree
     errors.add(:terms, 'Must agree to terms and services') if !terms
-  end
-
-  def only_one_pending_order
-    errors.add(:base, 'only one pending order allowed, please wait until previous order is processed') if (self.user.orders.pending.to_a - [self]).any?
   end
 
   def quantity_less_than_max_order
@@ -78,11 +57,7 @@ class Order < ApplicationRecord
   end
 
   def perform_total_calculation
-    if self.quantity and self.event_item and self.status == PENDING_STATUS
-      qty = self.quantity
-      #freq = self.event_item.flat_rate ? 1.0 : (self.end_date - self.start_date)/1.day
-      self.total = (self.event_item.price * qty ) * (1.0 + self.event_item.tax)
-    end
+    self.total = (self.event_item.price * self.quantity ) * (1.0 + self.event_item.tax)
   end
 
   def update_finalized_on

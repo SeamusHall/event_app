@@ -9,7 +9,7 @@
           %br
             -#Event Dates:
               = @event.dates
-          = @event.page_body.html_safe
+          %p= markdown @event.page_body
         .col-md-1
         %hr
     .container-fluid

@@ -12,12 +12,12 @@ class OrderProduct < ActiveRecord::Base
   STATUSES = { 'pending'   => 'Order Pending (pre-submit)',
                'progress'  => 'Order In Progress (payment submitted)',
                'validated' => 'Order Validated (payment processed)',
-               'archived'  => 'Order Archived',
+               'canceled'  => 'Order canceled',
                'declined'  => 'Card Declined' }
   PENDING_STATUS = 'pending'
   PROGRESS_STATUS = 'progress'
   VALIDATED_STATUS = 'validated'
-  ARCHIVED_STATUS = 'archived'
+  CANCELED_STATUS = 'canceled'
   DECLINED_STATUS = 'declined'
 
   validate :check_if_order_hase_one_item, on: [:update]
@@ -64,11 +64,11 @@ class OrderProduct < ActiveRecord::Base
     self.order_product_items.each do |opi|
       total_temp += ( opi.product.price * opi.quantity )
     end
-    return self.total - total_temp
+    self.total - total_temp
   end
 
   def check_status
-    self.status == OrderProduct::PROGRESS_STATUS || self.status == OrderProduct::VALIDATED_STATUS || self.status == OrderProduct::DECLINED_STATUS
+    self.status == OrderProduct::PROGRESS_STATUS || self.status == OrderProduct::VALIDATED_STATUS || self.status == OrderProduct::CANCELED_STATUS
   end
 
   private

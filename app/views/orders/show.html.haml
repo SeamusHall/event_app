@@ -87,7 +87,7 @@
               %td.text-center.text-danger
                 %h4
                   %strong= number_to_currency(@order.total)
-        %h1 Thank you for your order.
+        %h1= @order.status == Order::CANCELED_STATUS ? "Order has been canceled." : "Thank you for your order."
 
 
 - else
@@ -125,8 +125,6 @@
                     %strong Item Tax
                   %td.text-center
                     %strong Item Quantity
-                  -#%td.text-center
-                    %strong Order Date
                   %td.text-center
                     %strong Order Name
                   %td.text-center
@@ -137,26 +135,9 @@
                   %td= @order.event_item.event.name
                   %td.text-center= @order.event_item.tax > 0.0 ? number_to_percentage(@order.event_item.tax * 100, precision: 2) : '--'
                   %td.text-center= @order.quantity
-                  -#%td.text-center= @order.dates
                   %td.text-center= @order.user.first_name + ' ' + @order.user.last_name
                   %td.text-center
                   %td.text-right= number_to_currency(@order.event_item.price)
-                -# %tr
-                  %td.highrow
-                  %td.highrow
-                  %td.highrow
-                  %td.highrow
-                  %td.highrow.text-center
-                    %strong Subtotal
-                  %td.highrow.text-right $958.00
-                  %tr
-                    %td.emptyrow
-                    %td.emptyrow
-                    %td.emptyrow
-                    %td.emptyrow
-                    %td.emptyrow.text-center
-                      %strong Shipping
-                    %td.emptyrow.text-right $20
                 %tr
                   %td.highrow
                   %td.highrow
@@ -168,9 +149,8 @@
 %br
 = link_to 'Orders', orders_path, class: 'btn btn-primary btn-lg'
 = link_to 'Modify Order', edit_order_path(@order), class: 'btn btn-info btn-lg' unless @order.check_status
-= link_to 'Proceed to Checkout', purchase_order_path(@order), class: 'btn btn-success btn-lg' if @order.status == Order::PENDING_STATUS && @order.event_item.max_event != 0
-
-
+= link_to 'Proceed to Checkout', purchase_order_path(@order), class: 'btn btn-success btn-lg' unless @order.check_status || @order.event_item.max_event == 0
+= link_to 'Cancel Order', cancel_order_path(@order), method: :post, class: 'btn btn-danger btn-lg' unless @order.check_status
 
 -# Possible Additions
   %hr/

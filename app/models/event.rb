@@ -1,4 +1,3 @@
-# require 'pandoc-ruby'
 class Event < ApplicationRecord
   acts_as_paranoid
   has_many :event_items, dependent: :destroy
@@ -17,13 +16,4 @@ class Event < ApplicationRecord
   def almost_over?
     self.available? and self.unavailable_at <= Time.now + 7.days
   end
-
-  def dates
-    self.starts_on.strftime('%m/%d/%Y') + ' - ' + self.ends_on.strftime('%m/%d/%Y')
-  end
-
-  # def converted_body
-  #   @converter = PandocRuby.new(self.page_body, :from => :markdown, :to => :html)
-  #   @converter.convert
-  # end
 end

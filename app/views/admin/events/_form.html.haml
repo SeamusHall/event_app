@@ -39,9 +39,13 @@
         = f.file_field :attachment, class: 'form-control'
   .row
     .col-sm-12
+      %i
+        markdown format (working on getting it to work with tables/br tags/hr tags):
+        = link_to 'markdown syntax', 'https://caleorourke.gitbooks.io/redcarpet-syntax/content/index.html', target: :_blank
+      %br
       .form-group
         = f.label :page_body
-        = f.cktext_area :page_body, cols: 40, ckeditor: { toolbar: 'Easy' }
+        = f.cktext_area :page_body, cols: 40, ckeditor: { toolbar: 'mini' }
       %hr
       = f.fields_for :event_items do |event_item_form|
         %p Event Item
@@ -49,10 +53,12 @@
           .col-sm-6
             .form-group
               = event_item_form.text_field :description, placeholder: 'description', class: 'form-control'
-          .col-sm-6
+          .col-sm-3
             .form-group
-              = event_item_form.check_box :flat_rate
-              = event_item_form.label :flat_rate
+              = event_item_form.text_field :max_event, placeholder: 'max per event', class: 'form-control'
+          .col-sm-3
+            .form-group
+              = event_item_form.text_field :max_order, placeholder: 'max per order', class: 'form-control'
         .row
           .col-sm-3
             .form-group
@@ -66,16 +72,9 @@
                 = event_item_form.text_field :tax, placeholder: '0.0875', class: 'form-control'
                 .input-group-addon
                   = "%"
-          .col-sm-3
-            .form-group
-              = event_item_form.text_field :max_event, placeholder: 'max per event', class: 'form-control'
-          .col-sm-3
-            .form-group
-              = event_item_form.text_field :max_order, placeholder: 'max per order', class: 'form-control'
-        .row
           .col-sm-6
-          .col-sm-6
-            = event_item_form.link_to_remove "Remove Item", class: 'btn btn-danger btn-lg btn-block', data: { confirm: "Be careful when deleting, especially when someone has made a purchase on this item." }
+            = event_item_form.link_to_remove "Remove Item", class: 'btn btn-danger btn-lg btn-block', data: { confirm: "Be careful when deleting, especially if someone has made a purchase on this item." }
+
       = f.link_to_add "Add Item", :event_items, class: 'btn btn-success btn-lg btn-block'
   %hr
   .row
