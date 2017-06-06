@@ -9,15 +9,18 @@ class OrderProduct < ActiveRecord::Base
   before_validation :calculate
   before_validation :update_finalized_on
 
-  STATUSES = { 'pending' => 'Order Pending (pre-submit)',
-               'progress' => 'Order In Progress (payment submitted)',
+  STATUSES = { 'pending'   => 'Order Pending (pre-submit)',
+               'progress'  => 'Order In Progress (payment submitted)',
                'validated' => 'Order Validated (payment processed)',
-               'archived' => 'Order Archived' }
+               'canceled'  => 'Order canceled',
+               'declined'  => 'Card Declined' }
   PENDING_STATUS = 'pending'
   PROGRESS_STATUS = 'progress'
   VALIDATED_STATUS = 'validated'
-  ARCHIVED_STATUS = 'archived'
+  CANCELED_STATUS = 'canceled'
+  DECLINED_STATUS = 'declined'
 
+  validate :check_if_order_hase_one_item, on: [:update]
   validates :status, inclusion: { in: STATUSES.keys }, presence: true
   validates :total, presence: true
   validates :total, numericality: { greater_than: 0.0 }
@@ -54,20 +57,23 @@ class OrderProduct < ActiveRecord::Base
     ret
   end
 
+  # Calculates the total amount of tax
+  # to send over to Authorize
   def total_tax
     total_temp = 0
     self.order_product_items.each do |opi|
       total_temp += ( opi.product.price * opi.quantity )
     end
-    return self.total - total_temp
+    self.total - total_temp
   end
 
   def check_status
-    self.status == OrderProduct::PROGRESS_STATUS || self.status == OrderProduct::VALIDATED_STATUS
+    self.status == OrderProduct::PROGRESS_STATUS || self.status == OrderProduct::VALIDATED_STATUS || self.status == OrderProduct::CANCELED_STATUS
   end
 
   private
 
+  # Calculates Total for order
   def calculate
     total_temp = 0
     self.order_product_items.each do |opi|
@@ -76,11 +82,17 @@ class OrderProduct < ActiveRecord::Base
     self.total = total_temp
   end
 
+  # Update date order was finalized_on
   def update_finalized_on
     if self.status == VALIDATED_STATUS
       self.finalized_on = Time.now unless self.finalized_on.present?
     else
       self.finalized_on = nil
     end
+  end
+
+  # checks to make sure there is at least one item in the order
+  def check_if_order_hase_one_item
+    errors.add(:base, "Your order must have at least one item") if self.order_product_items.only_deleted.count > 1
   end
 end

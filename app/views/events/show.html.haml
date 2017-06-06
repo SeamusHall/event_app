@@ -7,9 +7,7 @@
         .col-md-10
           %h4= @event.description
           %br
-            -#Event Dates:
-              = @event.dates
-          = @event.page_body.html_safe
+          = markdown @event.page_body
           -#.product-rating
             %i.fa.fa-star.gold
             %i.fa.fa-star.gold
@@ -96,14 +94,6 @@
                           .form-group
                             = f.label :quantity
                             = f.select :quantity, options_for_select((1..ei.max_order).to_a, selected: '1'), {prompt: 'quantity'}, {class: 'form-control selectpicker', required: true}
-                        -#.col-sm-4
-                          .form-group
-                              = f.label 'check-in date'
-                              = f.select :start_date, options_for_select((@event.starts_on.to_date..@event.ends_on.to_date).map{ |d| [d.strftime('%a, %b %d, %Y'), d.strftime('%Y-%m-%d')] }), {prompt: 'check-in date'}, {class: 'form-control selectpicker', required: true}
-                          .col-sm-4
-                          .form-group
-                            = f.label 'check-out date'
-                            = f.select :end_date, options_for_select((@event.starts_on.to_date..@event.ends_on.to_date).map{ |d| [d.strftime('%a, %b %d, %Y'), d.strftime('%Y-%m-%d')] }), {prompt: 'end date'}, {class: 'form-control selectpicker', required: true}
                       %hr
                       .row
                         .col-sm-4

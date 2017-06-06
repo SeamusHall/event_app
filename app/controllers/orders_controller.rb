@@ -36,6 +36,15 @@ class OrdersController < ApplicationController
     end
   end
 
+  def cancel
+    @order.status = Order::CANCELED_STATUS
+    if @order.save
+      redirect_to :back, notice: 'Order has been successfully canceled.'
+    else
+      redirect_to :back, notice: 'Order was not canceled.'
+    end
+  end
+
   def make_purchase
     # create transation and request with Authorize
     transaction = Transaction.new(AUTHORIZE_NET_CONFIG['api_login_id'], AUTHORIZE_NET_CONFIG['api_transaction_key'], :gateway => :production)
@@ -61,8 +70,7 @@ class OrdersController < ApplicationController
 
     # tax
     if @order.event_item.tax > 0.0
-      qty = @order.quantity
-      tax_amount = (@order.event_item.price * qty) * (@order.event_item.tax)
+      tax_amount = (@order.event_item.price * @order.quantity) * (@order.event_item.tax)
       request.transactionRequest.tax = ExtendedAmountType.new(tax_amount.round(2), "State Tax", "")
     end
 
@@ -115,7 +123,7 @@ class OrdersController < ApplicationController
 
   private
   def order_params
-    permitted_params = [:event_item_id, :quantity, :start_date, :end_date, :first_name, :last_name, :terms, :comments]
+    permitted_params = [:event_item_id, :quantity, :terms, :comments]
     permitted_params << :status if current_user.has_role?(:admin)
     params.require(:order).permit(permitted_params)
   end

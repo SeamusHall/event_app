@@ -85,4 +85,9 @@ module ApplicationHelper
     end
   end
 
+  def markdown(text)
+    renderer = Redcarpet::Render::HTML.new(filter_html: true, hard_wrap: true, link_attributes: { rel: 'nofollow', target: "_blank" }, fenced_code_blocks: true, prettify: true)
+    markdown = Redcarpet::Markdown.new(renderer, { tables: true, autolink: true, superscript: true, space_after_headers: true, underline: true, highlight: true, quote: true, footnotes: true, disable_indented_code_blocks: true } )
+    markdown.render(text).html_safe
+  end
 end

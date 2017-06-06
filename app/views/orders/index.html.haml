@@ -27,7 +27,7 @@
           %span= number_to_currency(order.total)
         %ul
           %li.plan-feature= "quantity: #{order.quantity}"
-          %li.plan-feature= current_user.has_role?(:admin) ? order.status : order.extended_status
+          %li.plan-feature= order.status
           %li.plan-feature
             = link_to 'Show', order, class: 'btn btn-success'
             = link_to 'edit', edit_order_path(order), class: 'btn btn-warning' unless order.check_status
@@ -37,7 +37,27 @@
           %span= number_to_currency(order.total)
         %ul
           %li.plan-feature= "quantity: #{order.quantity}"
-          %li.plan-feature= current_user.has_role?(:admin) ? order.status : order.extended_status
+          %li.plan-feature= order.status
+          %li.plan-feature
+            = link_to 'Show', order, class: 'btn btn-success'
+            = link_to 'edit', edit_order_path(order), class: 'btn btn-warning' unless order.check_status
+      - elsif order.status == Order::DECLINED_STATUS
+        .plan-name-red
+          %h2= "#{order.event_item.event.name}"
+          %span= number_to_currency(order.total)
+        %ul
+          %li.plan-feature= "quantity: #{order.quantity}"
+          %li.plan-feature= order.status
+          %li.plan-feature
+            = link_to 'Show', order, class: 'btn btn-success'
+            = link_to 'edit', edit_order_path(order), class: 'btn btn-warning' unless order.check_status
+      - elsif order.status == Order::CANCELED_STATUS
+        .plan-name-lightblue
+          %h2= "#{order.event_item.event.name}"
+          %span= number_to_currency(order.total)
+        %ul
+          %li.plan-feature= "quantity: #{order.quantity}"
+          %li.plan-feature= order.status
           %li.plan-feature
             = link_to 'Show', order, class: 'btn btn-success'
             = link_to 'edit', edit_order_path(order), class: 'btn btn-warning' unless order.check_status
@@ -47,7 +67,7 @@
           %span= number_to_currency(order.total)
         %ul
           %li.plan-feature= "quantity: #{order.quantity}"
-          %li.plan-feature= current_user.has_role?(:admin) ? order.status : order.extended_status unless order.check_status
+          %li.plan-feature= order.status
           %li.plan-feature
             = link_to 'Show', order, class: 'btn btn-success'
             = link_to 'edit', edit_order_path(order), class: 'btn btn-warning'
@@ -63,7 +83,7 @@
           %h2= "eclipse-meals/parking"
           %span= number_to_currency(order.total)
         %ul
-          %li.plan-feature= current_user.has_role?(:admin) ? order.status : order.extended_status
+          %li.plan-feature= order.status
           %li.plan-feature
             = link_to 'Show', order, class: 'btn btn-success'
             = link_to 'edit', edit_order_product_path(order), class: 'btn btn-warning' unless order.check_status
@@ -72,7 +92,25 @@
           %h2= "eclipse-meals/parking"
           %span= number_to_currency(order.total)
         %ul
-          %li.plan-feature= current_user.has_role?(:admin) ? order.status : order.extended_status
+          %li.plan-feature= order.status
+          %li.plan-feature
+            = link_to 'Show', order, class: 'btn btn-success'
+            = link_to 'edit', edit_order_product_path(order), class: 'btn btn-warning' unless order.check_status
+      - elsif order.status == Order::DECLINED_STATUS
+        .plan-name-red
+          %h2= "eclipse-meals/parking"
+          %span= number_to_currency(order.total)
+        %ul
+          %li.plan-feature= order.status
+          %li.plan-feature
+            = link_to 'Show', order, class: 'btn btn-success'
+            = link_to 'edit', edit_order_product_path(order), class: 'btn btn-warning' unless order.check_status
+      - elsif order.status == Order::CANCELED_STATUS
+        .plan-name-lightblue
+          %h2= "eclipse-meals/parking"
+          %span= number_to_currency(order.total)
+        %ul
+          %li.plan-feature= order.status
           %li.plan-feature
             = link_to 'Show', order, class: 'btn btn-success'
             = link_to 'edit', edit_order_product_path(order), class: 'btn btn-warning' unless order.check_status
@@ -81,7 +119,7 @@
           %h2= "eclipse-meals/parking"
           %span= number_to_currency(order.total)
         %ul
-          %li.plan-feature= current_user.has_role?(:admin) ? order.status : order.extended_status unless order.check_status
+          %li.plan-feature= order.status
           %li.plan-feature
             = link_to 'Show', order, class: 'btn btn-success'
             = link_to 'edit', edit_order_product_path(order), class: 'btn btn-warning'

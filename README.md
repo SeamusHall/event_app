@@ -1,4 +1,4 @@
-- [Homepage](http://events.housing.siu.edu)
+- [Homepage](https://events.housing.siu.edu)
 - IP Address: 131.230.116.221
 
 - Authors

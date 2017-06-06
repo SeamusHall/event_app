@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     member do
       get :purchase
       post :make_purchase
+      post :cancel
     end
   end
 
@@ -14,11 +15,14 @@ Rails.application.routes.draw do
     member do
       get :purchase
       post :make_purchase
+      post :cancel
     end
   end
+
   get "layouts/terms"
   get "layouts/risk"
   get "layouts/instructions"
+
   resources :events, only: [:index,:show] do
     post :auto_update_role
   end
@@ -37,7 +41,7 @@ Rails.application.routes.draw do
   },
   path: '', path_names: {
     confirmation:  'verification',
-    unlock:        'unblock',
+    unlock:        'unlock',
     sign_in:       'login',
     sign_out:      'logout',
     sign_up:       'sign_up'
@@ -48,6 +52,11 @@ Rails.application.routes.draw do
   # routes for admin interface
   get "admin" => "admin#index"
   namespace :admin do
+    get "orders/show_orders_valid"    => "orders#show_orders_valid"
+    get "orders/show_orders_progress" => "orders#show_orders_progress"
+    get "orders/show_orders_pending"  => "orders#show_orders_pending"
+    get "orders/show_orders_canceled" => "orders#show_orders_canceled"
+    get "orders/show_orders_declined" => "orders#show_orders_declined"
     resources :users
     resources :roles
     resources :orders do

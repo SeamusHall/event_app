@@ -7,10 +7,4 @@ class EventItem < ApplicationRecord
   validates :tax, numericality: { less_than: 0.99 }
   validates :max_order, numericality: { only_integer: true , greater_than: 0 }
   validates :max_event, numericality: { only_integer: true , greater_than: -1 }
-  #validate :valid_min_freq
-
-  private
-  #def valid_min_freq
-  #  errors.add(:min_freq, 'needs to be less than start date to end date') if self.min_freq >= (self.event.ends_on - self.event.starts_on) / 1.day
-  #end
 end

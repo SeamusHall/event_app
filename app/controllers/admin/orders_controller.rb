@@ -26,6 +26,31 @@ module Admin
       end
     end
 
+    def show_orders_valid
+      @orders = Order.all.where(status: Order::VALIDATED_STATUS).page params[:page]
+      @order_products = OrderProduct.all.where(status: OrderProduct::VALIDATED_STATUS).page params[:page]
+    end
+
+    def show_orders_progress
+      @orders = Order.all.where(status: Order::PROGRESS_STATUS).page params[:page]
+      @order_products = OrderProduct.all.where(status: OrderProduct::PROGRESS_STATUS).page params[:page]
+    end
+
+    def show_orders_pending
+      @orders = Order.all.where(status: Order::PENDING_STATUS).page params[:page]
+      @order_products = OrderProduct.all.where(status: OrderProduct::PENDING_STATUS).page params[:page]
+    end
+
+    def show_orders_canceled
+      @orders = Order.all.where(status: Order::CANCELED_STATUS).page params[:page]
+      @order_products = OrderProduct.all.where(status: OrderProduct::CANCELED_STATUS).page params[:page]
+    end
+
+    def show_orders_declined
+      @orders = Order.all.where(status: Order::DECLINED_STATUS).page params[:page]
+      @order_products = OrderProduct.all.where(status: OrderProduct::DECLINED_STATUS).page params[:page]
+    end
+
     private
 
     def set_order
@@ -33,7 +58,7 @@ module Admin
     end
 
     def order_params
-      permitted_params = [:event_item_id, :quantity, :start_date, :end_date, :first_name, :last_name]
+      permitted_params = [:event_item_id, :quantity, :terms, :comments]
       permitted_params << :status if current_user.has_role?(:admin)
       params.require(:order).permit(permitted_params)
     end
