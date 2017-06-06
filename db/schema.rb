@@ -45,8 +45,6 @@ ActiveRecord::Schema.define(version: 20170605213607) do
     t.text     "page_body"
     t.datetime "available_at"
     t.datetime "unavailable_at"
-    t.datetime "starts_on"
-    t.datetime "ends_on"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
     t.datetime "deleted_at"
