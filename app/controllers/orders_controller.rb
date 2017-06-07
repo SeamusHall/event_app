@@ -32,7 +32,8 @@ class OrdersController < ApplicationController
   def purchase
     # Just in case!!!!
     if @order.event_item.max_event == 0
-      redirect_to :back, alert: 'Event is sold out!!!'
+      flash[:error] = 'Event is sold out!!!'
+      redirect_to :back
     end
   end
 
