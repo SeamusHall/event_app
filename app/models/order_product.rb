@@ -13,12 +13,14 @@ class OrderProduct < ActiveRecord::Base
                'progress'  => 'Order In Progress (payment submitted)',
                'validated' => 'Order Validated (payment processed)',
                'canceled'  => 'Order canceled',
-               'declined'  => 'Card Declined' }
+               'declined'  => 'Card Declined',
+               'refunded'  => 'Order Refunded' }
   PENDING_STATUS = 'pending'
   PROGRESS_STATUS = 'progress'
   VALIDATED_STATUS = 'validated'
   CANCELED_STATUS = 'canceled'
   DECLINED_STATUS = 'declined'
+  REFUNED_STATUS = 'refunded'
 
   validate :check_if_order_hase_one_item, on: [:update]
   validates :status, inclusion: { in: STATUSES.keys }, presence: true
@@ -41,6 +43,16 @@ class OrderProduct < ActiveRecord::Base
     self.order_product_items.each do |opi|
       product = Product.find(opi.product_id)
       product.quantity -= opi.quantity
+      product.save
+    end
+  end
+
+  # Finds the product id of each order_product_item
+  # Updates the amount left on product in database
+  def increment_product
+    self.order_product_items.each do |opi|
+      product = Product.find(opi.product_id)
+      product.quantity += opi.quantity
       product.save
     end
   end
@@ -68,7 +80,11 @@ class OrderProduct < ActiveRecord::Base
   end
 
   def check_status
-    self.status == OrderProduct::PROGRESS_STATUS || self.status == OrderProduct::VALIDATED_STATUS || self.status == OrderProduct::CANCELED_STATUS
+    self.status == OrderProduct::PROGRESS_STATUS || self.status == OrderProduct::VALIDATED_STATUS || self.status == OrderProduct::CANCELED_STATUS || self.status == OrderProduct::REFUNED_STATUS
+  end
+
+  def cant_edit_status
+    self.status == OrderProduct::CANCELED_STATUS || self.status == OrderProduct::REFUNED_STATUS
   end
 
   private

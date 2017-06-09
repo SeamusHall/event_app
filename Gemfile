@@ -36,6 +36,8 @@ gem 'kaminari'
 gem 'gravtastic'
 gem 'ckeditor'
 
+gem 'axlsx_rails'
+
 # For image and Video Uploading
 gem 'carrierwave'
 gem "mini_magick"

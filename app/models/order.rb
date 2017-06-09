@@ -8,12 +8,14 @@ class Order < ApplicationRecord
                'progress'  => 'Order In Progress (payment submitted)',
                'validated' => 'Order Validated (payment processed)',
                'canceled'  => 'Order Canceled',
-               'declined'  => 'Card Declined' }
+               'declined'  => 'Card Declined',
+               'refunded'  => 'Order Refunded' }
   PENDING_STATUS = 'pending'
   PROGRESS_STATUS = 'progress'
   VALIDATED_STATUS = 'validated'
   CANCELED_STATUS = 'canceled'
   DECLINED_STATUS = 'declined'
+  REFUNED_STATUS = 'refunded'
 
   before_validation :perform_total_calculation
   before_validation :update_finalized_on
@@ -36,13 +38,22 @@ class Order < ApplicationRecord
   end
 
   def check_status
-    self.status == Order::PROGRESS_STATUS || self.status == Order::VALIDATED_STATUS || self.status == Order::CANCELED_STATUS
+    self.status == Order::PROGRESS_STATUS || self.status == Order::VALIDATED_STATUS || self.status == Order::CANCELED_STATUS || self.status == Order::REFUNED_STATUS
+  end
+
+  def cant_edit_status
+    self.status == Order::CANCELED_STATUS || self.status == Order::REFUNED_STATUS
   end
 
   # Deletes the amount left in event_item so we know
   # how many we have left to sell (Based on quantity customer wants per order)
   def decrement_max_order
     self.event_item.max_event -= self.quantity
+    self.event_item.save
+  end
+
+  def increment_max_order
+    self.event_item.max_event += self.quantity
     self.event_item.save
   end
 

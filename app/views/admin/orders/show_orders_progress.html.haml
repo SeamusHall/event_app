@@ -1,1 +1,8 @@
-= render file: "admin/orders/index"
+.row
+  .col-lg-4
+  .col-lg-4
+  .col-lg-4
+    = link_to 'Progress Orders Spreadsheet', admin_orders_show_orders_progress_path(format: :xlsx), class: 'btn btn-warning btn-block btn-lg'
+  .col-lg-4
+%br
+= render 'admin/orders/display'

@@ -10,6 +10,7 @@ class OrdersController < ApplicationController
   def create
     @order.user = current_user
     @order.status = Order::PENDING_STATUS
+    @order.send_message = false # For if refunded or order declined
     if @order.save
       respond_to do |format|
         format.html { redirect_to @order, notice: 'Order was successfully created.' }
