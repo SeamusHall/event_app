@@ -10,6 +10,7 @@ class OrderProductsController < ApplicationController
     @order_product = OrderProduct.create(order_product_params)
     @order_product.user = current_user
     @order_product.status = Order::PENDING_STATUS
+    @order_product.send_message = false # For if refunded or order declined
 
     if @order_product.save
       respond_to do |format|

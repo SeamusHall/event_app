@@ -87,7 +87,7 @@
               %td.text-center.text-danger
                 %h4
                   %strong= number_to_currency(@order.total)
-        %h1= @order.status == Order::CANCELED_STATUS ? "Order has been canceled." : "Thank you for your order."
+        %h1= @order.status == Order::CANCELED_STATUS ? "Order has been canceled." : (@order.status == Order::REFUNED_STATUS) ? "Order has been refunded." : "Thank you for your order."
 
 
 - else

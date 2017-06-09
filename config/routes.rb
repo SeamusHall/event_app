@@ -57,17 +57,20 @@ Rails.application.routes.draw do
     get "orders/show_orders_pending"  => "orders#show_orders_pending"
     get "orders/show_orders_canceled" => "orders#show_orders_canceled"
     get "orders/show_orders_declined" => "orders#show_orders_declined"
+    get "orders/show_orders_refunded" => "orders#show_orders_refunded"
     resources :users
     resources :roles
     resources :orders do
       member do
         get :validate
+        get :send_email_and_update_totals
       end
     end
     resources :events
     resources :order_products, except: [:index] do
       member do
         get :validate
+        get :send_email_and_update_totals
       end
     end
     resources :products do

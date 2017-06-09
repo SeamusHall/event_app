@@ -1,78 +1,9 @@
 .row
-  .col-lg-2
-    = link_to 'Show All Orders', admin_orders_path, class: 'btn btn-primary btn-block btn-lg'
-  .col-lg-2
-    = link_to "Show Valid Status", admin_orders_show_orders_valid_path, class: 'btn btn-success btn-block btn-lg'
-  .col-lg-2
-    = link_to "Show Progress Status", admin_orders_show_orders_progress_path, class: 'btn btn-warning btn-block btn-lg'
-  .col-lg-2
-    = link_to "Show Pending Status",  admin_orders_show_orders_pending_path, class: 'btn btn-grey btn-block btn-lg'
-  .col-lg-2
-    = link_to "Show Canceled Status", admin_orders_show_orders_canceled_path, class: 'btn btn-info btn-block btn-lg'
-  .col-lg-2
-    = link_to "Show Declined Status", admin_orders_show_orders_declined_path, class: 'btn btn-danger btn-block btn-lg'
-
-%h2 Event Orders
-
-%hr
-%div{style: "overflow-x:auto;"}
-  %table.table
-    %thead
-      %tr
-        %th ID
-        %th Status
-        %th Date
-        %th Quantity
-        %th Total
-        %th First Name
-        %th Last Name
-        %th
-    %tbody
-      - @orders.each do |order|
-        - unless order.user.nil?
-          %tr{class: (order.status == Order::VALIDATED_STATUS ? 'success' : (order.status == Order::PROGRESS_STATUS) ? 'warning' : (order.status == Order::CANCELED_STATUS) ? 'info' : (order.status == Order::DECLINED_STATUS) ? 'danger' : 'default')}
-            %td= order.id
-            %td= current_user.has_role?(:admin) ? order.status : order.extended_status
-            %td= order.created_at.strftime('%m-%e-%y %H:%M')
-            %td= order.quantity
-            %td= number_to_currency(order.total)
-            %td= order.user.first_name
-            %td= order.user.last_name
-            %td
-              = link_to 'show', admin_order_path(order), class: 'btn btn-success btn-block'
-              = link_to 'edit', edit_admin_order_path(order), class: 'btn btn-warning btn-block' unless order.status == Order::CANCELED_STATUS
-              - if can?(:validate, order) and order.status == Order::PROGRESS_STATUS
-                = link_to 'Validate', validate_admin_order_path(order), class: 'btn btn-info btn-block'
-= paginate @orders
-
+  .col-lg-4
+  .col-lg-4
+  .col-lg-4
+    = link_to 'All Orders Spreadsheet', admin_orders_path(format: :xlsx), class: 'btn btn-primary btn-block btn-lg'
+  .col-lg-4
 %br
-%h2 Orders
 
-%hr
-%div{style: "overflow-x:auto;"}
-  %table.table
-    %thead
-      %tr
-        %th ID
-        %th Status
-        %th Date
-        %th Total
-        %th First Name
-        %th Last Name
-        %th
-    %tbody
-      - @order_products.each do |op|
-        - unless op.user.nil?
-          %tr{class: (op.status == OrderProduct::VALIDATED_STATUS ? 'success' : (op.status == OrderProduct::PROGRESS_STATUS) ? 'warning' : (op.status == OrderProduct::CANCELED_STATUS) ? 'info' : (op.status == OrderProduct::DECLINED_STATUS) ? 'danger' : 'default')}
-            %td= op.id
-            %td= current_user.has_role?(:admin) ? op.status : op.extended_status
-            %td= op.created_at.strftime('%m-%e-%y %H:%M')
-            %td= number_to_currency(op.total)
-            %td= op.user.first_name
-            %td= op.user.last_name
-            %td
-              = link_to 'show', admin_order_product_path(op), class: 'btn btn-success btn-block'
-              = link_to 'edit', edit_admin_order_product_path(op), class: 'btn btn-warning btn-block' unless op.status == OrderProduct::CANCELED_STATUS
-              - if can?(:validate, op) and op.status == OrderProduct::PROGRESS_STATUS
-                = link_to 'Validate', validate_admin_order_product_path(op), class: 'btn btn-info btn-block'
-= paginate @order_products
+= render 'admin/orders/display'

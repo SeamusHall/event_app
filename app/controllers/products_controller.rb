@@ -14,13 +14,13 @@ class ProductsController < ApplicationController
     # find all orders that belong to current_user unless current_user isn't signed in
     order =  Order.all.where(user_id: current_user.id) unless current_user.nil?
 
-    if Product.find(params[:id]).published # if an order is published display product
-      @product = Product.find(params[:id])
-    elsif !order.nil?
+    if !order.nil?
       # check each order that belongs to a user and check if the status is in progress or validated
       if order.each { |o| Product.find(params[:id]).status == o.status || o.status == Order::VALIDATED_STATUS }
         @product = Product.find(params[:id])
       end
+    elsif Product.find(params[:id]).published # if an order is published display product
+      @product = Product.find(params[:id])
     else
       # Display error message
       flash[:error] = "You are not allowed to acess that page."

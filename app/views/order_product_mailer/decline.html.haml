@@ -1,0 +1,12 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+  %body
+    %h1
+      Hi #{@user.full_name}
+    %p
+      Thank you for your order unfortunately your car was decline please click the following link
+    %p
+      to update your order.
+    %p= link_to 'update order', order_url(@order)
