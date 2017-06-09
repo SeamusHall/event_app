@@ -36,8 +36,8 @@ Rails.application.routes.draw do
 
   devise_for :users, controllers: {
     # For Recaptcha verification
-    registrations: 'registrations', as: 'register',
-    passwords:     'passwords', as: 'secret'
+    registrations: 'registrations',
+    passwords:     'passwords'
   },
   path: '', path_names: {
     confirmation:  'verification',
