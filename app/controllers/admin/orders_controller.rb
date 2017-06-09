@@ -7,8 +7,9 @@ module Admin
     def index
       @orders = Order.all.page params[:page]
       @order_products = OrderProduct.all.page params[:page]
-      @orders_all = @orders + @order_products
+
       # For SpreadSheet
+      @orders_all = Order.all + OrderProduct.all
       respond_to do |format|
         format.html
         format.xlsx
@@ -55,8 +56,9 @@ module Admin
     def show_orders_valid
       @orders = Order.all.where(status: Order::VALIDATED_STATUS).page params[:page]
       @order_products = OrderProduct.all.where(status: OrderProduct::VALIDATED_STATUS).page params[:page]
-      @orders_all = @orders + @order_products
+
       # For SpreadSheet
+      @orders_all = Order.all.where(status: Order::VALIDATED_STATUS) + OrderProduct.all.where(status: OrderProduct::VALIDATED_STATUS)
       respond_to do |format|
         format.html
         format.xlsx
@@ -66,8 +68,9 @@ module Admin
     def show_orders_progress
       @orders = Order.all.where(status: Order::PROGRESS_STATUS).page params[:page]
       @order_products = OrderProduct.all.where(status: OrderProduct::PROGRESS_STATUS).page params[:page]
-      @orders_all = @orders + @order_products
+
       # For SpreadSheet
+      @orders_all = Order.all.where(status: Order::PROGRESS_STATUS) + OrderProduct.all.where(status: OrderProduct::PROGRESS_STATUS)
       respond_to do |format|
         format.html
         format.xlsx
@@ -77,8 +80,9 @@ module Admin
     def show_orders_pending
       @orders = Order.all.where(status: Order::PENDING_STATUS).page params[:page]
       @order_products = OrderProduct.all.where(status: OrderProduct::PENDING_STATUS).page params[:page]
-      @orders_all = @orders + @order_products
+
       # For SpreadSheet
+      @orders_all = Order.all.where(status: Order::PENDING_STATUS) + OrderProduct.all.where(status: OrderProduct::PENDING_STATUS)
       respond_to do |format|
         format.html
         format.xlsx
@@ -88,8 +92,9 @@ module Admin
     def show_orders_canceled
       @orders = Order.all.where(status: Order::CANCELED_STATUS).page params[:page]
       @order_products = OrderProduct.all.where(status: OrderProduct::CANCELED_STATUS).page params[:page]
-      @orders_all = @orders + @order_products
+
       # For SpreadSheet
+      @orders_all = Order.all.where(status: Order::CANCELED_STATUS) + OrderProduct.all.where(status: OrderProduct::CANCELED_STATUS)
       respond_to do |format|
         format.html
         format.xlsx
@@ -99,8 +104,9 @@ module Admin
     def show_orders_declined
       @orders = Order.all.where(status: Order::DECLINED_STATUS).page params[:page]
       @order_products = OrderProduct.all.where(status: OrderProduct::DECLINED_STATUS).page params[:page]
-      @orders_all = @orders + @order_products
+
       # For SpreadSheet
+      @orders_all = Order.all.where(status: Order::DECLINED_STATUS) + OrderProduct.all.where(status: OrderProduct::DECLINED_STATUS)
       respond_to do |format|
         format.html
         format.xlsx
@@ -110,8 +116,9 @@ module Admin
     def show_orders_refunded
       @orders = Order.all.where(status: Order::REFUNED_STATUS).page params[:page]
       @order_products = OrderProduct.all.where(status: OrderProduct::REFUNED_STATUS).page params[:page]
-      @orders_all = @orders + @order_products
+
       # For SpreadSheet
+      @orders_all = Order.all.where(status: Order::REFUNED_STATUS) + OrderProduct.all.where(status: OrderProduct::REFUNED_STATUS)
       respond_to do |format|
         format.html
         format.xlsx
