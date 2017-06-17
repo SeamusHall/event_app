@@ -31,18 +31,17 @@ class Ability
 
     user ||= User.new # guest user (not logged in)
 
-    can :manage, User, user_id: user.id
+    can :read, Product
     can :read, Event, Event.all do |event|
       event.available?
     end
-    can :read, Product
-    can :manage, Order, user_id: user.id
-    can :manage, OrderProduct, user_id: user.id
-    cannot [:update, :destroy, :purchase, :validate], Order, status: (Order::STATUSES.keys - [Order::PENDING_STATUS])
-    cannot [:update, :destroy, :purchase, :validate], OrderProduct, status: (OrderProduct::STATUSES.keys - [OrderProduct::PENDING_STATUS])
 
     if user.has_role? :reg
       can :manage, User, id: user.id
+      can :manage, Order, user_id: user.id
+      can :manage, OrderProduct, user_id: user.id
+      cannot [:update, :destroy, :purchase, :validate], Order, status: (Order::STATUSES.keys - [Order::PENDING_STATUS])
+      cannot [:update, :destroy, :purchase, :validate], OrderProduct, status: (OrderProduct::STATUSES.keys - [OrderProduct::PENDING_STATUS])
     end
 
     if user.has_role? :admin
