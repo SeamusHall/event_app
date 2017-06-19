@@ -24,7 +24,7 @@ gem 'jquery-turbolinks'
 gem 'jbuilder', '~> 2.5'
 gem 'nested_form'
 
-# User Account Creation & Verification
+# User Account Creation & Verification changes
 gem 'country_select'
 gem 'phonelib'
 gem 'geocoder'
