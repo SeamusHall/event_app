@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170616042529) do
+ActiveRecord::Schema.define(version: 20170609135412) do
 
   create_table "ckeditor_assets", force: :cascade do |t|
     t.string   "data_file_name",               null: false
@@ -172,8 +172,6 @@ ActiveRecord::Schema.define(version: 20170616042529) do
     t.string   "postal_code"
     t.string   "phone"
     t.string   "country"
-    t.float    "latitude"
-    t.float    "longitude"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["deleted_at"], name: "index_users_on_deleted_at"
     t.index ["email"], name: "index_users_on_email", unique: true

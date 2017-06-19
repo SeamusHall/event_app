@@ -10,6 +10,7 @@ class OrderProductsController < ApplicationController
     @order_product = OrderProduct.create(order_product_params)
     @order_product.user = current_user
     @order_product.status = Order::PENDING_STATUS
+    @order_product.send_message = false # For if refunded or order declined
 
     if @order_product.save
       respond_to do |format|
@@ -113,7 +114,6 @@ class OrderProductsController < ApplicationController
       @order_product.transaction_id = response.transactionResponse.transId
       if @order_product.save
         @order_product.decrement_product # decrease amount of product have left if saved
-        @order_product.send_message = false # For if refunded or order declined
         respond_to do |format|
           format.html { redirect_to @order_product, notice: 'Order was successfully placed! Thank you for your order!' }
         end
