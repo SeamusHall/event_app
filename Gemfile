@@ -28,7 +28,6 @@ gem 'nested_form'
 gem 'country_select'
 gem 'validates_zipcode'
 gem 'phonelib'
-gem 'geocoder'
 
 gem 'haml-rails'
 gem 'redcarpet' # markdown
