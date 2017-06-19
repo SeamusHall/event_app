@@ -14,25 +14,17 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable,
          :confirmable, :lockable, :timeoutable
 
-  validates_presence_of :first_name, :last_name, :address, :city, :state, :country, :postal_code, :phone, on: [:update]
+  validates_presence_of :first_name, :last_name, :address, :city, :state, :country, :postal_code, on: [:update]
 
   # Email/phone/address verification
   validates_format_of :email, with: /@/
+  validates :postal_code, zipcode: { country_code: :us }, on: [:update]
   validates :phone, phone: { possible: true, allow_blank: true, types: [:voip, :mobile], country_specifier: -> phone { phone.country.try(:upcase) } }, on: [:update]
 
-  # TODO FIX THIS UP!!!
-  geocoded_by :valid_address do |obj, results|
-    if results.present?
-      obj.latitude = results.first.latitude
-      obj.longitude = results.first.longitude
-    else
-      obj.latitude = nil
-      obj.longitude = nil
-    end
-  end
-
-  before_validation :geocode, if: :address_changed?
-  validate :found_address_presence, on: [:update]
+  # TODO Address verification
+  # geocoded_by :valid_address, :latitude, :longitude
+  # To avoid unnecessary work (and quota usage)
+  # after_validation :geocode, if: ->(obj){ obj.address.present? and obj.address_changed? }
 
   scope :active, ->() { where(locked_at: nil) }
 
@@ -69,10 +61,6 @@ class User < ApplicationRecord
   private
 
   def valid_address
-    [city, state, postal_code, country, address].compact.join(', ')
-  end
-
-  def found_address_presence
-    errors.add(:base, "Something went wrong. We couldn't find your address") if latitude.blank? || longitude.blank?
+    [address, postal_code, city, state, country].join(',')
   end
 end
