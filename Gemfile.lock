@@ -149,7 +149,6 @@ GEM
     faker (1.7.3)
       i18n (~> 0.5)
     ffi (1.9.18)
-    geocoder (1.4.4)
     get_process_mem (0.2.1)
     globalid (0.4.0)
       activesupport (>= 4.2.0)
@@ -381,7 +380,6 @@ DEPENDENCIES
   country_select
   devise (~> 4.2)
   faker
-  geocoder
   gravtastic
   haml-rails
   jbuilder (~> 2.5)
