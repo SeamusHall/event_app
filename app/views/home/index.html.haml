@@ -1,6 +1,6 @@
 %header.jumbotron.hero-spacer
 
-  %p Welcome to the University Housing Event page! You may now Sign Up for an account.
+  %p Welcome to the University Housing Event page! You may now Sign Up for an account. For the best experience, please use Firefox or Chrome Web-browsers.
   - unless current_user.nil?
     - if current_user.check_nullity?
       = link_to 'Update Account', auto_update_role_cart_url, method: :post, class: 'btn btn-lg btn-info'
