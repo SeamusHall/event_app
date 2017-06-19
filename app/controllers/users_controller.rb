@@ -11,7 +11,8 @@ class UsersController < ApplicationController
 
   private
 
+  # Important!!! DON'T permit role_ids
   def user_params
-    params.require(:user).permit(:email, :password, :password_confirmation, :remember_me, :first_name, :last_name, :phone, :address, :city, :state, :country, :postal_code, role_ids: [])
+    params.require(:user).permit(:email, :password, :password_confirmation, :remember_me, :first_name, :last_name, :phone, :address, :city, :state, :country, :postal_code)
   end
 end

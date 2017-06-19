@@ -26,7 +26,6 @@ gem 'nested_form'
 
 # User Account Creation & Verification
 gem 'country_select'
-gem 'validates_zipcode'
 gem 'phonelib'
 gem 'geocoder'
 
@@ -59,7 +58,7 @@ gem 'paranoia', '~> 2.2'
 gem 'authorizenet', '1.9.1'
 gem "recaptcha", require: "recaptcha/rails"
 
-# For Running Back Ground Jobs and Implementation of Multithreaded Processing (Later)
+# For Running Back Ground Jobs and cache memory storage
 gem 'redis'
 gem 'redis-namespace'
 gem 'redis-rails'
