@@ -69,6 +69,7 @@
         %th Total
         %th First Name
         %th Last Name
+        %th Email
         %th
     %tbody
       - @order_products.each do |op|
@@ -80,6 +81,7 @@
             %td= number_to_currency(op.total)
             %td= op.user.first_name
             %td= op.user.last_name
+            %td= order.user.email
             %td
               = link_to 'show', admin_order_product_path(op), class: 'btn btn-success btn-block'
               = link_to 'edit', edit_admin_order_product_path(op), class: 'btn btn-warning btn-block' unless op.cant_edit_status
