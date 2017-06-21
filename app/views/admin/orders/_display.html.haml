@@ -44,6 +44,7 @@
             %td= number_to_currency(order.total)
             %td= order.user.first_name
             %td= order.user.last_name
+            %td= order.user.email
             %td{width: "30%"}= order.comments unless order.comments.nil?
             %td
               = link_to 'show', admin_order_path(order), class: 'btn btn-success btn-block'
