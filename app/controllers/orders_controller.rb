@@ -10,7 +10,6 @@ class OrdersController < ApplicationController
   def create
     @order.user = current_user
     @order.status = Order::PENDING_STATUS
-    @order.send_message = false # For if refunded or order declined
     if @order.save
       respond_to do |format|
         format.html { redirect_to @order, notice: 'Order was successfully created.' }
@@ -103,8 +102,9 @@ class OrdersController < ApplicationController
       @order.payment_details = response.to_yaml
       @order.auth_code = response.transactionResponse.authCode
       @order.transaction_id = response.transactionResponse.transId
-      @order.decrement_max_order
       if @order.save
+        @order.decrement_max_order
+        @order.send_message = false # For if refunded or order declined
         respond_to do |format|
           format.html { redirect_to @order, notice: 'Order was successfully placed! Thank you for your order!' }
         end
@@ -138,7 +138,7 @@ class OrdersController < ApplicationController
     # Check whether the order status is in progress or validated
     # either way when it's either status display product
     @orders.each do |order|
-      if order.check_status
+      if order.status == Order::PROGRESS_STATUS || order.status == Order::VALIDATED_STATUS
         @products = Product.all.where(check_status: Order::PROGRESS_STATUS)
       end
     end
@@ -146,7 +146,7 @@ class OrdersController < ApplicationController
 
   def set_products_for_order
     order = Order.find(params[:id])
-    if order.check_status
+    if order.status == Order::PROGRESS_STATUS || order.status == Order::VALIDATED_STATUS
       @products = Product.all.where(check_status: Order::PROGRESS_STATUS)
     end
   end
