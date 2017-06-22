@@ -1,3 +1,5 @@
+%h1 Temp display Number of Rooms
+%h3= Order.where(status: Order::VALIDATED_STATUS).sum(:quantity) + Order.where(status: Order::REFUNED_STATUS).sum(:quantity) + Order.where(status: Order::DECLINED_STATUS).sum(:quantity) + Order.where(status: Order::PROGRESS_STATUS).sum(:quantity)
 .row
   .col-lg-2= link_to 'Show All Orders', admin_orders_path, class: 'btn btn-primary btn-block btn-lg'
   .col-lg-2= link_to "Show Valid Status", admin_orders_show_orders_valid_path, class: 'btn btn-success btn-block btn-lg'
@@ -24,7 +26,7 @@
       %tr
         %th ID
         %th Status
-        %th Date
+        -#%th Date
         %th Quantity
         %th Total
         %th First Name
@@ -39,20 +41,20 @@
           %tr{class: (order.status == Order::VALIDATED_STATUS ? 'success' : (order.status == Order::PROGRESS_STATUS) ? 'warning' : (order.status == Order::CANCELED_STATUS) ? 'info' : (order.status == Order::DECLINED_STATUS) ? 'danger' : (order.status == Order::REFUNED_STATUS) ? 'refund' : 'default')}
             %td= order.id
             %td= current_user.has_role?(:admin) ? order.status : order.extended_status
-            %td= order.created_at.strftime('%m-%e-%y %H:%M')
+            -#%td= order.created_at.strftime('%m-%e-%y %H:%M')
             %td= order.quantity
             %td= number_to_currency(order.total)
             %td= order.user.first_name
             %td= order.user.last_name
             %td= order.user.email
             %td{width: "30%"}= order.comments unless order.comments.nil?
-            %td
+            %td{width: "15%"}
               = link_to 'show', admin_order_path(order), class: 'btn btn-success btn-block'
               = link_to 'edit', edit_admin_order_path(order), class: 'btn btn-warning btn-block' unless order.cant_edit_status
               - if can?(:validate, order) and order.status == Order::PROGRESS_STATUS
                 = link_to 'Validate', validate_admin_order_path(order), class: 'btn btn-info btn-block'
               - elsif (order.status == Order::DECLINED_STATUS || order.status == Order::REFUNED_STATUS) and !order.send_message
-                = link_to 'Send Email', send_email_and_update_totals_admin_order_path(order), class: 'btn btn-danger btn-block'
+                = link_to 'Update Stock Totals', send_email_and_update_totals_admin_order_path(order), class: 'btn btn-danger btn-block'
 = paginate @orders
 
 %br

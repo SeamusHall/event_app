@@ -31,15 +31,15 @@ module Admin
       if @order_product.status == Order::DECLINED_STATUS
         @order_product.increment_product
         @order_product.send_message = true
-        OrderProductMailer.decline(@order_product).deliver_now
+        #OrderProductMailer.decline(@order_product).deliver_now
         @order_product.save
-        redirect_to :back, notice: 'Email was successfully sent and stock has been updated.'
+        redirect_to :back, notice: 'Stock has been updated.'
       elsif @order_product.status == Order::REFUNED_STATUS
         @order_product.increment_product
         @order_product.send_message = true
-        OrderProductMailer.refund(@order_product).deliver_now
+        #OrderProductMailer.refund(@order_product).deliver_now
         @order_product.save
-        redirect_to :back, notice: 'Email was successfully sent and stock has been updated.'
+        redirect_to :back, notice: 'Stock has been updated.'      
       else
         flash[:error] = 'Something has gone terribly wrong. Please Contact IT for support.'
         redirect_to :back
