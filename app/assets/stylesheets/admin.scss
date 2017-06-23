@@ -71,9 +71,24 @@ video.video {
   color: black;
 }
 
+.btn-lt-purple {
+  background-color: #DDA0DD; /* Plum */
+  color: $white;
+}
+
+.btn-lt-purple:hover {
+  color: $white;
+  background-color: #a93da9;
+}
+
 .btn-pink {
   background-color: #FF69B4; /* Hot Pink */
   color: $white;
+}
+
+.btn-pink:hover {
+  color: $white;
+  background-color: #e60073;
 }
 
 .refund {

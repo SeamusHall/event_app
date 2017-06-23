@@ -1,5 +1,3 @@
-%h1 Temp display Number of Rooms
-%h3= Order.where(status: Order::VALIDATED_STATUS).sum(:quantity) + Order.where(status: Order::REFUNED_STATUS).sum(:quantity) + Order.where(status: Order::DECLINED_STATUS).sum(:quantity) + Order.where(status: Order::PROGRESS_STATUS).sum(:quantity)
 .row
   .col-lg-2= link_to 'Show All Orders', admin_orders_path, class: 'btn btn-primary btn-block btn-lg'
   .col-lg-2= link_to "Show Valid Status", admin_orders_show_orders_valid_path, class: 'btn btn-success btn-block btn-lg'
@@ -54,7 +52,7 @@
               - if can?(:validate, order) and order.status == Order::PROGRESS_STATUS
                 = link_to 'Validate', validate_admin_order_path(order), class: 'btn btn-info btn-block'
               - elsif (order.status == Order::DECLINED_STATUS || order.status == Order::REFUNED_STATUS) and !order.send_message
-                = link_to 'Update Stock Totals', send_email_and_update_totals_admin_order_path(order), class: 'btn btn-danger btn-block'
+                = link_to 'Update Stock Totals', send_email_and_update_totals_admin_order_path(order), class: 'btn btn-lt-purple btn-block'
 = paginate @orders
 
 %br
@@ -90,5 +88,5 @@
               - if can?(:validate, op) and op.status == OrderProduct::PROGRESS_STATUS
                 = link_to 'Validate', validate_admin_order_product_path(op), class: 'btn btn-info btn-block'
               - elsif (op.status == OrderProduct::DECLINED_STATUS || op.status == OrderProduct::REFUNED_STATUS) and !op.send_message
-                = link_to 'Update Stock Totals', send_email_and_update_totals_admin_order_product_path(op), class: 'btn btn-danger btn-block'
+                = link_to 'Update Stock Totals', send_email_and_update_totals_admin_order_product_path(op), class: 'btn btn-lt-purple btn-block'
 = paginate @order_products
