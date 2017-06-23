@@ -39,8 +39,8 @@
           %tr{class: (order.status == Order::VALIDATED_STATUS ? 'success' : (order.status == Order::PROGRESS_STATUS) ? 'warning' : (order.status == Order::CANCELED_STATUS) ? 'info' : (order.status == Order::DECLINED_STATUS) ? 'danger' : (order.status == Order::REFUNED_STATUS) ? 'refund' : 'default')}
             %td= order.id
             %td= current_user.has_role?(:admin) ? order.status : order.extended_status
-            -#%td= order.created_at.strftime('%m-%e-%y %H:%M')
-            %td= order.quantity
+            %td= order.created_at.strftime('%m-%e-%y %H:%M')
+            -#%td= order.quantity
             %td= number_to_currency(order.total)
             %td= order.user.first_name
             %td= order.user.last_name
