@@ -10,7 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170616042529) do
+ActiveRecord::Schema.define(version: 20170623023108) do
+
+  create_table "categories", force: :cascade do |t|
+    t.string   "name"
+    t.text     "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
 
   create_table "ckeditor_assets", force: :cascade do |t|
     t.string   "data_file_name",               null: false
@@ -120,6 +127,8 @@ ActiveRecord::Schema.define(version: 20170616042529) do
     t.integer  "max_to_sell"
     t.decimal  "price",        precision: 9, scale: 2
     t.decimal  "tax",          precision: 6, scale: 5
+    t.integer  "category_id"
+    t.index ["category_id"], name: "index_products_on_category_id"
     t.index ["deleted_at"], name: "index_products_on_deleted_at"
   end
 

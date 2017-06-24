@@ -18,7 +18,7 @@ module Admin
 
     def update
       if @order.update(order_params)
-        redirect_to admin_order_path(@order), notice: 'Order was successfully updated.'
+        respond_with @order, location: -> { ["admin", @order] }
       else
         render "edit"
       end

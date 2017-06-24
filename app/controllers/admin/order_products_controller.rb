@@ -11,7 +11,7 @@ module Admin
 
     def update
       if @order_product.update(order_product_params)
-        redirect_to admin_order_product_path(@order_product), notice: 'Order was successfully updated.'
+        respond_with @order_product, location: -> { ["admin", @order_product] }
       else
         render "edit"
       end
@@ -39,7 +39,7 @@ module Admin
         @order_product.send_message = true
         #OrderProductMailer.refund(@order_product).deliver_now
         @order_product.save
-        redirect_to :back, notice: 'Stock has been updated.'      
+        redirect_to :back, notice: 'Stock has been updated.'
       else
         flash[:error] = 'Something has gone terribly wrong. Please Contact IT for support.'
         redirect_to :back

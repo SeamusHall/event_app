@@ -32,6 +32,7 @@ class Ability
     user ||= User.new # guest user (not logged in)
 
     can :read, Product
+    can :read, Category
     can :read, Event, Event.all do |event|
       event.available?
     end

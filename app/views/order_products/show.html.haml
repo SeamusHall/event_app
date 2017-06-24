@@ -63,7 +63,7 @@
               %tr
                 %td= opi.product.name
                 %td.text-center= opi.quantity
-                %td.text-center= number_to_percentage(opi.product.tax * 100, precision: 2)
+                %td.text-center= opi.product.tax > 0.0 ? number_to_percentage(opi.product.tax * 100, precision: 2) : '----'
                 %td.text-right= number_to_currency(opi.product.price)
             %tr
               %td  
@@ -148,7 +148,7 @@
                   %tr
                     %td= opi.product.name
                     %td.text-center= opi.quantity
-                    %td.text-center= number_to_percentage(opi.product.tax * 100, precision: 2)
+                    %td.text-center= opi.product.tax > 0.0 ? number_to_percentage(opi.product.tax * 100, precision: 2) : '----'
                     %td.text-right= number_to_currency(opi.product.price)
                 %tr
                   %td.highrow

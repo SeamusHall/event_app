@@ -13,7 +13,7 @@ module Events
     config.active_job.queue_adapter = Rails.env.production? ? :sidekiq : :async
 
     # makes Rails Use redis as cache store
-    # config.cache_store = :redis_store, 'redis://localhost:6379/0/cache', { expires_in: 90.minutes }
+    config.cache_store = :redis_store, 'redis://localhost:6379/0/cache', { expires_in: 90.minutes }
 
     # Using redis as a backend for sessions
     # config.session_store :redis_store, servers: ["redis://localhost:6379/0/session"]

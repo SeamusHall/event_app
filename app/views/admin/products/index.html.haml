@@ -17,8 +17,7 @@
         %tr
           %td= product.name
           %td= number_to_currency product.price
-          - unless product.tax.nil?
-            %td= number_to_percentage(product.tax * 100, precision: 2)
+          %td= product.tax > 0.0 ? number_to_percentage(product.tax * 100, precision: 2) : '----'
           %td= product.quantity
           %td
             - unless product.attachments.empty?
