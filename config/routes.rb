@@ -26,6 +26,8 @@ Rails.application.routes.draw do
   resources :events, only: [:index,:show] do
     post :auto_update_role
   end
+
+  resources :categories, only: [:index,:show]
   resources :products, only: [:index,:show]
   resource :cart, only: [:show] do
     post "add", path: "add/:id"
@@ -60,6 +62,7 @@ Rails.application.routes.draw do
     get "orders/show_orders_refunded" => "orders#show_orders_refunded"
     resources :users
     resources :roles
+    resources :categories
     resources :orders do
       member do
         get :validate

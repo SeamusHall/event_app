@@ -56,12 +56,21 @@
       .form-group
         = f.label 'Product Status'
         = f.select :status, options_for_select(Product::STATUSES.keys), {prompt: 'product status'}, {class: 'form-control selectpicker', required: true}
+    .col-sm-3
+      .form-group
+        = f.label 'Categories'
+        = f.collection_select :category_id, Category.all, :id, :name, {prompt: 'No Category'}, {class: 'form-control selectpicker'}
     .col-sm-1
       .form-group
         = f.label 'publish'
         = f.check_box :published
-    .col-sm-3
+    .col-sm-1
+  .row
+    .col-sm-1
+    .col-sm-5
       .form-group
         = f.submit 'Save', class: 'btn btn-success btn-lg btn-block', id: 'progress-bar', data: { disable_with: 'Uploading' }
-        = link_to 'Back', admin_products_path, class: 'btn btn-danger btn-lg btn-block', data: { disable_with: 'Please wait' }
+    .col-sm-5
+      .form-group
+        = link_to 'Back', :back, class: 'btn btn-danger btn-lg btn-block', data: { disable_with: 'Please wait' }
     .col-sm-1

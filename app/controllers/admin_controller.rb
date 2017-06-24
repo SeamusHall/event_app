@@ -7,7 +7,9 @@ class AdminController < ApplicationController
     @users = User.all
     @events = Event.available
     @products = Product.all
+    @categories = Category.all
     @orders = Order.not_validated
+    @roles = Role.all
     @order_products = OrderProduct.not_validated
   end
 

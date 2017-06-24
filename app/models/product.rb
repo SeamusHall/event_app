@@ -11,6 +11,7 @@ class Product < ApplicationRecord
   validates :quantity, numericality: { greater_than: -1 }
 
   belongs_to :order_product
+  belongs_to :category
 
   STATUSES = { 'In Stock' => 'Product In Stock',
                'Out Of Stock' => 'Product Out Of Stock'

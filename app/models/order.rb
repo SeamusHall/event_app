@@ -20,7 +20,7 @@ class Order < ApplicationRecord
   before_validation :perform_total_calculation
   before_validation :update_finalized_on
 
-  validate :better_agree
+  validate :do_checks
 
   validates :status, inclusion: { in: STATUSES.keys }, presence: true
   validates :quantity, :total, presence: true
@@ -59,12 +59,11 @@ class Order < ApplicationRecord
 
   private
 
-  def better_agree
+  def do_checks
     errors.add(:terms, 'Must agree to terms and services') if !terms
-  end
-
-  def quantity_less_than_max_order
     errors.add(:quantity, "must be less than order max (#{self.event_item.max_order})") if self.quantity and self.quantity > self.event_item.max_order
+    errors.add(:quantity, "Event is sold out!") if self.event_item.max_event == 0
+    errors.add(:quantity, "You currently want more for #{self.event_item.name} then what we have") if self.event_item.max_event < self.quantity && self.event_item.max_event != 0
   end
 
   def perform_total_calculation
