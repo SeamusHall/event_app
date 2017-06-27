@@ -42,7 +42,7 @@ class Ability
       can :manage, Order, user_id: user.id
       can :manage, OrderProduct, user_id: user.id
       cannot [:update, :destroy, :purchase, :validate], Order, status: (Order::STATUSES.keys - [Order::PENDING_STATUS, Order::DECLINED_STATUS])
-      cannot [:update, :destroy, :purchase, :validate], OrderProduct, status: (OrderProduct::STATUSES.keys - [OrderProduct::PENDING_STATUS, Order::DECLINED_STATUS])
+      cannot [:update, :destroy, :purchase, :validate], OrderProduct, status: (OrderProduct::STATUSES.keys - [OrderProduct::PENDING_STATUS, OrderProduct::DECLINED_STATUS])
     end
 
     if user.has_role? :admin
