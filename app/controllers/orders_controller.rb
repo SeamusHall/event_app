@@ -102,11 +102,6 @@ class OrdersController < ApplicationController
 
     # parse response
     if response.messages.resultCode == MessageTypeEnum::Ok
-      # success
-      @order.placed_at = Time.now
-      @order.payment_details = response.to_yaml
-      @order.auth_code = response.transactionResponse.authCode
-      @order.transaction_id = response.transactionResponse.transId
       if check_payment(response) # check payment response code to see if anything cuased it to decline
         @order.status = Order::DECLINED_STATUS
         @order.save
@@ -117,6 +112,11 @@ class OrdersController < ApplicationController
         end
         redirect_to :back
       else
+        # success
+        @order.placed_at = Time.now
+        @order.payment_details = response.to_yaml
+        @order.auth_code = response.transactionResponse.authCode
+        @order.transaction_id = response.transactionResponse.transId
         @order.status = Order::PROGRESS_STATUS
         @order.send_message = false # For if refunded
         @order.decrement_max_order

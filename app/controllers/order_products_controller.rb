@@ -112,11 +112,6 @@ class OrderProductsController < ApplicationController
 
     # parse response
     if response.messages.resultCode == MessageTypeEnum::Ok
-      # success
-      @order_product.placed_at = Time.now
-      @order_product.payment_details = response.to_yaml
-      @order_product.auth_code = response.transactionResponse.authCode
-      @order_product.transaction_id = response.transactionResponse.transId
       if check_payment(response) # check payment response code to see if anything cuased it to decline
         @order_product.status = Order::DECLINED_STATUS
         @order_product.save
@@ -127,6 +122,11 @@ class OrderProductsController < ApplicationController
         end
         redirect_to :back
       else
+        # success
+        @order_product.placed_at = Time.now
+        @order_product.payment_details = response.to_yaml
+        @order_product.auth_code = response.transactionResponse.authCode
+        @order_product.transaction_id = response.transactionResponse.transId
         @order_product.status = OrderProduct::PROGRESS_STATUS
         @order_product.send_message = false # For if refunded
         @order_product.decrement_product
