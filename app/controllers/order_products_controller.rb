@@ -120,6 +120,11 @@ class OrderProductsController < ApplicationController
       if check_payment(response) # check payment response code to see if anything cuased it to decline
         @order_product.status = Order::DECLINED_STATUS
         @order_product.save
+        unless response.transactionResponse.errors.nil?
+          flash[:error] = "Transaction Failed. \n Error Code: #{response.transactionResponse.errors.errors[0].errorCode} \n #{response.transactionResponse.errors.errors[0].errorText}"
+        else
+          flash[:error] = "Transaction Failed. \n Error Code : #{response.messages.messages[0].code} \n Error Message : #{response.messages.messages[0].text}"
+        end
         redirect_to :back
       else
         @order_product.status = OrderProduct::PROGRESS_STATUS
@@ -150,27 +155,11 @@ class OrderProductsController < ApplicationController
   # for more info
   # https://support.authorize.net/authkb/index?page=content&id=A50
   def check_payment(response)
-    if response.transactionResponse.responseCode == '2'
-      flash[:error] = "Something has gone wrong your card was declined. Please try again."
-    elsif response.transactionResponse.responseCode == '3'
-      flash[:error] = "Referral to card issuing bank for verbal approval"
-    elsif response.transactionResponse.responseCode == '4'
-      flash[:error] = "Card reported lost or stolen; pick up card if physically available"
-    elsif response.transactionResponse.responseCode == '27'
-      flash[:error] = "Address Verification Service (AVS) mismatch; declined by account settings"
-    elsif response.transactionResponse.responseCode == '44'
-      flash[:error] = "Card Code decline by payment processor"
-    elsif response.transactionResponse.responseCode == '45'
-      flash[:error] = "AVS and Card Code mismatch; declined by account settings"
-    elsif response.transactionResponse.responseCode == '65'
-      flash[:error] = "Card Code mismatch; declined by account settings"
-    elsif response.transactionResponse.responseCode == '250'
-      flash[:error] = "Fraud Detection Suite (FDS) blocked IP address"
-    elsif response.transactionResponse.responseCode == '251'
-      flash[:error] = "FDS filter triggered--filter set to decline"
-    elsif response.transactionResponse.responseCode == '254'
-      flash[:error] = "FDS held for review; transaction declined after manual review"
-    end
+    ret = false
+    resp = response.transactionResponse.responseCode
+    res_codes = ['2', '3', '4', '27', '44', '45', '65', '250', '251', '254']
+    res_codes.each { |rs| rs == resp ? ret = true : next }
+    return ret
   end
 
   def order_product_params
