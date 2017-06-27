@@ -52,6 +52,11 @@ class OrderProductsController < ApplicationController
   end
 
   def make_purchase
+
+    # Used to allow multiple transation on the same order if order gets declined
+    # lets 1000 transation tries
+    @invoice_num = rand(1000) if @order_product.status == OrderProduct::DECLINED_STATUS
+
     # create transation and request with Authorize
     transaction = Transaction.new(AUTHORIZE_NET_CONFIG['api_login_id'], AUTHORIZE_NET_CONFIG['api_transaction_key'], :gateway => :production)
     request = CreateTransactionRequest.new
@@ -63,8 +68,10 @@ class OrderProductsController < ApplicationController
     request.transactionRequest.payment = PaymentType.new
     request.transactionRequest.payment.creditCard = CreditCardType.new(params[:cc_num], params[:exp_date], params[:ccv])
 
+    invoice_num = @order_product.status == OrderProduct::DECLINED_STATUS ? @order_product.id.to_s + @invoice_num.to_s : @order_product.id.to_s
+
     # add order and line item information
-    request.transactionRequest.order = OrderType.new(@order_product.id.to_s, "eclipse-meals/parking")
+    request.transactionRequest.order = OrderType.new(invoice_num, "eclipse-meals/parking")
     line_items = []
     @order_product.order_product_items.each do |opi|
       line_items << LineItemType.new(
@@ -111,28 +118,61 @@ class OrderProductsController < ApplicationController
       @order_product.payment_details = response.to_yaml
       @order_product.auth_code = response.transactionResponse.authCode
       @order_product.transaction_id = response.transactionResponse.transId
-      if @order_product.save
-        @order_product.send_message = false # For if refunded or order declined
-        @order_product.decrement_product # decrease amount of product have left if saved
-        respond_to do |format|
-          format.html { redirect_to @order_product, notice: 'Order was successfully placed! Thank you for your order!' }
-        end
+      if check_payment(response) # check payment response code to see if anything cuased it to decline
+        @order_product.status = Order::DECLINED_STATUS
+        @order_product.save
+        redirect_to :back
       else
-        respond_to do |format|
-          format.html { redirect_to purchase_order_product_path(@order_product), error: 'Payment processed, but order was not updated. Call University Housing during regular business hours (618.453.2301).' }
+        if @order_product.save
+          @order_product.send_message = false # For if refunded
+          @order_product.decrement_product
+          respond_to do |format|
+            format.html { redirect_to @order_product, notice: "Order was successfully placed! Thank you for your order!" }
+          end
+        else
+          respond_to do |format|
+            format.html { redirect_to :back, error: 'Payment processed, but order was not updated. Call University Housing during regular business hours (618.453.2301).' }
+          end
         end
       end
     else
-      # failure
-      respond_to do |format|
-        format.html { redirect_to purchase_order_product_path(@order_product), alert: "#{response.messages.messages[0].text}" }
-        #format.html { redirect_to purchase_order_product_path(@order_product), alert: "#{response.messages.messages[0].text} Error Code: #{response.transactionResponse.errors.errors[0].errorCode} (#{response.transactionResponse.errors.errors[0].errorText})" }
+      unless response.transactionResponse.errors.nil?
+        flash[:error] = "Transaction Failed. \n Error Code: #{response.transactionResponse.errors.errors[0].errorCode} \n #{response.transactionResponse.errors.errors[0].errorText}"
+      else
+        flash[:error] = "Transaction Failed. \n Error Code : #{response.messages.messages[0].code} \n Error Message : #{response.messages.messages[0].text}"
       end
+      redirect_to :back
     end
-
   end
 
   private
+
+  # for more info
+  # https://support.authorize.net/authkb/index?page=content&id=A50
+  def check_payment(response)
+    if response.transactionResponse.responseCode == '2'
+      flash[:error] = "Something has gone wrong your card was declined. Please try again."
+    elsif response.transactionResponse.responseCode == '3'
+      flash[:error] = "Referral to card issuing bank for verbal approval"
+    elsif response.transactionResponse.responseCode == '4'
+      flash[:error] = "Card reported lost or stolen; pick up card if physically available"
+    elsif response.transactionResponse.responseCode == '27'
+      flash[:error] = "Address Verification Service (AVS) mismatch; declined by account settings"
+    elsif response.transactionResponse.responseCode == '44'
+      flash[:error] = "Card Code decline by payment processor"
+    elsif response.transactionResponse.responseCode == '45'
+      flash[:error] = "AVS and Card Code mismatch; declined by account settings"
+    elsif response.transactionResponse.responseCode == '65'
+      flash[:error] = "Card Code mismatch; declined by account settings"
+    elsif response.transactionResponse.responseCode == '250'
+      flash[:error] = "Fraud Detection Suite (FDS) blocked IP address"
+    elsif response.transactionResponse.responseCode == '251'
+      flash[:error] = "FDS filter triggered--filter set to decline"
+    elsif response.transactionResponse.responseCode == '254'
+      flash[:error] = "FDS held for review; transaction declined after manual review"
+    end
+  end
+
   def order_product_params
     permitted_params = [:user_id, :total, :payment_details,
                         order_product_items_attributes: [:id,:product_id,:quantity, :_destroy]]

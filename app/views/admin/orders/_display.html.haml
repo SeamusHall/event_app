@@ -39,7 +39,7 @@
           %tr{class: (order.status == Order::VALIDATED_STATUS ? 'success' : (order.status == Order::PROGRESS_STATUS) ? 'warning' : (order.status == Order::CANCELED_STATUS) ? 'info' : (order.status == Order::DECLINED_STATUS) ? 'danger' : (order.status == Order::REFUNED_STATUS) ? 'refund' : 'default')}
             %td= order.id
             %td= current_user.has_role?(:admin) ? order.status : order.extended_status
-            %td= order.created_at.strftime('%m-%e-%y %H:%M')
+            %td{width: '10%'}= order.created_at.strftime('%m-%e-%y %H:%M')
             -#%td= order.quantity
             %td= number_to_currency(order.total)
             %td= order.user.first_name
@@ -51,7 +51,7 @@
               = link_to 'edit', edit_admin_order_path(order), class: 'btn btn-warning btn-block' unless order.cant_edit_status
               - if can?(:validate, order) and order.status == Order::PROGRESS_STATUS
                 = link_to 'Validate', validate_admin_order_path(order), class: 'btn btn-info btn-block'
-              - elsif (order.status == Order::DECLINED_STATUS || order.status == Order::REFUNED_STATUS) and !order.send_message
+              - elsif (order.status == Order::REFUNED_STATUS) and !order.send_message
                 = link_to 'Update Stock Totals', send_email_and_update_totals_admin_order_path(order), class: 'btn btn-lt-purple btn-block'
 = paginate @orders
 
@@ -87,6 +87,6 @@
               = link_to 'edit', edit_admin_order_product_path(op), class: 'btn btn-warning btn-block' unless op.cant_edit_status
               - if can?(:validate, op) and op.status == OrderProduct::PROGRESS_STATUS
                 = link_to 'Validate', validate_admin_order_product_path(op), class: 'btn btn-info btn-block'
-              - elsif (op.status == OrderProduct::DECLINED_STATUS || op.status == OrderProduct::REFUNED_STATUS) and !op.send_message
+              - elsif (op.status == OrderProduct::REFUNED_STATUS) and !op.send_message
                 = link_to 'Update Stock Totals', send_email_and_update_totals_admin_order_product_path(op), class: 'btn btn-lt-purple btn-block'
 = paginate @order_products

@@ -75,4 +75,4 @@
                 %strong= number_to_currency @order.total
 %br
 = link_to 'Orders', admin_orders_path, class: 'btn btn-primary btn-lg'
-= link_to 'Modify Order', edit_admin_order_path(@order), class: 'btn btn-info btn-lg' if can? :edit, @order
+= link_to 'Modify Order', edit_admin_order_path(@order), class: 'btn btn-info btn-lg' unless @order.cant_edit_status
