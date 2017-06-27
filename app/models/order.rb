@@ -42,7 +42,7 @@ class Order < ApplicationRecord
   end
 
   def cant_edit_status
-    self.status == Order::CANCELED_STATUS || self.status == Order::REFUNED_STATUS
+    self.status == Order::CANCELED_STATUS || self.status == Order::REFUNED_STATUS || self.status == Order::DECLINED_STATUS
   end
 
   # Deletes the amount left in event_item so we know
