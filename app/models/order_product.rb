@@ -84,7 +84,7 @@ class OrderProduct < ActiveRecord::Base
   end
 
   def cant_edit_status
-    self.status == OrderProduct::CANCELED_STATUS || self.status == OrderProduct::REFUNED_STATUS || self.status == OrderProduct::DECLINED_STATUS
+    self.status == OrderProduct::CANCELED_STATUS || self.status == OrderProduct::REFUNED_STATUS
   end
 
   private

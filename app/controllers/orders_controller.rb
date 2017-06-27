@@ -104,7 +104,6 @@ class OrdersController < ApplicationController
     if response.messages.resultCode == MessageTypeEnum::Ok
       # success
       @order.placed_at = Time.now
-      @order.status = Order::PROGRESS_STATUS
       @order.payment_details = response.to_yaml
       @order.auth_code = response.transactionResponse.authCode
       @order.transaction_id = response.transactionResponse.transId
@@ -113,9 +112,10 @@ class OrdersController < ApplicationController
         @order.save
         redirect_to :back
       else
-        if @order.save
-          @order.send_message = false # For if refunded
-          @order.decrement_max_order
+        @order.status = Order::PROGRESS_STATUS
+        @order.send_message = false # For if refunded
+        @order.decrement_max_order
+        if @order.saver
           respond_to do |format|
             format.html { redirect_to @order, notice: "Order was successfully placed! Thank you for your order!" }
           end
