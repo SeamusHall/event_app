@@ -20,7 +20,7 @@ class OrderProductsController < ApplicationController
       respond_to do |format|
         format.json { render json: @order_product.errors, status: :unprocessable_entity}
         # For multiple browser support (this doesn't display there errors)
-        format.html { format.html { redirect_to :back, flash[:error] = @order_product.errors } }
+        format.html { redirect_to :back, flash[:error] = @order_product.errors }
       end
     end
   end

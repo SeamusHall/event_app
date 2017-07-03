@@ -54,6 +54,8 @@ Rails.application.routes.draw do
   # routes for admin interface
   get "admin" => "admin#index"
   namespace :admin do
+    get "layouts/admin_navigation" => "layouts#admin_navigation"
+    get "layouts/show_user_info/:id" => "layouts#show_user_info"
     get "orders/show_orders_valid"    => "orders#show_orders_valid"
     get "orders/show_orders_progress" => "orders#show_orders_progress"
     get "orders/show_orders_pending"  => "orders#show_orders_pending"

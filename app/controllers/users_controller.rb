@@ -2,6 +2,7 @@ class UsersController < ApplicationController
   load_and_authorize_resource
 
   def update
+    @user.del_cache
     if @user.update(user_params)
       respond_with @user, location: -> { user_path(@user) }, notice: "User was successfully updated"
     else

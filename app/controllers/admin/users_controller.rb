@@ -2,12 +2,13 @@ module Admin
   class UsersController < AdminController
     load_and_authorize_resource
     before_action :set_user, only: [:edit,:show,:update]
+
     def index
-      @roles = Role.all
       @users = User.active.order(:email).page params[:page]
     end
 
     def update
+      @user.del_cache
       if @user.update(user_params)
         redirect_to admin_user_path(@user), notice: 'User was successfully updated.'
       else

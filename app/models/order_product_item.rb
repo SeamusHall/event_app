@@ -1,4 +1,4 @@
-class OrderProductItem < ActiveRecord::Base
+class OrderProductItem < ApplicationRecord
   acts_as_paranoid
 
   belongs_to :order_product
