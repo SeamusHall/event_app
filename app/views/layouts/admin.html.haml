@@ -17,10 +17,10 @@
   = javascript_include_tag 'sb-admin-2.js'
   = javascript_include_tag "nested_form"
 
-  %body{style: 'margin-top: 50px'}
-    = render file: "layouts/admin_navigation"
+  %body{style: 'margin-top: 80px'}
+    = render file: "admin/layouts/admin_navigation"
     #main{role: 'main'}
       #mySidenav.sidenav
-        = render 'layouts/sidebar_navigation'
+        = render 'admin/layouts/sidebar_navigation'
       = display_flash
       = yield

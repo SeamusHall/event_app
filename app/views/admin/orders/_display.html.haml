@@ -1,18 +1,19 @@
-.row
-  .col-lg-2= link_to 'Show All Orders', admin_orders_path, class: 'btn btn-primary btn-block btn-lg'
-  .col-lg-2= link_to "Show Valid Status", admin_orders_show_orders_valid_path, class: 'btn btn-success btn-block btn-lg'
-  .col-lg-2= link_to "Show Progress Status", admin_orders_show_orders_progress_path, class: 'btn btn-warning btn-block btn-lg'
-  .col-lg-2= link_to "Show Pending Status",  admin_orders_show_orders_pending_path, class: 'btn btn-grey btn-block btn-lg'
-  .col-lg-2= link_to "Show Canceled Status", admin_orders_show_orders_canceled_path, class: 'btn btn-info btn-block btn-lg'
-  .col-lg-2= link_to "Show Declined Status", admin_orders_show_orders_declined_path, class: 'btn btn-danger btn-block btn-lg'
+- unless params[:id]
+  .row
+    .col-lg-2= link_to 'Show All Orders', admin_orders_path, class: 'btn btn-primary btn-block btn-lg'
+    .col-lg-2= link_to "Show Valid Status", admin_orders_show_orders_valid_path, class: 'btn btn-success btn-block btn-lg'
+    .col-lg-2= link_to "Show Progress Status", admin_orders_show_orders_progress_path, class: 'btn btn-warning btn-block btn-lg'
+    .col-lg-2= link_to "Show Pending Status",  admin_orders_show_orders_pending_path, class: 'btn btn-grey btn-block btn-lg'
+    .col-lg-2= link_to "Show Canceled Status", admin_orders_show_orders_canceled_path, class: 'btn btn-info btn-block btn-lg'
+    .col-lg-2= link_to "Show Declined Status", admin_orders_show_orders_declined_path, class: 'btn btn-danger btn-block btn-lg'
 
-%br
-.row
-  .col-lg-4
-  .col-lg-1
-  .col-lg-2= link_to 'Show Refunded Status', admin_orders_show_orders_refunded_path, class: 'btn btn-pink btn-block btn-lg'
-  .col-lg-1
-  .col-lg-4
+  %br
+  .row
+    .col-lg-4
+    .col-lg-1
+    .col-lg-2= link_to 'Show Refunded Status', admin_orders_show_orders_refunded_path, class: 'btn btn-pink btn-block btn-lg'
+    .col-lg-1
+    .col-lg-4
 
 %hr
 %h2 Event Orders

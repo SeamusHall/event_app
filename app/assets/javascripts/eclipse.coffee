@@ -65,6 +65,12 @@ $(document).on "turbolinks:load", ->
       $('.fancy-spinner').fadeOut 200, ->
         $(@).remove()
 
+  $('#redis_field_form').on 'input', ->
+    if $(this).val().length > 0
+      $('#redis_form').submit()
+    else
+      $('#redis_field_form').popover('destroy')
+
   $(document).ready ->
     $('.bxslider').bxSlider
       video: true

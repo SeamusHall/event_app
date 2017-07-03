@@ -1,4 +1,4 @@
-class OrderProduct < ActiveRecord::Base
+class OrderProduct < ApplicationRecord
   acts_as_paranoid
   paginates_per 9
   belongs_to :user

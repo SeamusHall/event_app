@@ -33,28 +33,44 @@ video.video {
   height: 100%;
 }
 
-.container {
-  padding-left: 100px;
-  padding-right: 100px;
-  width: 100%;
+.result-container {
+  .popover{
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .popover-content {
+    padding: 0;
+    height: auto;
+    max-height: 250px;
+    overflow-y: auto;
+
+    img {
+      height: 60px;
+      width: 60px;
+      border-radius: 50%;
+    }
+  }
+
+ .srd {
+   border-left: 0;
+   border-right: 0;
+ }
 }
 
-.navbar {
+.navbar.admin-nav {
   background-color: $maroon;
+  height: 100px;
+  padding: 15px;
 }
 .navbar-brand {
   color: $white !important;
   font-size: 60px;
   text-align: center;
 }
-.navbar-header.white {
-  background-color: $white;
-}
-.navbar-default {
-  .navbar-nav li a {
-    color: $white !important;
-    font-size: 20px;
-  }
+.navbar-nav li a {
+  color: $white !important;
+  font-size: 20px;
 }
 .navbar-nav li .dropdown-menu {
     margin-top: 0;
@@ -130,7 +146,7 @@ video.video {
     left: 0;
     background-color: $black;
     overflow-x: hidden;
-    padding-top: 100px;
+    padding-top: 120px;
     transition: 0.5s;
 }
 
