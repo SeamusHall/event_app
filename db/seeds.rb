@@ -11,15 +11,17 @@ Role.where(name: 'reg').first_or_create(description: 'regular user role')
 # Thanks to mrvncaragay
 # https://github.com/mrvncaragay/rails-redis-search/blob/master/db/seeds.rb
 def add_users_to_redis(user)
-  1.upto(user.full_name.length)   { |n| $redis.zadd(user.full_name[0, n].to_s.downcase, n,  "#{user.id},#{user.full_name},#{user.phone},#{user.email},#{user.gravatar_url}") }
   1.upto(user.email.length)       { |n| $redis.zadd(user.email[0, n], n,                    "#{user.id},#{user.full_name},#{user.phone},#{user.email},#{user.gravatar_url}") }
-  1.upto(user.phone.length)       { |n| $redis.zadd(user.phone[0, n].to_s, n,               "#{user.id},#{user.full_name},#{user.phone},#{user.email},#{user.gravatar_url}") }
-  1.upto(user.first_name.length)  { |n| $redis.zadd(user.first_name[0, n].downcase, n,      "#{user.id},#{user.full_name},#{user.phone},#{user.email},#{user.gravatar_url}") }
-  1.upto(user.last_name.length)   { |n| $redis.zadd(user.last_name[0, n].downcase, n,       "#{user.id},#{user.full_name},#{user.phone},#{user.email},#{user.gravatar_url}") }
-  1.upto(user.city.length)        { |n| $redis.zadd(user.city[0, n].downcase, n,            "#{user.id},#{user.full_name},#{user.phone},#{user.email},#{user.gravatar_url}") }
-  1.upto(user.postal_code.length) { |n| $redis.zadd(user.postal_code[0, n].to_s, n,         "#{user.id},#{user.full_name},#{user.phone},#{user.email},#{user.gravatar_url}") }
-  1.upto(user.state.length)       { |n| $redis.zadd(user.state[0, n].to_s.downcase, n,      "#{user.id},#{user.full_name},#{user.phone},#{user.email},#{user.gravatar_url}") }
-  1.upto(user.country.length)     { |n| $redis.zadd(user.country[0, n].to_s.downcase, n,    "#{user.id},#{user.full_name},#{user.phone},#{user.email},#{user.gravatar_url}") }
+  unless user.check_nullity?
+    1.upto(user.full_name.length)   { |n| $redis.zadd(user.full_name[0, n].to_s.downcase, n,  "#{user.id},#{user.full_name},#{user.phone},#{user.email},#{user.gravatar_url}") }
+    1.upto(user.phone.length)       { |n| $redis.zadd(user.phone[0, n].to_s, n,               "#{user.id},#{user.full_name},#{user.phone},#{user.email},#{user.gravatar_url}") }
+    1.upto(user.first_name.length)  { |n| $redis.zadd(user.first_name[0, n].downcase, n,      "#{user.id},#{user.full_name},#{user.phone},#{user.email},#{user.gravatar_url}") }
+    1.upto(user.last_name.length)   { |n| $redis.zadd(user.last_name[0, n].downcase, n,       "#{user.id},#{user.full_name},#{user.phone},#{user.email},#{user.gravatar_url}") }
+    1.upto(user.city.length)        { |n| $redis.zadd(user.city[0, n].downcase, n,            "#{user.id},#{user.full_name},#{user.phone},#{user.email},#{user.gravatar_url}") }
+    1.upto(user.postal_code.length) { |n| $redis.zadd(user.postal_code[0, n].to_s, n,         "#{user.id},#{user.full_name},#{user.phone},#{user.email},#{user.gravatar_url}") }
+    1.upto(user.state.length)       { |n| $redis.zadd(user.state[0, n].to_s.downcase, n,      "#{user.id},#{user.full_name},#{user.phone},#{user.email},#{user.gravatar_url}") }
+    1.upto(user.country.length)     { |n| $redis.zadd(user.country[0, n].to_s.downcase, n,    "#{user.id},#{user.full_name},#{user.phone},#{user.email},#{user.gravatar_url}") }
+  end
 end
 
 def add_orders_to_redis(order)
