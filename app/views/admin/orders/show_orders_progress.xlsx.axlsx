@@ -2,9 +2,13 @@ wb = xlsx_package.workbook
 wb.styles do |style|
   wb.add_worksheet(name: "orders_progress") do |sheet|
     highlight_cell = style.add_style(bg_color: "EFC376")
-    sheet.add_row ["User ID", "OrderID", "First Name", "Last Name", "Email", "Phone #", "Street Address", "City", "State", "Postal Code", "Total"], style: highlight_cell
+    sheet.add_row ["User ID", "OrderID", "First Name", "Last Name", "Email", "Phone #", "Street Address", "City", "State", "Postal Code", "total", "comments"], style: highlight_cell
     @orders_all.each do |order|
-      sheet.add_row [order.user.id, order.id, order.user.first_name, order.user.last_name, order.user.email, order.user.phone, order.user.address, order.user.city, order.user.state, order.user.postal_code, order.total]
+      if order.model_name.name == "Order"
+        sheet.add_row [order.user.id, order.id, order.user.first_name, order.user.last_name, order.user.email, order.user.phone, order.user.address, order.user.city, order.user.state, order.user.postal_code, order.total, order.comments]
+      else
+        sheet.add_row [order.user.id, order.id, order.user.first_name, order.user.last_name, order.user.email, order.user.phone, order.user.address, order.user.city, order.user.state, order.user.postal_code, order.total]
+      end
     end
   end
 end
