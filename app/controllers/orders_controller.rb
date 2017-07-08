@@ -119,8 +119,8 @@ class OrdersController < ApplicationController
         @order.transaction_id = response.transactionResponse.transId
         @order.status = Order::PROGRESS_STATUS
         @order.send_message = false # For if refunded
-        @order.decrement_max_order
         if @order.save
+          @order.decrement_max_order # This needs to be after save as it will cause save issues for the last order
           respond_to do |format|
             format.html { redirect_to @order, notice: "Order was successfully placed! Thank you for your order!" }
           end

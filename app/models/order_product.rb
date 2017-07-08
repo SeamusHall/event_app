@@ -6,7 +6,9 @@ class OrderProduct < ApplicationRecord
   has_many :order_product_items, dependent: :destroy
   accepts_nested_attributes_for :order_product_items, allow_destroy: true
 
-  before_validation :calculate
+  # adding on: [:create, :update] here
+  # gets rid of the tax update bug
+  before_validation :calculate_total, on: [:create,:update]
   before_validation :update_finalized_on
 
   STATUSES = { 'pending'   => 'Order Pending (pre-submit)',
@@ -88,27 +90,22 @@ class OrderProduct < ApplicationRecord
   end
 
   private
-
-  # Calculates Total for order
-  def calculate
-    total_temp = 0
-    self.order_product_items.each do |opi|
-      total_temp += (opi.product.price * opi.quantity ) * (1.0 + opi.product.tax)
+    # Calculates Total for order
+    def calculate_total
+      total_temp = 0
+      self.order_product_items.each do |opi|
+        total_temp += (opi.product.price * opi.quantity ) * (1.0 + opi.product.tax)
+      end
+      self.total = total_temp
     end
-    self.total = total_temp
-  end
 
-  # Update date order was finalized_on
-  def update_finalized_on
-    if self.status == VALIDATED_STATUS
-      self.finalized_on = Time.now unless self.finalized_on.present?
-    else
-      self.finalized_on = nil
+    # Update date order was finalized_on
+    def update_finalized_on
+      self.finalized_on = (self.status == VALIDATED_STATUS && !self.finalized_on.present?) ? Time.now : nil
     end
-  end
 
-  # checks to make sure there is at least one item in the order
-  def check_if_order_hase_one_item
-    errors.add(:base, "Your order must have at least one item") if self.order_product_items.only_deleted.count > 1
-  end
+    # checks to make sure there is at least one item in the order
+    def check_if_order_hase_one_item
+      errors.add(:base, "Your order must have at least one item") if self.order_product_items.only_deleted.count > 1
+    end
 end
