@@ -1,6 +1,6 @@
 %header.jumbotron.hero-spacer
 
-  %p Welcome to the University Housing Event page! Schneider Hall is currently sold out. Please check back on July 10th. If you would like to be on a waiting list, please email: support@housing.siu.edu
+  %p Welcome to the University Housing Event page! Schneider Hall is currently sold out. Please check back after July 10th for additional availability. If you would like to be on a waiting list, please email: support@housing.siu.edu
   - unless current_user.nil?
     - if current_user.check_nullity?
       = link_to 'Update Account', auto_update_role_cart_url, method: :post, class: 'btn btn-lg btn-info'
