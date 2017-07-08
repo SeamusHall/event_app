@@ -129,8 +129,9 @@ class OrderProductsController < ApplicationController
         @order_product.transaction_id = response.transactionResponse.transId
         @order_product.status = OrderProduct::PROGRESS_STATUS
         @order_product.send_message = false # For if refunded
-        @order_product.decrement_product
         if @order_product.save
+          # This needs to be after save as it will cause save issues for the last order
+          @order_product.decrement_product
           respond_to do |format|
             format.html { redirect_to @order_product, notice: "Order was successfully placed! Thank you for your order!" }
           end

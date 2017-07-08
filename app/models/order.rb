@@ -17,7 +17,9 @@ class Order < ApplicationRecord
   DECLINED_STATUS = 'declined'
   REFUNED_STATUS = 'refunded'
 
-  before_validation :perform_total_calculation
+  # adding on: [:create, :update] here
+  # gets rid of the tax update bug
+  before_validation :perform_total_calculation, on: [:create, :update]
   before_validation :update_finalized_on
 
   validate :do_checks
@@ -59,22 +61,18 @@ class Order < ApplicationRecord
 
   private
 
-  def do_checks
-    errors.add(:terms, 'Must agree to terms and services') if !terms
-    errors.add(:quantity, "must be less than order max (#{self.event_item.max_order})") if self.quantity and self.quantity > self.event_item.max_order
-    errors.add(:quantity, "Event is sold out!") if self.event_item.max_event == 0
-    errors.add(:quantity, "You currently want more for #{self.event_item.name} then what we have") if self.event_item.max_event < self.quantity && self.event_item.max_event != 0
-  end
-
-  def perform_total_calculation
-    self.total = (self.event_item.price * self.quantity ) * (1.0 + self.event_item.tax)
-  end
-
-  def update_finalized_on
-    if self.status == VALIDATED_STATUS
-      self.finalized_on = Time.now unless self.finalized_on.present?
-    else
-      self.finalized_on = nil
+    def perform_total_calculation
+      self.total = (self.event_item.price * self.quantity ) * (1.0 + self.event_item.tax)
     end
-  end
+
+    def do_checks
+      errors.add(:terms, 'Must agree to terms and services') if !terms
+      errors.add(:quantity, "must be less than order max (#{self.event_item.max_order})") if self.quantity and self.quantity > self.event_item.max_order
+      errors.add(:quantity, "You currently want more for #{self.event_item.name} then what we have") if self.event_item.max_event < self.quantity && self.event_item.max_event != 0
+    end
+
+    # Update date order was finalized_on
+    def update_finalized_on
+      self.finalized_on = (self.status == VALIDATED_STATUS && !self.finalized_on.present?) ? Time.now : nil
+    end
 end
