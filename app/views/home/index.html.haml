@@ -1,12 +1,12 @@
 %header.jumbotron.hero-spacer
 
-  %p Welcome to the University Housing Event page! Schneider Hall is currently sold out. Please check back after July 10th for additional availability. If you would like to be on a waiting list, please email: support@housing.siu.edu
+  %p Welcome to the University Housing Event page! Schneider Hall is currently sold out for the Eclipse Event.
   - unless current_user.nil?
     - if current_user.check_nullity?
       = link_to 'Update Account', auto_update_role_cart_url, method: :post, class: 'btn btn-lg btn-info'
   - else
-    = link_to 'Sign Up!', new_registration_path(User.new), class: 'btn btn-lg btn-primary'
-  = link_to  'Schneider Eclipse Housing details', 'http://housing.siu.edu/eclipse', class: 'btn btn-info btn-lg', target: :_blank
+    -#= link_to 'Sign Up!', new_registration_path(User.new), class: 'btn btn-lg btn-primary'
+  -#= link_to  'Schneider Eclipse Housing details', 'http://housing.siu.edu/eclipse', class: 'btn btn-info btn-lg', target: :_blank
   = link_to  'Purchasing Instructions', layouts_instructions_path , class: 'btn btn-warning btn-lg', target: :_blank
   = link_to  'Terms and Conditions', layouts_terms_path , class: 'btn btn-info btn-lg', target: :_blank
   = link_to  'Assumption of Risk', layouts_risk_path, class: 'btn btn-warning btn-lg', target: :_blank
