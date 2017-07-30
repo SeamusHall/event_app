@@ -16,7 +16,7 @@ module Events
     config.cache_store = :redis_store, 'redis://localhost:6379/0/cache', { expires_in: 90.minutes }
 
     # Using redis as a backend for sessions
-    # config.session_store :redis_store, servers: ["redis://localhost:6379/0/session"]
+    config.session_store :redis_store, servers: ["redis://localhost:6379/0/session"]
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
