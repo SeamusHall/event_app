@@ -151,7 +151,6 @@ class OrdersController < ApplicationController
 
   def order_params
     permitted_params = [:event_item_id, :quantity, :terms, :comments]
-    permitted_params << :status if current_user.has_role?(:admin)
     params.require(:order).permit(permitted_params)
   end
 
