@@ -39,11 +39,7 @@ class OrdersController < ApplicationController
 
   def cancel
     @order.status = Order::CANCELED_STATUS
-    if @order.save
-      redirect_to :back, notice: 'Order has been successfully canceled.'
-    else
-      redirect_to :back, notice: 'Order was not canceled.'
-    end
+    redirect_to :back, notice: (@order.save) ? 'Order has been successfully canceled.' : 'Order was not canceled.'
   end
 
   def make_purchase
