@@ -49,7 +49,7 @@
             %td{width: "30%"}= order.comments unless order.comments.nil?
             %td{width: "15%"}
               = link_to 'show', admin_order_path(order), class: 'btn btn-success btn-block'
-              = link_to 'edit', edit_admin_order_path(order), class: 'btn btn-warning btn-block' unless order.cant_edit_status
+              = link_to 'edit', edit_admin_order_path(order), class: 'btn btn-warning btn-block'
               - if can?(:validate, order) and order.status == Order::PROGRESS_STATUS
                 = link_to 'Validate', validate_admin_order_path(order), class: 'btn btn-info btn-block'
               - elsif (order.status == Order::REFUNED_STATUS) and !order.send_message
@@ -85,7 +85,7 @@
             %td= op.user.email
             %td
               = link_to 'show', admin_order_product_path(op), class: 'btn btn-success btn-block'
-              = link_to 'edit', edit_admin_order_product_path(op), class: 'btn btn-warning btn-block' unless op.cant_edit_status
+              = link_to 'edit', edit_admin_order_product_path(op), class: 'btn btn-warning btn-block'
               - if can?(:validate, op) and op.status == OrderProduct::PROGRESS_STATUS
                 = link_to 'Validate', validate_admin_order_product_path(op), class: 'btn btn-info btn-block'
               - elsif (op.status == OrderProduct::REFUNED_STATUS) and !op.send_message

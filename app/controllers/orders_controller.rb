@@ -1,9 +1,16 @@
 include AuthorizeNet::API
 class OrdersController < ApplicationController
   load_and_authorize_resource
+  # Be sure a user is authenticated
   before_action :authenticate_user!
+
+  # Allow Users to add to the cart
   before_action :cart_initializer
+
+  # Display Orders based on ID of the users
   before_action :set_orders, only: [:index]
+
+  # Display Products Based off of a users order status
   before_action :set_products_for_order, only: [:show]
   respond_to :js, :json, :html
 
@@ -18,7 +25,7 @@ class OrdersController < ApplicationController
     else
       respond_to do |format|
         format.json { render json: @order.errors, status: :unprocessable_entity }
-        # For multiple browser support (this doesn't display there errors)
+        # For multiple browser support
         format.html { redirect_to :back, flash[:error] = @order.errors }
       end
     end
