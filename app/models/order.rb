@@ -4,6 +4,7 @@ class Order < ApplicationRecord
   belongs_to :user
   belongs_to :event_item
 
+  # Order STATUSES
   STATUSES = { 'pending'   => 'Order Pending (pre-submit)',
                'progress'  => 'Order In Progress (payment submitted)',
                'validated' => 'Order Validated (payment processed)',
@@ -41,10 +42,6 @@ class Order < ApplicationRecord
 
   def check_status
     self.status == Order::PROGRESS_STATUS || self.status == Order::VALIDATED_STATUS || self.status == Order::CANCELED_STATUS || self.status == Order::REFUNED_STATUS
-  end
-
-  def cant_edit_status
-    self.status == Order::CANCELED_STATUS || self.status == Order::REFUNED_STATUS
   end
 
   # Deletes the amount left in event_item so we know

@@ -1,7 +1,12 @@
 include AuthorizeNet::API
 class OrderProductsController < ApplicationController
   load_and_authorize_resource
+
+  # Ensure a user is loged in
   before_action :authenticate_user!
+
+  # Allows for products to be added to the cart
+  # Method found in ApplicationController
   before_action :cart_initializer
   before_action :set_order_product, only: [:show, :update]
   respond_to :js, :json, :html

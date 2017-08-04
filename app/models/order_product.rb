@@ -4,6 +4,8 @@ class OrderProduct < ApplicationRecord
   belongs_to :user
 
   has_many :order_product_items, dependent: :destroy
+
+  # Allows Order Items to be deleted from Orders # TODO
   accepts_nested_attributes_for :order_product_items, allow_destroy: true
 
   # adding on: [:create, :update] here
@@ -11,6 +13,7 @@ class OrderProduct < ApplicationRecord
   before_validation :calculate_total, on: [:create,:update]
   before_validation :update_finalized_on
 
+  # Order Statuses for OrderProduct NOTE: Not actually needed could use the one from Order.rb
   STATUSES = { 'pending'   => 'Order Pending (pre-submit)',
                'progress'  => 'Order In Progress (payment submitted)',
                'validated' => 'Order Validated (payment processed)',
@@ -24,7 +27,9 @@ class OrderProduct < ApplicationRecord
   DECLINED_STATUS = 'declined'
   REFUNED_STATUS = 'refunded'
 
+  # Method used to check if and order has at least one Item in it
   validate :check_if_order_hase_one_item, on: [:update]
+
   validates :status, inclusion: { in: STATUSES.keys }, presence: true
   validates :total, presence: true
   validates :total, numericality: { greater_than: 0.0 }
@@ -83,10 +88,6 @@ class OrderProduct < ApplicationRecord
 
   def check_status
     self.status == OrderProduct::PROGRESS_STATUS || self.status == OrderProduct::VALIDATED_STATUS || self.status == OrderProduct::CANCELED_STATUS || self.status == OrderProduct::REFUNED_STATUS
-  end
-
-  def cant_edit_status
-    self.status == OrderProduct::CANCELED_STATUS || self.status == OrderProduct::REFUNED_STATUS
   end
 
   private
