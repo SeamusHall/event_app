@@ -7,7 +7,7 @@
       %br
       = form_tag admin_layouts_admin_navigation_path, method: :get, id: "redis_form", remote: true do
         .form-group.result-container
-          = text_field_tag :users, params[:users], id: 'redis_field_form', placeholder: "Welcome to the future... (Search Anything)", class: "form-control"
+          = text_field_tag :users, params[:users], id: 'redis_field_form', placeholder: "Search...", class: "form-control"
     .col-sm-4
       .collapse.navbar-collapse
         - if current_user
