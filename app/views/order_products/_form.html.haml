@@ -19,7 +19,8 @@
             .col-sm-1
             .col-sm-2= opi_f.label "Quantity:"
             .col-sm-4= opi_f.select :quantity, options_for_select((1..opi_f.object.product.max_to_sell).to_a, selected: "#{opi_f.object.quantity}"), {prompt: 'quantity'},{class: 'form-control selectpicker'}
-            .col-sm-4= opi_f.link_to_remove "Remove Item", class: 'btn btn-danger btn-lg btn-block', data: { confirm: "Are you sure?" } if @order_product.order_product_items.count > 1
+            .col-sm-4
+            -#= opi_f.link_to_remove "Remove Item", class: 'btn btn-danger btn-lg btn-block', data: { confirm: "Are you sure?" } if @order_product.order_product_items.count > 1
             .col-sm-1
       %br
       .actions.right

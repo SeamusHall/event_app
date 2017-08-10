@@ -27,8 +27,8 @@ class OrderProduct < ApplicationRecord
   DECLINED_STATUS = 'declined'
   REFUNED_STATUS = 'refunded'
 
-  # Method used to check if and order has at least one Item in it
-  validate :check_if_order_hase_one_item, on: [:update]
+  # TODO Method used to check if and order has at least one Item in it
+  # validate :check_if_order_hase_one_item, on: [:update]
 
   validates :status, inclusion: { in: STATUSES.keys }, presence: true
   validates :total, presence: true
