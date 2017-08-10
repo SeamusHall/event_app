@@ -5,7 +5,7 @@ class OrderProduct < ApplicationRecord
 
   has_many :order_product_items, dependent: :destroy
 
-  # Allows Order Items to be deleted from Orders # TODO
+  # Allows Order Items to be deleted from Orders
   accepts_nested_attributes_for :order_product_items, allow_destroy: true
 
   # adding on: [:create, :update] here
@@ -105,8 +105,9 @@ class OrderProduct < ApplicationRecord
       self.finalized_on = (self.status == VALIDATED_STATUS && !self.finalized_on.present?) ? Time.now : nil
     end
 
+    # TODO NOT MUCH MORE I CAN THINK OF
     # checks to make sure there is at least one item in the order
     def check_if_order_hase_one_item
-      errors.add(:base, "Your order must have at least one item") if self.order_product_items.only_deleted.count > 1
+      errors.add(:base, "Your order must have at least one item") unless self.order_product_items.only_deleted.empty?
     end
 end
