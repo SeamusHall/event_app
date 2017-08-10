@@ -13,6 +13,9 @@
 - if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && controller_name != 'unlocks'
   = link_to "Didn't receive unlock instructions?", new_unlock_path(resource_name), class: 'btn btn-block btn-warning btn-lg'
   %br/
+- if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email)
+  = link_to "Restore Account", new_restore_path, class: 'btn btn-block btn-pink btn-lg'
+  %br/
 - if devise_mapping.omniauthable?
   - resource_class.omniauth_providers.each do |provider|
     = link_to "Sign in with #{OmniAuth::Utils.camelize(provider)}", omniauth_authorize_path(resource_name, provider)
