@@ -1,16 +1,16 @@
 %header.jumbotron.hero-spacer
 
-  %p University Hall Eclipse Housing has sold out!
-  %p Thank you for your interest in on-campus accommodations for the 2017 total solar eclipse. Unfortunately, the eclipse housing rooms in University Hall have sold out. 
+  %p Good news!
+  %p Additional Eclipse Housing rooms have become available in University Hall.  Please act fast as rooms are first come first served.  Thank you for your interest in On-Campus Eclipse Housing!
   - if current_user.nil?
-    -#= link_to 'Sign Up!', new_registration_path(User.new), class: 'btn btn-lg btn-primary'
+    = link_to 'Sign Up!', new_registration_path(User.new), class: 'btn btn-lg btn-primary'
   - else
     - if current_user.check_nullity?
       = link_to 'Update Account', auto_update_role_cart_url, method: :post, class: 'btn btn-lg btn-info'
-  -#= link_to  'University Hall Eclipse Housing details', 'http://housing.siu.edu/eclipse', class: 'btn btn-info btn-lg', target: :_blank
-  = link_to  'Meal Plan & Parking Pass Purchasing Instructions', layouts_instructions_path , class: 'btn btn-warning btn-lg', target: :_blank
-  -#= link_to  'Terms and Conditions', layouts_terms_path , class: 'btn btn-info btn-lg', target: :_blank
-  -#= link_to  'Assumption of Risk', layouts_risk_path, class: 'btn btn-warning btn-lg', target: :_blank
+  = link_to  'University Hall Eclipse Housing details', 'http://housing.siu.edu/eclipse', class: 'btn btn-info btn-lg', target: :_blank
+  = link_to  'Purchasing Instructions', layouts_instructions_path , class: 'btn btn-warning btn-lg', target: :_blank
+  = link_to  'Terms and Conditions', layouts_terms_path , class: 'btn btn-info btn-lg', target: :_blank
+  = link_to  'Assumption of Risk', layouts_risk_path, class: 'btn btn-warning btn-lg', target: :_blank
 - if current_user
   %hr
   .row
