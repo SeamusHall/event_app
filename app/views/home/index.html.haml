@@ -1,9 +1,9 @@
 %header.jumbotron.hero-spacer
 
 
-  %p Welcome the Univeristy Housing Events, there are no events available at this time.
+  %p Welcome to Univeristy Housing Events, there are no events available at this time.
   - if current_user.nil?
-    -#= link_to 'Sign Up!', new_registration_path(User.new), class: 'btn btn-lg btn-primary'
+    = link_to 'Sign Up!', new_registration_path(User.new), class: 'btn btn-lg btn-primary'
   - else
     - if current_user.check_nullity?
       = link_to 'Update Account', auto_update_role_cart_url, method: :post, class: 'btn btn-lg btn-info'
