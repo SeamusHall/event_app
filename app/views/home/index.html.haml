@@ -1,7 +1,7 @@
 %header.jumbotron.hero-spacer
 
 
-  %p Welcome to Univeristy Housing Events, there are no events available at this time.
+  %p Welcome to the Univeristy Housing Event page.
   - if current_user.nil?
     = link_to 'Sign Up!', new_registration_path(User.new), class: 'btn btn-lg btn-primary'
   - else
