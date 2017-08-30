@@ -1,7 +1,12 @@
 include AuthorizeNet::API
 class OrderProductsController < ApplicationController
   load_and_authorize_resource
+
+  # Ensure a user is loged in
   before_action :authenticate_user!
+
+  # Allows for products to be added to the cart
+  # Method found in ApplicationController
   before_action :cart_initializer
   before_action :set_order_product, only: [:show, :update]
   respond_to :js, :json, :html
@@ -162,7 +167,6 @@ class OrderProductsController < ApplicationController
   def order_product_params
     permitted_params = [:user_id, :total, :payment_details,
                         order_product_items_attributes: [:id,:product_id,:quantity, :_destroy]]
-    permitted_params << :status if current_user.has_role?(:admin)
     params.require(:order_product).permit(permitted_params)
   end
 

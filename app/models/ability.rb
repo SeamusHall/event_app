@@ -47,10 +47,6 @@ class Ability
 
     if user.has_role? :admin
       can :manage, :all
-      cannot :edit, Order, status: Order::CANCELED_STATUS
-      cannot :edit, OrderProduct, status: OrderProduct::CANCELED_STATUS
-      cannot :edit, Order, status: Order::REFUNED_STATUS
-      cannot :edit, OrderProduct, status: OrderProduct::REFUNED_STATUS
       cannot :destroy, [Role, User, Event, Order, Product, OrderProduct]
     end
   end

@@ -132,9 +132,7 @@ module Admin
     end
 
     def order_params
-      permitted_params = []
-      permitted_params << :status if current_user.has_role?(:admin)
-      params.require(:order).permit(permitted_params)
+      params.require(:order).permit(:status)
     end
   end
 end

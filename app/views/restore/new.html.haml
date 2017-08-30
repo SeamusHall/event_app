@@ -1,0 +1,17 @@
+.row
+  .col-md-3
+  .col-md-5
+    #login-box
+      .logo
+        = image_tag 'towers.jpg', class: 'img-responsive img-circle center-block'
+        %h1.logo-caption
+          %span.tweak Restore Account
+      .controls
+      = form_tag restore_index_path do
+        .form-group
+          = label_tag 'email', 'Email:'
+          = text_field_tag 'email', '', placeholder: 'example@gmail.com', class: 'form-control', required: true, "x-autocompletetype" => "cc-number"
+        .form-group.right
+          = submit_tag "Restore", class: 'btn btn-success btn-lg'
+          = link_to 'back', :back, class: 'btn btn-danger btn-lg'
+  .col-md-4

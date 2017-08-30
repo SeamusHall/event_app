@@ -50,6 +50,8 @@ Rails.application.routes.draw do
   }
 
   resources :users
+  # routes for users account restore
+  resources :restore, only: [:new, :create]
 
   # routes for admin interface
   get "admin" => "admin#index"
