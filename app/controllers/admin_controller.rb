@@ -4,7 +4,7 @@ class AdminController < ApplicationController
   layout 'admin'
 
   def index
-    @users = User.all
+    @users = User.active
     @events = Event.available
     @products = Product.all
     @categories = Category.all

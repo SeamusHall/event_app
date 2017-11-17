@@ -8,7 +8,12 @@ class RestoreController < ApplicationController
     user = User.only_deleted.where(email: params[:email])
     # The use of ids here is fine because it should only return one record
     # users can't have the same emails
-    User.restore(user.ids)
-    redirect_to root_path, notice: "Account Succefully restored"
+    unless user.empty?
+      User.restore(user.ids)
+      redirect_to root_path, notice: "Account Succefully restored"
+    else
+      flash[:error] = "Email not found.."
+      redirect_to :back
+    end
   end
 end

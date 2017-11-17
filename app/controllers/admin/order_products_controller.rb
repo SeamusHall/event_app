@@ -27,7 +27,7 @@ module Admin
       end
     end
 
-    def send_email_and_update_totals
+    def update_stock_totals
       if @order_product.status == Order::DECLINED_STATUS
         @order_product.increment_product
         @order_product.send_message = true
@@ -47,13 +47,13 @@ module Admin
     end
 
     private
-    def order_product_params
-      params.require(:order_product).permit(:status)
-    end
+      def order_product_params
+        params.require(:order_product).permit(:status)
+      end
 
-    def set_order_product
-      @order_product = OrderProduct.find(params[:id])
-    end
+      def set_order_product
+        @order_product = OrderProduct.find(params[:id])
+      end
 
   end
 end

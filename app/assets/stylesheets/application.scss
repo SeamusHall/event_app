@@ -10,7 +10,6 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  *
- *= require_tree .
  *= require_self
  *= require video-js
  */
@@ -18,4 +17,7 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 @import 'bootstrap-datetimepicker';
+@import "sb-admin-2.css";
+@import "sb-admin-2.min.css";
+@import "bootstrap-select.min.css";
 @import "housing-base";

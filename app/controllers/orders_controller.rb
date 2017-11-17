@@ -17,6 +17,7 @@ class OrdersController < ApplicationController
   def create
     @order.user = current_user
     @order.status = Order::PENDING_STATUS
+    @order.perform_total_calculation
     if @order.save
       respond_to do |format|
         format.html { redirect_to @order, notice: 'Order was successfully created.' }
@@ -33,7 +34,15 @@ class OrdersController < ApplicationController
 
   def update
     @order.update(order_params)
-    respond_with @order, location: -> { @order }
+    @order.perform_total_calculation
+    if @order.save
+      respond_with @order, location: -> { @order }
+    else
+      respond_to do |format|
+        format.json { render json: @order.errors, status: :unprocessable_entity }
+        format.html { redirect_to :back, flash[:error] = @order.errors }
+      end
+    end
   end
 
   def purchase

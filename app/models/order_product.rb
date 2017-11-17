@@ -8,9 +8,6 @@ class OrderProduct < ApplicationRecord
   # Allows Order Items to be deleted from Orders
   accepts_nested_attributes_for :order_product_items, allow_destroy: true
 
-  # adding on: [:create, :update] here
-  # gets rid of the tax update bug
-  before_validation :calculate_total, on: [:create,:update]
   before_validation :update_finalized_on
 
   # Order Statuses for OrderProduct NOTE: Not actually needed could use the one from Order.rb
@@ -90,15 +87,16 @@ class OrderProduct < ApplicationRecord
     self.status == OrderProduct::PROGRESS_STATUS || self.status == OrderProduct::VALIDATED_STATUS || self.status == OrderProduct::CANCELED_STATUS || self.status == OrderProduct::REFUNED_STATUS
   end
 
-  private
-    # Calculates Total for order
-    def calculate_total
-      total_temp = 0
-      self.order_product_items.each do |opi|
-        total_temp += (opi.product.price * opi.quantity ) * (1.0 + opi.product.tax)
-      end
-      self.total = total_temp
+  # Calculates Total for order
+  def calculate_total
+    total_temp = 0
+    self.order_product_items.each do |opi|
+      total_temp += (opi.product.price * opi.quantity ) * (1.0 + opi.product.tax)
     end
+    self.total = total_temp
+  end
+
+  private
 
     # Update date order was finalized_on
     def update_finalized_on

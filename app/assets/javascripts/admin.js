@@ -1,0 +1,11 @@
+//= require jquery
+//= require jquery.turbolinks
+//= require bootstrap-sprockets
+//= require jquery_ujs
+//= require turbolinks
+//= require moment
+//= require bootstrap-datetimepicker
+//= require ckeditor/init
+//= require video
+//= require sb-admin-2.js
+//= require bootstrap-select.min.js

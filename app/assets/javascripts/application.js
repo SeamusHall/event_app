@@ -19,4 +19,5 @@
 //= require bootstrap-datetimepicker
 //= require ckeditor/init
 //= require video
-//= require_tree .
+//= require sb-admin-2.js
+//= require bootstrap-select.min.js

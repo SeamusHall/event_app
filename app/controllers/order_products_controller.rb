@@ -15,7 +15,7 @@ class OrderProductsController < ApplicationController
     @order_product = OrderProduct.create(order_product_params)
     @order_product.user = current_user
     @order_product.status = Order::PENDING_STATUS
-
+    @order_product.calculate_total
     if @order_product.save
       respond_to do |format|
         format.html { redirect_to @order_product, notice: 'Order was successfully created. Note that although created until you make a purchase it does not garentee that your item will be available.'}
@@ -24,7 +24,7 @@ class OrderProductsController < ApplicationController
     else
       respond_to do |format|
         format.json { render json: @order_product.errors, status: :unprocessable_entity}
-        # For multiple browser support (this doesn't display there errors)
+        # For multiple browser support
         format.html { redirect_to :back, flash[:error] = @order_product.errors }
       end
     end
@@ -37,14 +37,20 @@ class OrderProductsController < ApplicationController
 
   def update
     @order_product.update(order_product_params)
-    respond_with @order_product, location: -> { @order_product }
+    @order_product.calculate_total
+    if @order_product.save
+      respond_with @order_product, location: -> { @order_product }
+    else
+      respond_to do |format|
+        format.json { render json: @order_product.errors, status: :unprocessable_entity}
+        format.html { redirect_to :back, flash[:error] = @order_product.errors }
+      end
+    end
   end
 
   def purchase
     # Just in case!!!
-    if @order_product.check_stock
-      redirect_to :back, alert: 'Something Has Gone Wrong :( one of your items must be out of stock'
-    end
+    redirect_to :back, alert: 'Something Has Gone Wrong :( one of your items must be out of stock' if @order_product.check_stock
   end
 
   def cancel
@@ -119,7 +125,7 @@ class OrderProductsController < ApplicationController
         unless response.transactionResponse.errors.nil?
           flash[:error] = "Transaction Failed. \n Error Code: #{response.transactionResponse.errors.errors[0].errorCode} \n #{response.transactionResponse.errors.errors[0].errorText}"
         else
-          flash[:error] = "Transaction Failed. \n Error Code : #{response.messages.messages[0].code} \n Error Message : #{response.messages.messages[0].text}"
+          flash[:error] = "Transaction Failed. \n Error Code: #{response.messages.messages[0].code} \n Error Message: #{response.messages.messages[0].text}"
         end
         redirect_to :back
       else
@@ -153,25 +159,24 @@ class OrderProductsController < ApplicationController
   end
 
   private
+    # for more info
+    # https://support.authorize.net/authkb/index?page=content&id=A50
+    def check_payment(response)
+      ret = false
+      resp = response.transactionResponse.responseCode
+      res_codes = ['2', '3', '4', '27', '44', '45', '65', '250', '251', '254']
+      res_codes.each { |rs| rs == resp ? ret = true : next }
+      return ret
+    end
 
-  # for more info
-  # https://support.authorize.net/authkb/index?page=content&id=A50
-  def check_payment(response)
-    ret = false
-    resp = response.transactionResponse.responseCode
-    res_codes = ['2', '3', '4', '27', '44', '45', '65', '250', '251', '254']
-    res_codes.each { |rs| rs == resp ? ret = true : next }
-    return ret
-  end
+    def order_product_params
+      permitted_params = [:user_id, :total, :payment_details,
+                          order_product_items_attributes: [:id,:product_id,:quantity, :_destroy]]
+      params.require(:order_product).permit(permitted_params)
+    end
 
-  def order_product_params
-    permitted_params = [:user_id, :total, :payment_details,
-                        order_product_items_attributes: [:id,:product_id,:quantity, :_destroy]]
-    params.require(:order_product).permit(permitted_params)
-  end
-
-  def set_order_product
-    @order_product = OrderProduct.find(params[:id])
-  end
+    def set_order_product
+      @order_product = OrderProduct.find(params[:id])
+    end
 
 end

@@ -53,7 +53,7 @@
               - if can?(:validate, order) and order.status == Order::PROGRESS_STATUS
                 = link_to 'Validate', validate_admin_order_path(order), class: 'btn btn-info btn-block'
               - elsif (order.status == Order::REFUNED_STATUS) and !order.send_message
-                = link_to 'Update Stock Totals', send_email_and_update_totals_admin_order_path(order), class: 'btn btn-lt-purple btn-block'
+                = link_to 'Update Stock Totals', update_stock_totals_admin_order_path(order), class: 'btn btn-lt-purple btn-block'
 = paginate @orders
 
 %br
@@ -89,5 +89,5 @@
               - if can?(:validate, op) and op.status == OrderProduct::PROGRESS_STATUS
                 = link_to 'Validate', validate_admin_order_product_path(op), class: 'btn btn-info btn-block'
               - elsif (op.status == OrderProduct::REFUNED_STATUS) and !op.send_message
-                = link_to 'Update Stock Totals', send_email_and_update_totals_admin_order_product_path(op), class: 'btn btn-lt-purple btn-block'
+                = link_to 'Update Stock Totals', update_stock_totals_admin_order_product_path(op), class: 'btn btn-lt-purple btn-block'
 = paginate @order_products

@@ -9,6 +9,7 @@ end
 
 gem 'rails', '~> 5.0.2'
 
+gem 'yard'
 # Deployment Gems
 gem 'puma', '~> 3.0'
 gem 'puma_worker_killer'
@@ -24,7 +25,7 @@ gem 'jquery-turbolinks'
 gem 'jbuilder', '~> 2.5'
 gem 'nested_form'
 
-# User Account Creation & Verification changes
+# User Account Creation & Verification
 gem 'country_select'
 gem 'phonelib'
 # gem 'geocoder'

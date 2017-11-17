@@ -2,6 +2,8 @@
 CSS File for Non admin interface
 */
 
+@import "home";
+@import "colors";
 @import "card";
 @import "table";
 @import "footer";
@@ -149,6 +151,15 @@ a {
   border-bottom-right-radius: 5px;
 }
 
+.btn-pink {
+  background-color: #FF69B4; /* Hot Pink */
+  color: $white;
+}
+
+.btn-pink:hover {
+  color: $white;
+  background-color: #e60073;
+}
 
 /*********************************************
 		          users show page

@@ -1,0 +1,311 @@
+.nav_wrap
+  %iframe#nav{src: class_list_path}
+  #resizer
+#main{:tabindex => "-1"}
+  #header
+    #menu
+    #search
+      = link_to "", class_list_path, class: 'class_list_link.full_list_link'
+      %svg{height: "24", width: "24"}
+        %rect{height: "4", rx: "1", ry: "1", width: "24", x: "0", y: "4"}
+        %rect{height: "4", rx: "1", ry: "1", width: "24", x: "0", y: "12"}
+        %rect{height: "4", rx: "1", ry: "1", width: "24", x: "0", y: "20"}
+    .clear
+  #content
+    %h1
+      Class: CartsController
+    .box_info
+      %dl
+        %dt Inherits:
+        %dd
+          %span.inheritName
+            %span.object_link
+              %a{:href => "ApplicationController.html", :title => "ApplicationController (class)"} ApplicationController
+          %ul.fullTree
+            %li Object
+            %li.next ActionController::Base
+            %li.next
+              %span.object_link
+                %a{:href => "ApplicationController.html", :title => "ApplicationController (class)"} ApplicationController
+            %li.next CartsController
+          %a.inheritanceTree{:href => "#"} show all
+      %dl
+        %dt Defined in:
+        %dd app/controllers/carts_controller.rb
+    %h2
+      Instance Method Summary
+      %small
+        %a.summary_toggle{:href => "#"} collapse
+    %ul.summary
+      %li.public
+        %span.summary_signature
+          %a{:href => "#add-instance_method", :title => "#add (instance method)"}
+            \#
+            %strong add
+            \&#8658; Object
+        %span.summary_desc
+          .inline
+      %li.public
+        %span.summary_signature
+          %a{:href => "#clear-instance_method", :title => "#clear (instance method)"}
+            \#
+            %strong clear
+            \&#8658; Object
+        %span.summary_desc
+          .inline
+      %li.public
+        %span.summary_signature
+          %a{:href => "#remove-instance_method", :title => "#remove (instance method)"}
+            \#
+            %strong remove
+            \&#8658; Object
+        %span.summary_desc
+          .inline
+      %li.public
+        %span.summary_signature
+          %a{:href => "#show-instance_method", :title => "#show (instance method)"}
+            \#
+            %strong show
+            \&#8658; Object
+        %span.summary_desc
+          .inline
+    %h3.inherited
+      Methods inherited from
+      %span.object_link
+        %a{:href => "ApplicationController.html", :title => "ApplicationController (class)"} ApplicationController
+    %p.inherited
+      %span.object_link>
+        %a{:href => "ApplicationController.html#auto_update_role-instance_method", :title => "ApplicationController#auto_update_role (method)"} #auto_update_role
+      ,
+      %span.object_link
+        %a{:href => "ApplicationController.html#cart_initializer-instance_method", :title => "ApplicationController#cart_initializer (method)"} #cart_initializer
+    #instance_method_details.method_details_list
+      %h2 Instance Method Details
+      .method_details.first
+        %h3#add-instance_method.signature.first
+          \#
+          %strong add
+          \&#8658;
+          %tt Object
+        %table.source_code
+          %tr
+            %td
+              %pre.lines
+                :preserve
+
+
+
+                  5
+                  6
+                  7
+                  8
+                  9
+                  10
+                  11            %td
+              %pre.code
+                %span.info.file # File 'app/controllers/carts_controller.rb', line 5
+                %span.kw def
+                %span.id.identifier.rubyid_add add
+                %span.ivar @cart
+                %span.period .
+                %span.id.identifier.rubyid_add_item_to_cart add_item_to_cart
+                %span.lparen (
+                %span.id.identifier.rubyid_params params
+                %span.lbracket [
+                %span.symbol :id
+                %span.rbracket ]
+                %span.rparen )
+                %span.id.identifier.rubyid_session session
+                %span.lbracket [
+                %span.tstring
+                  %span.tstring_beg "
+                  %span.tstring_content cart
+                  %span.tstring_end "
+                %span.rbracket ]
+                %span.op =
+                %span.ivar @cart
+                %span.period .
+                %span.id.identifier.rubyid_serialize serialize
+                %span.comment
+                  \# makes sure cart variable is a result of the serialization
+                %span.comment
+                  \# overriding the session variable is a big no no
+                %span.id.identifier.rubyid_product product
+                %span.op =
+                %span.const
+                  %span.object_link
+                    %a{:href => "Product.html", :title => "Product (class)"} Product
+                %span.period .
+                %span.id.identifier.rubyid_find find
+                %span.lparen (
+                %span.id.identifier.rubyid_params params
+                %span.lbracket [
+                %span.symbol :id
+                %span.rbracket ]
+                %span.rparen )
+                %span.id.identifier.rubyid_redirect_to redirect_to
+                %span.symbol :back
+                %span.comma ,
+                %span.label notice:
+                %span.tstring
+                  %span.tstring_beg "
+                  %span.tstring_content Added
+                  %span.embexpr_beg \#{
+                  %span.id.identifier.rubyid_product product
+                  %span.period .
+                  %span.id.identifier.rubyid_name name
+                  %span.embexpr_end }
+                  %span.tstring_content to cart
+                  %span.tstring_end "
+                %span.kw end
+      .method_details
+        %h3#clear-instance_method.signature
+          \#
+          %strong clear
+          \&#8658;
+          %tt Object
+        %table.source_code
+          %tr
+            %td
+              %pre.lines
+                :preserve
+
+
+
+                  20
+                  21
+                  22
+                  23
+                  24            %td
+              %pre.code
+                %span.info.file # File 'app/controllers/carts_controller.rb', line 20
+                %span.kw def
+                %span.id.identifier.rubyid_clear clear
+                %span.ivar @cart
+                %span.period .
+                %span.id.identifier.rubyid_clear_cart clear_cart
+                %span.id.identifier.rubyid_session session
+                %span.lbracket [
+                %span.tstring
+                  %span.tstring_beg "
+                  %span.tstring_content cart
+                  %span.tstring_end "
+                %span.rbracket ]
+                %span.op =
+                %span.ivar @cart
+                %span.period .
+                %span.id.identifier.rubyid_serialize serialize
+                %span.id.identifier.rubyid_redirect_to redirect_to
+                %span.symbol :back
+                %span.comma ,
+                %span.label notice:
+                %span.tstring
+                  %span.tstring_beg "
+                  %span.tstring_content Cart Has Been Cleared
+                  %span.tstring_end "
+                %span.kw end
+      .method_details
+        %h3#remove-instance_method.signature
+          \#
+          %strong remove
+          \&#8658;
+          %tt Object
+        %table.source_code
+          %tr
+            %td
+              %pre.lines
+                :preserve
+
+
+
+                  13
+                  14
+                  15
+                  16
+                  17
+                  18            %td
+              %pre.code
+                %span.info.file # File 'app/controllers/carts_controller.rb', line 13
+                %span.kw def
+                %span.id.identifier.rubyid_remove remove
+                %span.ivar @cart
+                %span.period .
+                %span.id.identifier.rubyid_delete_item_from_cart delete_item_from_cart
+                %span.lparen (
+                %span.id.identifier.rubyid_params params
+                %span.lbracket [
+                %span.symbol :id
+                %span.rbracket ]
+                %span.rparen )
+                %span.id.identifier.rubyid_session session
+                %span.lbracket [
+                %span.tstring
+                  %span.tstring_beg "
+                  %span.tstring_content cart
+                  %span.tstring_end "
+                %span.rbracket ]
+                %span.op =
+                %span.ivar @cart
+                %span.period .
+                %span.id.identifier.rubyid_serialize serialize
+                %span.id.identifier.rubyid_product product
+                %span.op =
+                %span.const
+                  %span.object_link
+                    %a{:href => "Product.html", :title => "Product (class)"} Product
+                %span.period .
+                %span.id.identifier.rubyid_find find
+                %span.lparen (
+                %span.id.identifier.rubyid_params params
+                %span.lbracket [
+                %span.symbol :id
+                %span.rbracket ]
+                %span.rparen )
+                %span.id.identifier.rubyid_redirect_to redirect_to
+                %span.symbol :back
+                %span.comma ,
+                %span.label notice:
+                %span.tstring
+                  %span.tstring_beg "
+                  %span.tstring_content Removed
+                  %span.embexpr_beg \#{
+                  %span.id.identifier.rubyid_product product
+                  %span.period .
+                  %span.id.identifier.rubyid_name name
+                  %span.embexpr_end }
+                  %span.tstring_content from cart
+                  %span.tstring_end "
+                %span.kw end
+      .method_details
+        %h3#show-instance_method.signature
+          \#
+          %strong show
+          \&#8658;
+          %tt Object
+        %table.source_code
+          %tr
+            %td
+              %pre.lines
+                :preserve
+
+
+
+                  26
+                  27
+                  28            %td
+              %pre.code
+                %span.info.file # File 'app/controllers/carts_controller.rb', line 26
+                %span.kw def
+                %span.id.identifier.rubyid_show show
+                %span.ivar @order_product
+                %span.op =
+                %span.const
+                  %span.object_link
+                    %a{:href => "OrderProduct.html", :title => "OrderProduct (class)"} OrderProduct
+                %span.period .
+                %span.id.identifier.rubyid_new new
+                %span.kw end
+  #footer
+    Generated on Fri Oct 27 15:36:50 2017 by
+    %a{:href => "http://yardoc.org", :target => "_parent", :title => "Yay! A Ruby Documentation Tool"} yard
+    0.9.9 (ruby-2.4.1).

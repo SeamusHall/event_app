@@ -18,9 +18,6 @@ class Order < ApplicationRecord
   DECLINED_STATUS = 'declined'
   REFUNED_STATUS = 'refunded'
 
-  # adding on: [:create, :update] here
-  # gets rid of the tax update bug
-  before_validation :perform_total_calculation, on: [:create, :update]
   before_validation :update_finalized_on
 
   validate :do_checks
@@ -56,11 +53,11 @@ class Order < ApplicationRecord
     self.event_item.save
   end
 
-  private
+  def perform_total_calculation
+    self.total = (self.event_item.price * self.quantity ) * (1.0 + self.event_item.tax)
+  end
 
-    def perform_total_calculation
-      self.total = (self.event_item.price * self.quantity ) * (1.0 + self.event_item.tax)
-    end
+  private
 
     def do_checks
       errors.add(:terms, 'Must agree to terms and services') if !terms

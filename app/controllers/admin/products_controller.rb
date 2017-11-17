@@ -54,6 +54,8 @@ module Admin
       @product = Product.find(params[:id])
     end
 
+    # Method used for video encoding as a background
+    # job on a seperate process
     def set_background_job
       count = 0
       @product.attachments.each do |attach|

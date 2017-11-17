@@ -10,8 +10,6 @@ Rails.application.config.assets.version = '1.0'
 # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
 # Rails.application.config.assets.precompile += %w( search.js )
 
-# TODO Figure out how to add assets to precompile array automatically
-Rails.application.config.assets.precompile += %w( sb-admin-2.css sb-admin-2.js admin.scss )
-Rails.application.config.assets.precompile += %w( bootstrap-select.min.js bootstrap-select.min.css )
 Rails.application.config.assets.precompile += %w( siu-logo-horizontal.png accepted_c22e0.png towers.jpg )
 Rails.application.config.assets.precompile += %w( video-js.swf vjs.eot vjs.svg vjs.ttf vjs.woff )
+Rails.application.config.assets.precompile += %w( admin.scss admin.js docs.scss docs.js )
