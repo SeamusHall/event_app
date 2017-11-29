@@ -14,8 +14,13 @@ h5 {
   color: $blue;
 }
 
-h1 {
+h1,
+h2,
+h3 {
   text-align: center;
+}
+
+h1 {
   font: normal 48px/normal "Warnes", Helvetica, sans-serif;
 }
 

@@ -14,10 +14,9 @@
  *= require video-js
  */
 
+@import "bootstrap-select.min";
 @import "bootstrap-sprockets";
 @import "bootstrap";
-@import 'bootstrap-datetimepicker';
-@import "sb-admin-2.css";
-@import "sb-admin-2.min.css";
-@import "bootstrap-select.min.css";
+@import "sb-admin-2";
+@import "sb-admin-2.min";
 @import "housing-base";

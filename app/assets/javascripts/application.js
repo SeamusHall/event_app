@@ -12,12 +12,15 @@
 //
 //= require jquery
 //= require jquery.turbolinks
+//= require bootstrap-select.min
+//= require bootstrap-datetimepicker
 //= require bootstrap-sprockets
 //= require jquery_ujs
 //= require turbolinks
 //= require moment
-//= require bootstrap-datetimepicker
 //= require ckeditor/init
 //= require video
-//= require sb-admin-2.js
-//= require bootstrap-select.min.js
+//= require sb-admin-2
+//= require sb-admin-2.min
+//= require jquery_nested_form
+//= require_tree .

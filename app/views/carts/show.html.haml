@@ -67,7 +67,7 @@
             %h1 Order Summary
           .modal-body
             %div{id: "errors"}
-            %h2= "Your current total cost #{number_to_currency @cart.total_price} "
+            %h2= "Your current total cost #{number_to_currency @cart.total_price}"
             %h3.center Item Infomation
             %br
             - @cart.items.each do |item|
