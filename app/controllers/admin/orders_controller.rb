@@ -34,7 +34,7 @@ module Admin
       end
     end
 
-    def send_email_and_update_totals
+    def update_stock_totals
       if @order.status == Order::DECLINED_STATUS
         @order.increment_max_order
         @order.send_message = true
@@ -127,12 +127,12 @@ module Admin
 
     private
 
-    def set_order
-      @order = Order.find(params[:id])
-    end
+      def set_order
+        @order = Order.find(params[:id])
+      end
 
-    def order_params
-      params.require(:order).permit(:status)
-    end
+      def order_params
+        params.require(:order).permit(:status)
+      end
   end
 end

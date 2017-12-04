@@ -19,4 +19,9 @@
 //= require bootstrap-datetimepicker
 //= require ckeditor/init
 //= require video
-//= require_tree .
+//= require sb-admin-2
+//= require sb-admin-2.min
+//= require jquery_nested_form
+//= require bootstrap-select.min
+//= require cable
+//= require events
