@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
   require 'sidekiq/web'
 
-  mount Sidekiq::Web => '/sidekiq'
   mount Ckeditor::Engine => '/ckeditor'
   resources :orders, except: [:destroy] do
     member do
@@ -56,6 +55,7 @@ Rails.application.routes.draw do
   # routes for admin interface
   get "admin" => "admin#index"
   namespace :admin do
+    mount Sidekiq::Web => '/sidekiq'
     get "layouts/admin_navigation"    => "layouts#admin_navigation"
     get "layouts/show_user_info/:id"  => "layouts#show_user_info"
     get "orders/show_orders_valid"    => "orders#show_orders_valid"
@@ -98,11 +98,12 @@ Rails.application.routes.draw do
   get "class_structure"     => "docs#class_structure"
   get "top_level_namespace" => "docs#top_level_namespace"
   namespace :docs do
+    # Helpers Routes
+    get "helpers/application_helper"                  => "helpers#application_helper"
 
     # Modules Routes
     get "modules/admin"                               => "modules#admin"
     get "modules/action_cable"                        => "modules#action_cable"
-    get "modules/application_helper"                  => "helpers#application_helper"
     get "modules/events"                              => "modules#events"
 
     # Controller Routes

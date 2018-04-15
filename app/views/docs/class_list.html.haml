@@ -4,225 +4,374 @@
     #full_list_nav= render "sidebar_links"
     #search
       Search:
-      %input{type: "text"}/
+      %input{type: "text"}
   %ul#full_list.class
     %li#object_.odd
       .item{style: "padding-left:30px"}
-        %span.object_link
-          %a{:href => "top-level-namespace.html", :title => "Top Level Namespace (root)"} Top Level Namespace
-    %li#object_Ability.even
-      .item{:style => "padding-left:30px"}
-        %span.object_link
-          %a{:href => "Ability.html", :title => "Ability (class)"} Ability
-        \&lt; Object
-        %small.search_info Top Level Namespace
-    %li#object_ActiveSupport::TestCase.odd
-      .item{:style => "padding-left:30px"}
-        %span.object_link
-          %a{:href => "ActiveSupport/TestCase.html", :title => "ActiveSupport::TestCase (class)"} ActiveSupport::TestCase
-        \&lt; Object
-        %small.search_info ActiveSupport
-    %li#object_Admin.even
-      .item{:style => "padding-left:30px"}
+        %span.object_link= link_to 'Top Level Namespace', top_level_namespace_path, title: 'Top Level Namespace (root)'
+
+    /* Models Section */
+    %li
+      .item{style: "padding-left:30px"}
         %a.toggle
-        %span.object_link
-          %a{:href => "Admin.html", :title => "Admin (module)"} Admin
-        %small.search_info Top Level Namespace
+        %span.object_link= link_to 'Models', docs_path, title: 'Models'
       %ul
-        %li#object_Admin::AttachmentsController.collapsed.odd
-          .item{:style => "padding-left:45px"}
-            %span.object_link
-              %a{:href => "Admin/AttachmentsController.html", :title => "Admin::AttachmentsController (class)"} AttachmentsController
+
+        %li#object_Ability.odd
+          .item{style: "padding-left:30px"}
+            %span.object_link= link_to 'Ability', docs_models_ability_path, title: 'Ability (class)'
+            %small.search_info Place to set Authorization
+
+        %li#object_ApplicationRecord.even
+          .item{style: "padding-left:30px"}
+            %span.object_link= link_to 'ApplicationRecord', docs_models_application_record_path, title: 'ApplicationResponder (class)'
+            \&lt; Base
+            %small.search_info Model
+
+        %li#object_Cart.odd
+          .item{style: "padding-left:30px"}
+            %span.object_link= link_to 'Cart', docs_models_cart_path, title: 'Cart (class)'
+            %small.search_info Model used to change how cart works
+
+        %li#object_CartItem.even
+          .item{style: "padding-left:30px"}
+            %span.object_link= link_to 'CartItem', docs_models_cart_item_path, title: 'CartItem (class)'
+            %small.search_info Model used to change how cart items works
+
+        %li#object_Category.odd
+          .item{style: "padding-left:30px"}
+            %span.object_link= link_to 'Category', docs_models_category_path, title: 'Category (class)'
+            \&lt; ApplicationRecord
+            %small.search_info Top Level Namespace
+
+        %li
+          .item{style: "padding-left:50px"}
+            %a.toggle
+            %span.object_link= link_to 'Ckeditor', docs_path, title: 'Ckeditor'
+          %ul
+
+            %li#object_Ckeditor::Asset.odd
+              .item{style: "padding-left:60px"}
+                %span.object_link= link_to 'Ckeditor::Asset', docs_models_ckeditor_asset_path, title: 'Ckeditor::Asset (class)'
+                \&lt; Base
+                %small.search_info Ckeditor
+
+            %li#object_Ckeditor::AttachmentFile.even
+              .item{style: "padding-left:60px"}
+                %span.object_link= link_to 'Ckeditor::AttachmentFile', docs_models_ckeditor_attachment_file_path, tile: 'Ckeditor::AttachmentFile (class)'
+                \&lt; Asset
+                %small.search_info Ckeditor
+
+            %li#object_Ckeditor::Picture.odd
+              .item{style: "padding-left:60px"}
+                %span.object_link= link_to 'Ckeditor::Picture', docs_models_ckeditor_picture_path, title: 'Ckeditor::Picture (class)'
+                \&lt; Asset
+                %small.search_info Ckeditor
+
+        %li#object_Event.even
+          .item{style: "padding-left:30px"}
+            %span.object_link= link_to 'Event', docs_models_event_path, title: 'Event (class)'
+            \&lt; ApplicationRecord
+            %small.search_info Event Model
+
+        %li#object_EventItem.odd
+          .item{style: "padding-left:30px"}
+            %span.object_link= link_to 'EventItem', docs_models_event_item_path, title: 'EventItem (class)'
+            \&lt; ApplicationRecord
+            %small.search_info EventItem Model
+
+        %li#object_OrderProduct.even
+          .item{style: "padding-left:30px"}
+            %span.object_link= link_to 'OrderProduct', docs_models_order_product_path, title: 'OrderProduct (class)'
+            \&lt; ApplicationRecord
+            %small.search_info OrderProduct Model
+
+        %li#object_OrderProductItem.odd
+          .item{style: "padding-left:30px"}
+            %span.object_link= link_to 'OrderProductItem', docs_models_order_product_item_path, title: 'OrderProductItem (class)'
+            \&lt; ApplicationRecord
+            %small.search_info OrderProductItem Model
+
+        %li#object_Order.even
+          .item{style: "padding-left:30px"}
+            %span.object_link= link_to 'Order', docs_models_order_path, title: 'Order (class)'
+            \&lt; ApplicationRecord
+            %small.search_info Order Model
+
+        %li#object_Product.odd
+          .item{style: "padding-left:30px"}
+            %span.object_link= link_to 'Product', docs_models_product_path, title: 'Product (class)'
+            \&lt; ApplicationRecord
+            %small.search_info Product Model
+
+        %li#object_Role.even
+          .item{style: "padding-left:30px"}
+            %span.object_link= link_to 'Role', docs_models_role_path, title: 'Role (class)'
+            \&lt; ApplicationRecord
+            %small.search_info Role Model
+
+        %li#object_User.odd
+          .item{style: "padding-left:30px"}
+            %span.object_link= link_to 'User', docs_models_user_path, title: 'User (class)'
+            \&lt; ApplicationRecord
+            %small.search_info User Model
+
+        %li#object_UserRole.even
+          .item{style: "padding-left:30px"}
+            %span.object_link= link_to 'UserRole', docs_models_user_role_path, title: 'UserRole (class)'
+            \&lt; ApplicationRecord
+            %small.search_info UserRole Model
+
+    /* Controllers Section */
+    %li
+      .item{style: "padding-left:30px"}
+        %a.toggle
+        %span.object_link= link_to 'Controllers', docs_path, title: 'Controllers'
+      %ul
+
+        %li#object_AdminController.odd
+          .item{style: "padding-left:30px"}
+            %span.object_link= link_to 'AdminController', docs_controllers_admin_controller_path, title: 'AdminController (class)'
             \&lt; ApplicationController
-            %small.search_info Admin
-        %li#object_Admin::CategoriesController.collapsed.even
-          .item{:style => "padding-left:45px"}
-            %span.object_link
-              %a{:href => "Admin/CategoriesController.html", :title => "Admin::CategoriesController (class)"} CategoriesController
-            \&lt; AdminController
-            %small.search_info Admin
-        %li#object_Admin::EventsController.collapsed.odd
-          .item{:style => "padding-left:45px"}
-            %span.object_link
-              %a{:href => "Admin/EventsController.html", :title => "Admin::EventsController (class)"} EventsController
-            \&lt; AdminController
-            %small.search_info Admin
-        %li#object_Admin::LayoutsController.collapsed.even
-          .item{:style => "padding-left:45px"}
-            %span.object_link
-              %a{:href => "Admin/LayoutsController.html", :title => "Admin::LayoutsController (class)"} LayoutsController
-            \&lt; AdminController
-            %small.search_info Admin
-        %li#object_Admin::OrderProductsController.collapsed.odd
-          .item{:style => "padding-left:45px"}
-            %span.object_link
-              %a{:href => "Admin/OrderProductsController.html", :title => "Admin::OrderProductsController (class)"} OrderProductsController
-            \&lt; AdminController
-            %small.search_info Admin
-        %li#object_Admin::OrdersController.collapsed.even
-          .item{:style => "padding-left:45px"}
-            %span.object_link
-              %a{:href => "Admin/OrdersController.html", :title => "Admin::OrdersController (class)"} OrdersController
-            \&lt; AdminController
-            %small.search_info Admin
-        %li#object_Admin::ProductsController.collapsed.odd
-          .item{:style => "padding-left:45px"}
-            %span.object_link
-              %a{:href => "Admin/ProductsController.html", :title => "Admin::ProductsController (class)"} ProductsController
-            \&lt; AdminController
-            %small.search_info Admin
-        %li#object_Admin::RolesController.collapsed.even
-          .item{:style => "padding-left:45px"}
-            %span.object_link
-              %a{:href => "Admin/RolesController.html", :title => "Admin::RolesController (class)"} RolesController
-            \&lt; AdminController
-            %small.search_info Admin
-        %li#object_Admin::UsersController.collapsed.odd
-          .item{:style => "padding-left:45px"}
-            %span.object_link
-              %a{:href => "Admin/UsersController.html", :title => "Admin::UsersController (class)"} UsersController
-            \&lt; AdminController
-            %small.search_info Admin
-    %li#object_AdminController.even
-      .item{:style => "padding-left:30px"}
-        %span.object_link
-          %a{:href => "AdminController.html", :title => "AdminController (class)"} AdminController
-        \&lt; ApplicationController
-        %small.search_info Top Level Namespace
-    %li#object_ApplicationCable.odd
-      .item{:style => "padding-left:30px"}
+            %small.search_info Admin Controller
+
+        %li#object_ApplicationController.even
+          .item{style: "padding-left:30px"}
+            %span.object_link= link_to 'ApplicationController', docs_controllers_application_controller_path, title: 'ApplicationController (class)'
+            \&lt; Base
+            %small.search_info Application Controller
+
+        %li#object_CartsController.odd
+          .item{style: "padding-left:30px"}
+            %span.object_link= link_to 'CartsController', docs_controllers_carts_controller_path, title: 'CartsController (class)'
+            \&lt; ApplicationController
+            %small.search_info Carts Controller
+
+        %li#object_EventsController.even
+          .item{style: "padding-left:30px"}
+            %span.object_link= link_to 'EventsController', docs_controllers_events_controller_path, title: 'EventsController (class)'
+            \&lt; ApplicationController
+            %small.search_info Events Controller
+
+        %li#object_HomeController.odd
+          .item{style: "padding-left:30px"}
+            %span.object_link= link_to 'HomeController', docs_controllers_home_controller_path, title: 'HomeController (class)'
+            \&lt; ApplicationController
+            %small.search_info Home Controller
+
+        %li#object_LayoutsController.even
+          .item{style: "padding-left:30px"}
+            %span.object_link= link_to 'LayoutsController', docs_controllers_layouts_controller_path, title: 'LayoutsController (class)'
+            \&lt; ApplicationController
+            %small.search_info Layouts Controller
+
+        %li#object_OrderProductsController.odd
+          .item{style: "padding-left:30px"}
+            %span.object_link= link_to 'OrderProductsController', docs_controllers_order_products_controller_path, title: 'OrderProductsController (class)'
+            \&lt; ApplicationController
+            %small.search_info Order Products Controller
+
+        %li#object_OrdersController.even
+          .item{style: "padding-left:30px"}
+            %span.object_link= link_to 'OrdersController', docs_controllers_orders_controller_path, title: 'OrdersController (class)'
+            \&lt; ApplicationController
+            %small.search_info Orders Controller
+
+        %li#object_PasswordsController.odd
+          .item{style: "padding-left:30px"}
+            %span.object_link= link_to 'PasswordsController', docs_controllers_passwords_controller_path, title: 'PasswordsController (class)'
+            \&lt; ApplicationController
+            %small.search_info Passwords Controller
+
+        %li#object_ProductsController.even
+          .item{style: "padding-left:30px"}
+            %span.object_link= link_to 'ProductsController', docs_controllers_products_controller_path, title: 'ProductsController (class)'
+            \&lt; ApplicationController
+            %small.search_info Products Controller
+
+        %li#object_RegistrationsController.odd
+          .item{style: "padding-left:30px"}
+            %span.object_link= link_to 'RegistrationsController', docs_controllers_registrations_controller_path, title: 'RegistrationsController (class)'
+            \&lt; ApplicationController
+            %small.search_info Registrations Controller
+
+        %li#object_RestoreController.even
+          .item{style: "padding-left:30px"}
+            %span.object_link= link_to 'RestoreController', docs_controllers_restore_controller_path, title: 'RestoreController (class)'
+            \&lt; ApplicationController
+            %small.search_info Restore Controller
+
+        %li#object_UsersController.odd
+          .item{style: "padding-left:30px"}
+            %span.object_link= link_to 'UsersController', docs_controllers_users_controller_path, title: 'UsersController (class)'
+            \&lt; ApplicationController
+            %small.search_info Users Controller
+
+        %li#object_Admin.even
+          .item{style: "padding-left:50px"}
+            %a.toggle
+            %span.object_link= link_to 'Admin', docs_modules_admin_path, title: 'Admin (module)'
+            %small.search_info Admin Module
+          %ul
+
+            %li#object_Admin::AttachmentsController.collapsed.odd
+              .item{:style => "padding-left:60px"}
+                %span.object_link= link_to 'AttachmentsController', docs_admin_controllers_attachment_controller_path, title: 'Admin::AttachmentsController (class)'
+                \&lt; AdminController
+                %small.search_info Admin
+
+            %li#object_Admin::CategoriesController.collapsed.even
+              .item{:style => "padding-left:60px"}
+                %span.object_link= link_to 'CategoriesController', docs_admin_controllers_categories_controller_path, title: 'Admin::CategoriesController (class)'
+                \&lt; AdminController
+                %small.search_info Admin
+
+            %li#object_Admin::EventsController.collapsed.odd
+              .item{:style => "padding-left:60px"}
+                %span.object_link= link_to 'EventsController', docs_admin_controllers_events_controller_path, title: 'Admin::EventsController (class)'
+                \&lt; AdminController
+                %small.search_info Admin
+
+            %li#object_Admin::LayoutsController.collapsed.even
+              .item{:style => "padding-left:60px"}
+                %span.object_link= link_to 'LayoutsController', docs_admin_controllers_layouts_controller_path, title: 'Admin::LayoutsController (class)'
+                \&lt; AdminController
+                %small.search_info Admin
+
+            %li#object_Admin::OrdersController.collapsed.odd
+              .item{:style => "padding-left:60px"}
+                %span.object_link= link_to 'OrderProductsController', docs_admin_controllers_order_products_controller_path, title: 'Admin::OrderProductsController (class)'
+                \&lt; AdminController
+                %small.search_info Admin
+
+            %li#object_Admin::OrdersController.collapsed.even
+              .item{:style => "padding-left:60px"}
+                %span.object_link= link_to 'OrdersController', docs_admin_controllers_orders_controller_path, title: 'Admin::OrdersController (class)'
+                \&lt; AdminController
+                %small.search_info Admin
+
+            %li#object_Admin::ProductsController.collapsed.odd
+              .item{:style => "padding-left:60px"}
+                %span.object_link= link_to 'ProductsController', docs_admin_controllers_products_controller_path, title: 'Admin::ProductsController (class)'
+                \&lt; AdminController
+                %small.search_info Admin
+
+            %li#object_Admin::RolesController.collapsed.even
+              .item{:style => "padding-left:60px"}
+                %span.object_link= link_to 'RolesController', docs_admin_controllers_roles_controller_path, title: 'Admin::RolesController (class)'
+                \&lt; AdminController
+                %small.search_info Admin
+
+            %li#object_Admin::UsersController.collapsed.odd
+              .item{:style => "padding-left:60px"}
+                %span.object_link= link_to 'UsersController', docs_admin_controllers_users_controller_path, title: 'Admin::UsersController (class)'
+                \&lt; AdminController
+                %small.search_info Admin
+
+    /* helpers Section */
+    %li
+      .item{style: "padding-left:30px"}
         %a.toggle
-        %span.object_link
-          %a{:href => "ApplicationCable.html", :title => "ApplicationCable (module)"} ApplicationCable
-        %small.search_info Top Level Namespace
+        %span.object_link= link_to 'Helpers', docs_path, title: 'Helpers'
       %ul
-        %li#object_ApplicationCable::Channel.collapsed.even
-          .item{:style => "padding-left:45px"}
-            %span.object_link
-              %a{:href => "ApplicationCable/Channel.html", :title => "ApplicationCable::Channel (class)"} Channel
+        %li#object_ApplicationHelper.odd
+          .item{style: "padding-left:30px"}
+            %span.object_link= link_to 'ApplicationHelper', docs_helpers_application_helper_path, title: 'ApplicationHelper (module)'
+            %small.search_info Top Level Namespace
+
+    /* jobs Section */
+    %li.even
+      .item{style: "padding-left:30px"}
+        %a.toggle
+        %span.object_link= link_to 'Jobs', docs_path, title: 'Jobs'
+      %ul
+        %li#object_ApplicationJob.even
+          .item{style: "padding-left:30px"}
+            %span.object_link= link_to 'ApplicationJob', docs_jobs_application_job_path, title: 'ApplicationJob (class)'
             \&lt; Base
-            %small.search_info ApplicationCable
-        %li#object_ApplicationCable::Connection.collapsed.odd
-          .item{:style => "padding-left:45px"}
-            %span.object_link
-              %a{:href => "ApplicationCable/Connection.html", :title => "ApplicationCable::Connection (class)"} Connection
+            %small.search_info Top Level Namespace
+
+    /* Mailers Section */
+    %li.odd
+      .item{style: "padding-left:30px"}
+        %a.toggle
+        %span.object_link= link_to 'Mailers', docs_path, title: 'Mailers'
+      %ul
+        %li#object_ApplicationMailer.even
+          .item{style: "padding-left:30px"}
+            %span.object_link= link_to 'ApplicationMailer', docs_mailers_application_mailer_path, title: 'ApplicationMailer (class)'
             \&lt; Base
-            %small.search_info ApplicationCable
-    %li#object_ApplicationController.even
-      .item{:style => "padding-left:30px"}
-        %span.object_link
-          %a{:href => "ApplicationController.html", :title => "ApplicationController (class)"} ApplicationController
-        \&lt; Base
-        %small.search_info Top Level Namespace
-    %li#object_ApplicationHelper.odd
-      .item{:style => "padding-left:30px"}
-        %span.object_link
-          %a{:href => "ApplicationHelper.html", :title => "ApplicationHelper (module)"} ApplicationHelper
-        %small.search_info Top Level Namespace
-    %li#object_ApplicationJob.even
-      .item{:style => "padding-left:30px"}
-        %span.object_link
-          %a{:href => "ApplicationJob.html", :title => "ApplicationJob (class)"} ApplicationJob
-        \&lt; Base
-        %small.search_info Top Level Namespace
-    %li#object_ApplicationMailer.odd
-      .item{:style => "padding-left:30px"}
-        %span.object_link
-          %a{:href => "ApplicationMailer.html", :title => "ApplicationMailer (class)"} ApplicationMailer
-        \&lt; Base
-        %small.search_info Top Level Namespace
-    %li#object_ApplicationRecord.even
-      .item{:style => "padding-left:30px"}
-        %span.object_link
-          %a{:href => "ApplicationRecord.html", :title => "ApplicationRecord (class)"} ApplicationRecord
-        \&lt; Base
-        %small.search_info Top Level Namespace
+            %small.search_info Top Level Namespace
+
+        %li#object_OrderMailer.odd
+          .item{style: "padding-left:30px"}
+            %span.object_link= link_to 'OrderMailer', docs_mailers_order_mailer_path, title: 'OrderMailer (class)'
+            \&lt; ApplicationMailer
+            %small.search_info Top Level Namespace
+
+        %li#object_OrderProductMailer.even
+          .item{style: "padding-left:30px"}
+            %span.object_link= link_to 'OrderProductMailer', docs_mailers_order_product_mailer_path, title: 'OrderProductMailer (class)'
+            \&lt; ApplicationMailer
+            %small.search_info Top Level Namespace
+
     %li#object_ApplicationResponder.odd
-      .item{:style => "padding-left:30px"}
+      .item{style: "padding-left:30px"}
         %span.object_link
           %a{:href => "ApplicationResponder.html", :title => "ApplicationResponder (class)"} ApplicationResponder
         \&lt; Responder
         %small.search_info Top Level Namespace
-    %li#object_AttachmentUploader.even
-      .item{:style => "padding-left:30px"}
-        %span.object_link
-          %a{:href => "AttachmentUploader.html", :title => "AttachmentUploader (class)"} AttachmentUploader
-        \&lt; Base
-        %small.search_info Top Level Namespace
-    %li#object_Cart.odd
-      .item{:style => "padding-left:30px"}
-        %span.object_link
-          %a{:href => "Cart.html", :title => "Cart (class)"} Cart
-        \&lt; Object
-        %small.search_info Top Level Namespace
-    %li#object_CartItem.even
-      .item{:style => "padding-left:30px"}
-        %span.object_link
-          %a{:href => "CartItem.html", :title => "CartItem (class)"} CartItem
-        \&lt; Object
-        %small.search_info Top Level Namespace
-    %li#object_CartsController.odd
-      .item{:style => "padding-left:30px"}
-        %span.object_link
-          %a{:href => "CartsController.html", :title => "CartsController (class)"} CartsController
-        \&lt; ApplicationController
-        %small.search_info Top Level Namespace
-    %li#object_Category.even
-      .item{:style => "padding-left:30px"}
-        %span.object_link
-          %a{:href => "Category.html", :title => "Category (class)"} Category
-        \&lt; ApplicationRecord
-        %small.search_info Top Level Namespace
-    %li#object_Ckeditor::Asset.odd
-      .item{:style => "padding-left:30px"}
-        %span.object_link
-          %a{:href => "Ckeditor/Asset.html", :title => "Ckeditor::Asset (class)"} Ckeditor::Asset
-        \&lt; Base
-        %small.search_info Ckeditor
-    %li#object_Ckeditor::AttachmentFile.even
-      .item{:style => "padding-left:30px"}
-        %span.object_link
-          %a{:href => "Ckeditor/AttachmentFile.html", :title => "Ckeditor::AttachmentFile (class)"} Ckeditor::AttachmentFile
-        \&lt; Asset
-        %small.search_info Ckeditor
-    %li#object_Ckeditor::Picture.odd
-      .item{:style => "padding-left:30px"}
-        %span.object_link
-          %a{:href => "Ckeditor/Picture.html", :title => "Ckeditor::Picture (class)"} Ckeditor::Picture
-        \&lt; Asset
-        %small.search_info Ckeditor
-    %li#object_CkeditorAttachmentFileUploader.even
-      .item{:style => "padding-left:30px"}
-        %span.object_link
-          %a{:href => "CkeditorAttachmentFileUploader.html", :title => "CkeditorAttachmentFileUploader (class)"} CkeditorAttachmentFileUploader
-        \&lt; Base
-        %small.search_info Top Level Namespace
-    %li#object_CkeditorPictureUploader.odd
-      .item{:style => "padding-left:30px"}
-        %span.object_link
-          %a{:href => "CkeditorPictureUploader.html", :title => "CkeditorPictureUploader (class)"} CkeditorPictureUploader
-        \&lt; Base
-        %small.search_info Top Level Namespace
-    %li#object_Event.even
-      .item{:style => "padding-left:30px"}
-        %span.object_link
-          %a{:href => "Event.html", :title => "Event (class)"} Event
-        \&lt; ApplicationRecord
-        %small.search_info Top Level Namespace
-    %li#object_EventItem.odd
-      .item{:style => "padding-left:30px"}
-        %span.object_link
-          %a{:href => "EventItem.html", :title => "EventItem (class)"} EventItem
-        \&lt; ApplicationRecord
-        %small.search_info Top Level Namespace
+
+  /* Uploaders Section */
+  %li.odd
+    .item{style: "padding-left:30px"}
+      %a.toggle
+      %span.object_link= link_to 'Uploaders', docs_path, title: 'Uploaders'
+    %ul
+      %li#object_AttachmentUploader.even
+        .item{style: "padding-left:30px"}
+          %span.object_link= link_to 'AttachmentUploader', docs_uploaders_attachment_uploader_path, title: 'AttachmentUploader (class)'
+          \&lt; Base
+          %small.search_info Attachment Uploader
+
+      %li#object_CkeditorAttachmentFileUploader.even
+        .item{style: "padding-left:30px"}
+          %span.object_link= link_to 'CkeditorAttachmentFileUploader', docs_uploaders_ckeditor_attachment_file_uploader_path, title: 'CkeditorAttachmentFileUploader (class)'
+          \&lt; Base
+          %small.search_info Top Level Namespace
+
+      %li#object_CkeditorPictureUploader.odd
+        .item{style: "padding-left:30px"}
+          %span.object_link= link_to 'CkeditorPictureUploader', docs_uploaders_ckeditor_picture_uploader_path, title: 'CkeditorPictureUploader (class)'
+          \&lt; Base
+          %small.search_info Top Level Namespace
+
+  /* Workers Section */
+  %li.even
+    .item{style: "padding-left:30px"}
+      %a.toggle
+      %span.object_link= link_to 'Workers', docs_path, title: 'Workers'
+    %ul
+      %li#object_ProductWorker.odd
+        .item{style: "padding-left:30px"}
+          %span.object_link
+            %a{:href => "ProductWorker.html", :title => "ProductWorker (class)"} ProductWorker
+          \&lt; AttachmentUploader
+          %small.search_info Top Level Namespace
+      %li#object_ThumbnailWorker.even
+        .item{style: "padding-left:30px"}
+          %span.object_link
+            %a{:href => "ThumbnailWorker.html", :title => "ThumbnailWorker (class)"} ThumbnailWorker
+          %small.search_info Top Level Namespace
+
     %li#object_EventTest.even
-      .item{:style => "padding-left:30px"}
+      .item{style: "padding-left:30px"}
         %span.object_link
           %a{:href => "EventTest.html", :title => "EventTest (class)"} EventTest
         \&lt; TestCase
         %small.search_info Top Level Namespace
     %li#object_Events.odd
-      .item{:style => "padding-left:30px"}
+      .item{style: "padding-left:30px"}
         %a.toggle
         %span.object_link
           %a{:href => "Events.html", :title => "Events (module)"} Events
@@ -234,159 +383,37 @@
               %a{:href => "Events/Application.html", :title => "Events::Application (class)"} Application
             \&lt; Application
             %small.search_info Events
-    %li#object_EventsController.odd
-      .item{:style => "padding-left:30px"}
-        %span.object_link
-          %a{:href => "EventsController.html", :title => "EventsController (class)"} EventsController
-        \&lt; ApplicationController
-        %small.search_info Top Level Namespace
+
     %li#object_EventsControllerTest.even
-      .item{:style => "padding-left:30px"}
+      .item{style: "padding-left:30px"}
         %span.object_link
           %a{:href => "EventsControllerTest.html", :title => "EventsControllerTest (class)"} EventsControllerTest
         \&lt; IntegrationTest
         %small.search_info Top Level Namespace
-    %li#object_HomeController.odd
-      .item{:style => "padding-left:30px"}
-        %span.object_link
-          %a{:href => "HomeController.html", :title => "HomeController (class)"} HomeController
-        \&lt; ApplicationController
-        %small.search_info Top Level Namespace
+
     %li#object_HomeControllerTest.even
-      .item{:style => "padding-left:30px"}
+      .item{style: "padding-left:30px"}
         %span.object_link
           %a{:href => "HomeControllerTest.html", :title => "HomeControllerTest (class)"} HomeControllerTest
         \&lt; IntegrationTest
         %small.search_info Top Level Namespace
-    %li#object_LayoutsController.odd
-      .item{:style => "padding-left:30px"}
-        %span.object_link
-          %a{:href => "LayoutsController.html", :title => "LayoutsController (class)"} LayoutsController
-        \&lt; ApplicationController
-        %small.search_info Top Level Namespace
-    %li#object_Order.even
-      .item{:style => "padding-left:30px"}
-        %span.object_link
-          %a{:href => "Order.html", :title => "Order (class)"} Order
-        \&lt; ApplicationRecord
-        %small.search_info Top Level Namespace
-    %li#object_OrderMailer.odd
-      .item{:style => "padding-left:30px"}
-        %span.object_link
-          %a{:href => "OrderMailer.html", :title => "OrderMailer (class)"} OrderMailer
-        \&lt; ApplicationMailer
-        %small.search_info Top Level Namespace
-    %li#object_OrderProduct.even
-      .item{:style => "padding-left:30px"}
-        %span.object_link
-          %a{:href => "OrderProduct.html", :title => "OrderProduct (class)"} OrderProduct
-        \&lt; ApplicationRecord
-        %small.search_info Top Level Namespace
-    %li#object_OrderProductItem.odd
-      .item{:style => "padding-left:30px"}
-        %span.object_link
-          %a{:href => "OrderProductItem.html", :title => "OrderProductItem (class)"} OrderProductItem
-        \&lt; ApplicationRecord
-        %small.search_info Top Level Namespace
-    %li#object_OrderProductMailer.even
-      .item{:style => "padding-left:30px"}
-        %span.object_link
-          %a{:href => "OrderProductMailer.html", :title => "OrderProductMailer (class)"} OrderProductMailer
-        \&lt; ApplicationMailer
-        %small.search_info Top Level Namespace
-    %li#object_OrderProductsController.odd
-      .item{:style => "padding-left:30px"}
-        %span.object_link
-          %a{:href => "OrderProductsController.html", :title => "OrderProductsController (class)"} OrderProductsController
-        \&lt; ApplicationController
-        %small.search_info Top Level Namespace
-    %li#object_OrdersController.even
-      .item{:style => "padding-left:30px"}
-        %span.object_link
-          %a{:href => "OrdersController.html", :title => "OrdersController (class)"} OrdersController
-        \&lt; ApplicationController
-        %small.search_info Top Level Namespace
-    %li#object_PasswordsController.odd
-      .item{:style => "padding-left:30px"}
-        %span.object_link
-          %a{:href => "PasswordsController.html", :title => "PasswordsController (class)"} PasswordsController
-        \&lt; PasswordsController
-        %small.search_info Top Level Namespace
-    %li#object_Product.even
-      .item{:style => "padding-left:30px"}
-        %span.object_link
-          %a{:href => "Product.html", :title => "Product (class)"} Product
-        \&lt; ApplicationRecord
-        %small.search_info Top Level Namespace
-    %li#object_ProductWorker.odd
-      .item{:style => "padding-left:30px"}
-        %span.object_link
-          %a{:href => "ProductWorker.html", :title => "ProductWorker (class)"} ProductWorker
-        \&lt; AttachmentUploader
-        %small.search_info Top Level Namespace
-    %li#object_ProductsController.even
-      .item{:style => "padding-left:30px"}
-        %span.object_link
-          %a{:href => "ProductsController.html", :title => "ProductsController (class)"} ProductsController
-        \&lt; ApplicationController
-        %small.search_info Top Level Namespace
-    %li#object_RegistrationsController.odd
-      .item{:style => "padding-left:30px"}
-        %span.object_link
-          %a{:href => "RegistrationsController.html", :title => "RegistrationsController (class)"} RegistrationsController
-        \&lt; RegistrationsController
-        %small.search_info Top Level Namespace
-    %li#object_RestoreController.even
-      .item{:style => "padding-left:30px"}
-        %span.object_link
-          %a{:href => "RestoreController.html", :title => "RestoreController (class)"} RestoreController
-        \&lt; ApplicationController
-        %small.search_info Top Level Namespace
-    %li#object_Role.odd
-      .item{:style => "padding-left:30px"}
-        %span.object_link
-          %a{:href => "Role.html", :title => "Role (class)"} Role
-        \&lt; ApplicationRecord
-        %small.search_info Top Level Namespace
+
     %li#object_RoleTest.even
-      .item{:style => "padding-left:30px"}
+      .item{style: "padding-left:30px"}
         %span.object_link
           %a{:href => "RoleTest.html", :title => "RoleTest (class)"} RoleTest
         \&lt; TestCase
         %small.search_info Top Level Namespace
     %li#object_RolesControllerTest.odd
-      .item{:style => "padding-left:30px"}
+      .item{style: "padding-left:30px"}
         %span.object_link
           %a{:href => "RolesControllerTest.html", :title => "RolesControllerTest (class)"} RolesControllerTest
         \&lt; IntegrationTest
         %small.search_info Top Level Namespace
-    %li#object_ThumbnailWorker.even
-      .item{:style => "padding-left:30px"}
-        %span.object_link
-          %a{:href => "ThumbnailWorker.html", :title => "ThumbnailWorker (class)"} ThumbnailWorker
-        \&lt; Object
-        %small.search_info Top Level Namespace
-    %li#object_User.odd
-      .item{:style => "padding-left:30px"}
-        %span.object_link
-          %a{:href => "User.html", :title => "User (class)"} User
-        \&lt; ApplicationRecord
-        %small.search_info Top Level Namespace
-    %li#object_UserRole.even
-      .item{:style => "padding-left:30px"}
-        %span.object_link
-          %a{:href => "UserRole.html", :title => "UserRole (class)"} UserRole
-        \&lt; ApplicationRecord
-        %small.search_info Top Level Namespace
+
     %li#object_UserTest.odd
-      .item{:style => "padding-left:30px"}
+      .item{style: "padding-left:30px"}
         %span.object_link
           %a{:href => "UserTest.html", :title => "UserTest (class)"} UserTest
         \&lt; TestCase
-        %small.search_info Top Level Namespace
-    %li#object_UsersController.even
-      .item{:style => "padding-left:30px"}
-        %span.object_link
-          %a{:href => "UsersController.html", :title => "UsersController (class)"} UsersController
-        \&lt; ApplicationController
         %small.search_info Top Level Namespace

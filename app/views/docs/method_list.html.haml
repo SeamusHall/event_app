@@ -8,17 +8,15 @@
   %ul#full_list.method
     %li.odd
       .item
-        %span.object_link= link_to "#add", docs_carts_controller_path, id: "#add-instance_method", title: "CartsController#add (method)"
+        %span.object_link= link_to "#add", docs_controllers_carts_controller_path, id: "#add-instance_method", title: "CartsController#add (method)"
         %small CartsController
     %li.even
       .item
-        %span.object_link
-          %a{:href => "Cart.html#add_item_to_cart-instance_method", :title => "Cart#add_item_to_cart (method)"} #add_item_to_cart
+        %span.object_link= link_to "#add_item_to_cart", docs_controllers_carts_controller_path, id: "#add_item_to_cart-instance_method", title: "Cart#add_item_to_cart (method)"
         %small Cart
     %li.odd
       .item
-        %span.object_link
-          %a{:href => "User.html#add_role-instance_method", :title => "User#add_role (method)"} #add_role
+        %span.object_link= link_to "#add_role", docs_models_role_path, id: "#add_role-instance_method", title: "User#add_role (method)"
         %small User
     %li.even
       .item
