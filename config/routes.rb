@@ -35,18 +35,8 @@ Rails.application.routes.draw do
     post :auto_update_role
   end
 
-  devise_for :users, controllers: {
-    # For Recaptcha verification
-    registrations: 'registrations',
-    passwords:     'passwords'
-  },
-                     path: '', path_names: {
-                       confirmation:  'verification',
-                       unlock:        'unlock',
-                       sign_in:       'login',
-                       sign_out:      'logout',
-                       sign_up:       'sign_up'
-                     }
+  devise_for :users, controllers: { registrations: 'registrations', passwords: 'passwords' },
+                     path: '', path_names: { confirmation: 'verification', unlock: 'unlock', sign_in: 'login', sign_out: 'logout', sign_up: 'sign_up' }
 
   resources :users
   # routes for users account restore
