@@ -3,7 +3,7 @@
     %span#progress-bar-text.sr-only
 
 = nested_form_for ["admin", @event] do |f|
-  = errors_for @event
+  = errors_for @event, false
   .row
     .col-sm-6
     .col-sm-4
