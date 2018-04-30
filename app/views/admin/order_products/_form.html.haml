@@ -1,5 +1,5 @@
 = nested_form_for ["admin",@order_product] do |f|
-  = errors_for @order_product, true
+  = errors_for @order_product, false
   = f.label 'Order Status'
   = f.select :status, options_for_select(OrderProduct::STATUSES.keys, selected: @order_product.status), {prompt: 'status'}, {class: 'form-control selectpicker', required: true}
   .container-fluid

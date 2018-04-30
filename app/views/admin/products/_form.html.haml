@@ -3,7 +3,7 @@
     %span#progress-bar-text.sr-only
 
 = form_for ["admin", @product], multipart: true do |f|
-  = errors_for @product, true
+  = errors_for @product, false
   .row
     .col-sm-1
     .col-sm-10
