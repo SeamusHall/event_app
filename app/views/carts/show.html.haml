@@ -30,9 +30,10 @@
               %td= number_to_currency item.product.price
               %td= number_to_currency item.total_price
               %td= link_to "Remove from cart", remove_cart_path(item.product.id), method: :post, class: 'btn btn-danger'
+
           %tr
             %td  
-            %td  
+            %td
             %td  
             %td
               %h3 Total

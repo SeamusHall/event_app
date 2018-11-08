@@ -38,8 +38,10 @@ ActiveRecord::Schema.define(version: 20170623023108) do
     t.decimal  "tax",          precision: 6, scale: 5
     t.integer  "max_event"
     t.integer  "max_order"
-    t.datetime "created_at",                           null: false
-    t.datetime "updated_at",                           null: false
+    t.integer  "min_freq"
+    t.boolean  "flat_rate",                            default: false
+    t.datetime "created_at",                                           null: false
+    t.datetime "updated_at",                                           null: false
     t.datetime "deleted_at"
     t.string   "check_status"
     t.index ["deleted_at"], name: "index_event_items_on_deleted_at"

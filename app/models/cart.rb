@@ -20,6 +20,10 @@ class Cart
 	def initialize(items = [])
 		@items = items
 	end
+	def total_items
+		@items.inject(0){|sum,item| sum + item.quantity}
+
+	end
 
 	def add_item_to_cart(product_id)
 		item = @items.find { |item| item.product_id == product_id }
@@ -39,6 +43,7 @@ class Cart
 			end
 		end
 	end
+
 
 	def clear_cart
 		@items.clear
