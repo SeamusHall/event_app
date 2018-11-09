@@ -81,13 +81,19 @@
                         Item:
                         = ei.description
                       %hr
-                      %p= "Please try to answer the following questions in the comments section"
+                      %p= "Please try to answer the following questions in the comments section:"
                       %ul
                         %li= "Names of everyone staying in the suite"
                         %li= "Name of your Chancellor Scholar"
                         %li= "Ages of guests under 18"
                         %li= "Will your Chancellor Scholar Candidate be staying with you in the guest suite?"
                       = f.hidden_field :event_item_id, value: ei.id
+                      %p.example= "Example:"
+                      %ul.example
+                        %li="John Doe, Jane Doe, Jim Doe and Janet Doe"
+                        %li="Jim Doe is our chancellor Scholar"
+                        %li= "Janet Doe is 12"
+                        %li="Yes he will be staying with us"
                       %br
                       .row
                         .col-sm-12
