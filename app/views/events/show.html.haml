@@ -100,17 +100,24 @@
                           .form-group
                             = f.label :comments
                             = f.text_area :comments, placeholder: 'Comments', class: 'form-control ' , :id => 'comments-Text'
-                            %p#Characters= "Characters Left: 120"
+                            %p#Characters= "Characters Left: 200"
                             :javascript
                                document.getElementById('comments-Text').onkeyup= function(){count()};
                                function count(){
                                var text =document.getElementById('comments-Text');
                                var display = document.getElementById('Characters');
-                               display.innerHTML="Characters Left:" +(120-text.value.length);
+                               display.innerHTML="Characters Left:" +(200-text.value.length);
+                               var button = document.getElementById('orderSubmit');
 
-                               if (text.value.length >120)
+                               if (text.value.length >200)
                                {
                                 display.style.color="red"
+                                button.style.display="none";
+                               }
+                               else
+                               {
+                               display.style.color="black"
+                               button.style.display="block";
                                }
                                }
 
@@ -133,7 +140,7 @@
                     .modal-footer
                       %button.btn.btn-default{type: 'button', "data-dismiss" => "modal"}
                         Close
-                      = f.submit 'Create Order', class: 'btn btn-success'
+                      = f.submit 'Create Order', class: 'btn btn-success', :id => 'orderSubmit'
           #service-two.tab-pane.fade
             %section.container
           #service-three.tab-pane.fade
