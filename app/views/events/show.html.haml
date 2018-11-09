@@ -99,7 +99,21 @@
                         .col-sm-12
                           .form-group
                             = f.label :comments
-                            = f.text_area :comments, placeholder: 'Additional Comments', class: 'form-control'
+                            = f.text_area :comments, placeholder: 'Comments', class: 'form-control ' , :id => 'comments-Text'
+                            %p#Characters= "Characters Left: 120"
+                            :javascript
+                               document.getElementById('comments-Text').onkeyup= function(){count()};
+                               function count(){
+                               var text =document.getElementById('comments-Text');
+                               var display = document.getElementById('Characters');
+                               display.innerHTML="Characters Left:" +(120-text.value.length);
+
+                               if (text.value.length >120)
+                               {
+                                display.style.color="red"
+                               }
+                               }
+
                       %br
                       .row
                         .col-sm-12
