@@ -1,6 +1,0 @@
-%p
-  %strong Current Sign In:
-  = @user.current_sign_in_at.strftime('%Y-%m-%dT%H:%M:%S%z') rescue ''
-%p
-  %strong Locked At:
-  = @user.locked_at.strftime('%Y-%m-%dT%H:%M:%S%z') rescue ''
